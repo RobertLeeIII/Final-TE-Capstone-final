@@ -6,6 +6,11 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import UserView from '../views/UserView.vue';
+import PotluckListView from '../views/PotluckListView.vue';
+import PotluckDetailsView from '../views/PotluckDetailsView.vue';
+import CreatePotluckView from '../views/CreatePotluckView.vue';
+import UpdatePotluckView from '../views/UpdatePotluckView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -47,6 +52,31 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/users/:id",
+    name: "user-view",
+    component: UserView,
+  },
+  {
+    path: "/users/:id/potlucks",
+    name: "potluck-list",
+    component: PotluckListView
+  },
+  {
+    path: "/potlucks/:id",
+    name: "potluck-details",
+    component: PotluckDetailsView
+  },
+  {
+    path: "/potlucks?action=create",
+    name: "potluck-create",
+    component: CreatePotluckView
+  },
+  {
+    path: "/potlucks?action=update",
+    name: "potluck-update",
+    component: UpdatePotluckView
   }
 ];
 
