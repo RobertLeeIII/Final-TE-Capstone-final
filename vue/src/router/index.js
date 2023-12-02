@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import UserView from '../views/UserView.vue';
+import UserDetailView from '../views/UserDetailView.vue';
 import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
@@ -56,27 +56,42 @@ const routes = [
   {
     path: "/users/:id",
     name: "user-view",
-    component: UserView,
+    component: UserDetailView,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/users/:id/potlucks",
     name: "potluck-list",
-    component: PotluckListView
+    component: PotluckListView,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/potlucks/:id",
     name: "potluck-details",
-    component: PotluckDetailsView
+    component: PotluckDetailsView,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/potlucks?action=create",
     name: "potluck-create",
-    component: CreatePotluckView
+    component: CreatePotluckView,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/potlucks?action=update",
     name: "potluck-update",
-    component: UpdatePotluckView
+    component: UpdatePotluckView,
+    meta: {
+      requiresAuth: false
+    }
   }
 ];
 
