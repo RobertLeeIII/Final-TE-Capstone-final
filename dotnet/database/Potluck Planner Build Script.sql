@@ -14,9 +14,6 @@ GO
 USE potluck_planner
 GO
 
-
-
-
 CREATE TABLE users (
     user_id INT IDENTITY(1,1) PRIMARY KEY,
 	username NVARCHAR(50) NOT NULL UNIQUE,
@@ -147,10 +144,16 @@ CREATE TABLE dish_rating (
 
 CREATE TABLE dish_course (
 	dish_id INT FOREIGN KEY references dishes(dish_id),
-	course_id INT FOREIGN KEY references courses(course_id)
+	course_id INT FOREIGN KEY references courses(course_id),
+	PRIMARY KEY (dish_id, course_id)
 );
 
-
+CREATE TABLE potluck_course (
+	potluck_id INT FOREIGN KEY references potlucks(potluck_id),
+	course_id INT FOREIGN KEY references courses(course_id),
+	how_many INT NOT NULL, 
+	PRIMARY KEY (potluck_id, course_id)
+);
 
 --populate default data
 INSERT INTO users (username, password_hash, salt, user_role) 
@@ -172,7 +175,6 @@ VALUES ('host'),('creator'),('guest');
 INSERT INTO diets (diet_name)
 VALUES ('Gluten Free'), ('Vegetarian'), ('Vegan'), ('Tree Nut Allergy'), ('Seafood Allergy'), ('Nut Allergy'), 
 	   ('Lactose Intolerant'), ('Soy Allergy');
-GO
 
 
 
