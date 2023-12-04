@@ -35,7 +35,8 @@ CREATE TABLE potlucks (
     time DATETIME NOT NULL,
     theme NVARCHAR(100) NULL,
     is_recurring BIT DEFAULT 0,
-    repeat_interval INT NULL
+    repeat_interval INT NULL,
+	status NVARCHAR(20) NOT NULL DEFAULT 'active'
 );
 
 CREATE TABLE dishes (
