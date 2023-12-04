@@ -116,6 +116,7 @@ namespace Capstone.DAO
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     // TODO: Gonna need more parameterized queries. Need to consult about NewPotluckDTO model
+                    cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
                     cmd.Parameters.AddWithValue("@potluck_name", incomingPotluck.Name);
                     cmd.Parameters.AddWithValue("@summary", incomingPotluck.Summary);
                     cmd.Parameters.AddWithValue("@time", incomingPotluck.Time);
