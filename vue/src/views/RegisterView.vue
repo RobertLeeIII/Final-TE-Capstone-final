@@ -1,4 +1,14 @@
 <template>
+  <section class="hero is-success">
+    <div class="hero-body">
+      <p class="title">
+        Potluck planner
+      </p>
+      <p class="subtitle">
+        Register User
+      </p>
+    </div>
+  </section>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
       <h1>Register User</h1>
@@ -27,11 +37,11 @@
           v-model="user.confirmPassword" required />
         <span class="icon is-left">
           <i class="fas fa-lock"></i>
-        </span> 
+        </span>
       </div>
       <div class="form-input-group">
         <label for="dietRes">Dietary Restrictions?</label>
-        <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes"  />
+        <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" />
       </div>
       <br>
       <button class="button is-primary" type="submit">Create Account</button>
@@ -98,4 +108,5 @@ export default {
 
 label {
   margin-right: 0.5rem;
-}</style>
+}
+</style>
