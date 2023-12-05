@@ -22,7 +22,7 @@ CREATE TABLE users (
 	password_hash varchar(200) NOT NULL,
 	salt varchar(200) NOT NULL,
 	user_role varchar(50) NOT NULL,
-	diet_rest bit NOT NULL DEFAULT 0
+	diet_rest bit NULL DEFAULT 0
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 )
 
