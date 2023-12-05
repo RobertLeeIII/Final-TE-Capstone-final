@@ -23,7 +23,7 @@ namespace Capstone.Controllers
             this.potluckDao = potluckDao;
         }
 
-        [HttpGet("/potlucks/{id}")]  //Endpoint might change
+        [HttpGet("/users/potlucks/{id}")]  //Endpoint might change
         public ActionResult<Potluck> GetPotluckById(int potluckId)
         {
             try
@@ -41,7 +41,7 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost("/users/{userId}/potlucks?action=create")]
+        [HttpPost("/users/{userId}/potlucks")]
         public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck, int userId)
         {
             Potluck addedPotluck = potluckDao.CreatePotluck(newPotluck);

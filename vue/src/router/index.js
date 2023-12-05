@@ -54,7 +54,7 @@ const routes = [
     }
   },
   {
-    path: "/users/:id",
+    path: "/:userId",
     name: "user-view",
     component: UserDetailView,
     meta: {
@@ -62,7 +62,7 @@ const routes = [
     }
   },
   {
-    path: "/users/:id/potlucks",
+    path: "/:userId/potlucks",
     name: "potluck-list",
     component: PotluckListView,
     meta: {
@@ -70,7 +70,7 @@ const routes = [
     }
   },
   {
-    path: "/potlucks/:id",
+    path: "/:userId/potlucks/:potluckId",
     name: "potluck-details",
     component: PotluckDetailsView,
     meta: {
@@ -78,7 +78,7 @@ const routes = [
     }
   },
   {
-    path: "/potlucks?action=create",
+    path: "/:userId/potlucksActioncreate",
     name: "potluck-create",
     component: CreatePotluckView,
     meta: {
@@ -86,7 +86,7 @@ const routes = [
     }
   },
   {
-    path: "/potlucks?action=update",
+    path: "/:userId/potlucks/:potluckIdActionupdate",
     name: "potluck-update",
     component: UpdatePotluckView,
     meta: {
