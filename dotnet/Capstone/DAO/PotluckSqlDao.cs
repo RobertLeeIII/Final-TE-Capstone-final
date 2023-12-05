@@ -165,7 +165,7 @@ namespace Capstone.DAO
             catch (SqlException ex)
             {
 
-                throw new DaoException("A SQL error occurred", ex;
+                throw new DaoException("A SQL error occurred", ex);
             }
             return potlucks;
         }
