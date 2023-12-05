@@ -145,12 +145,6 @@ CREATE TABLE dish_rating (
 	PRIMARY KEY (dish_id, rater)
 );
 
-CREATE TABLE dish_course (
-	dish_id INT FOREIGN KEY references dishes(dish_id),
-	course_id INT FOREIGN KEY references courses(course_id),
-	PRIMARY KEY (dish_id, course_id)
-);
-
 CREATE TABLE potluck_course (
 	potluck_id INT FOREIGN KEY references potlucks(potluck_id),
 	course_id INT FOREIGN KEY references courses(course_id),
