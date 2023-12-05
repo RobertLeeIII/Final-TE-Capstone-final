@@ -9,6 +9,7 @@ namespace Capstone.DAO
         public Potluck GetPotluckById(int potluckId);
         public Potluck GetPotluckByName(int potluckName);
         public IList<Potluck> GetPotlucksByUserId(int userId);
+        public IList<Potluck> getPotluckByHostID(int hostId);
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck);
         public Potluck UpdatePotluck(UpdatePotluckDTO updatedPotluck, int potluckId);
         public int DeletePotluck(int potluckId);
