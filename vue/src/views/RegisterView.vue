@@ -1,23 +1,50 @@
 <template>
+  <section class="hero is-success">
+    <div class="hero-body">
+      <p class="title">
+        Potluck planner
+      </p>
+      <p class="subtitle">
+        Register User
+      </p>
+    </div>
+  </section>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
-      <h1>Create Account</h1>
+      <h1>Register User</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
+        <input class="input is-rounded" type="text" id="username" placeholder="Username" v-model="user.username" required
+          autofocus />
+      </div>
+      <div class="form-input-group control has-icons-left has-icons-right">
+        <input class="input is-rounded" type="email" placeholder="Email" v-model="user.email" required>
+        <span class="icon is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </div>
+      <div class="form-input-group control has-icons-left">
+        <input class="input is-rounded" type="password" id="password" placeholder="Password" v-model="user.password"
+          required />
+        <span class="icon is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </div>
+      <div class="form-input-group control has-icons-left">
+        <input class="input is-rounded" type="password" id="confirmPassword" placeholder="Confirm Password"
+          v-model="user.confirmPassword" required />
+        <span class="icon is-left">
+          <i class="fas fa-lock"></i>
+        </span>
       </div>
       <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
+        <label for="dietRes">Dietary Restrictions?</label>
+        <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" />
       </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <button type="submit">Create Account</button>
+      <br>
+      <button class="button is-primary" type="submit">Create Account</button>
       <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
@@ -31,9 +58,11 @@ export default {
     return {
       user: {
         username: '',
+        email: '',
         password: '',
         confirmPassword: '',
         role: 'user',
+        dietRes: false,
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
@@ -76,6 +105,7 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }
