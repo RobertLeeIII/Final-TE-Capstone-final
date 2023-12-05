@@ -64,7 +64,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read()) 
+                    if (reader.Read())
                     {
                         user = MapRowToUser(reader);
                     }
@@ -107,7 +107,39 @@ namespace Capstone.DAO
 
             return user;
         }
+        public IList<User> getUsersByPotluckID(int potluckId)
+        {
+            IList<User> potLuckUsers = new List<User>();
 
+            string sql = "SELECT * FROM users " +
+                "potluck.user AS pu ON pu.user_id = users.user.id " +
+                "JOIN potlucks on potlucks.id = pu.potluck_id WHERE potlucks.potluck_id = @potluck_id;";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        User potLuckUser = MapRowToUser(reader);
+                        potLuckUsers.Add(potLuckUser);
+                    }
+
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw new DaoException("SQL Exception Occurred", ex);
+            }
+            return potLuckUsers;
+
+        }
         public User CreateUser(string email, string username, string password, string role, bool dietaryRestriction)
         {
             User newUser = null;
@@ -135,7 +167,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@diet_rest", dietaryRestriction);
 
                     newUserId = Convert.ToInt32(cmd.ExecuteScalar());
-                    
+
                 }
                 newUser = GetUserById(newUserId);
             }
@@ -160,4 +192,7 @@ namespace Capstone.DAO
             return user;
         }
     }
+
 }
+
+

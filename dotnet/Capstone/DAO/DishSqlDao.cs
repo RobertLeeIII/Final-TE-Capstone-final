@@ -136,7 +136,6 @@ namespace Capstone.DAO
             }
             return dish;
         }
-
         private Dish MapRowToDish(SqlDataReader reader)
         {
             Dish dish = new Dish();
