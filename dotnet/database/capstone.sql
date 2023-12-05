@@ -17,10 +17,12 @@ GO
 --create tables
 CREATE TABLE users (
 	user_id int IDENTITY(1,1) NOT NULL,
-	username varchar(50) NOT NULL,
+	email nvarchar(100) NULL,
+	username nvarchar(50) NOT NULL,
 	password_hash varchar(200) NOT NULL,
 	salt varchar(200) NOT NULL,
-	user_role varchar(50) NOT NULL
+	user_role varchar(50) NOT NULL,
+	diet_rest bit NOT NULL DEFAULT 0
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 )
 

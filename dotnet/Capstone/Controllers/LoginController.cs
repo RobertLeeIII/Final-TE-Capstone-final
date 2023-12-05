@@ -81,7 +81,7 @@ namespace Capstone.Controllers
             User newUser;
             try
             {
-                newUser = userDao.CreateUser(userParam.Username, userParam.Password, userParam.Role);
+                newUser = userDao.CreateUser(userParam.Email, userParam.Username, userParam.Password, userParam.Role, userParam.DietaryRestriction);
             }
             catch (DaoException)
             {
@@ -91,7 +91,7 @@ namespace Capstone.Controllers
             if (newUser != null)
             {
                 // Create a ReturnUser object to return to the client
-                ReturnUser returnUser = new ReturnUser() { UserId = newUser.UserId, Username = newUser.Username, Role = newUser.Role };
+                ReturnUser returnUser = new ReturnUser() { UserId = newUser.UserId, Username = newUser.Username, Role = newUser.Role};
 
                 result = Created("/login", returnUser);
             }
