@@ -159,20 +159,20 @@ CREATE TABLE potluck_course (
 );
 
 --populate default data
+INSERT INTO users (username, email, password_hash, salt, user_role) 
+VALUES ('user', '', 'Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
+VALUES ('admin', '', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
+VALUES ('ted', '', 'tH8BvtmnyMcS5Q9Oxlyiup5IqUQ=', 'yA4lHw0idGs=','admin');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('ted','tH8BvtmnyMcS5Q9Oxlyiup5IqUQ=', 'yA4lHw0idGs=','admin');
+VALUES ('kelsey', '', 'IscjyGodaIc9xNhASbt+fSnxgtI=', 'XdiczNYbBno=','admin');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('kelsey','IscjyGodaIc9xNhASbt+fSnxgtI=', 'XdiczNYbBno=','admin');
+VALUES ('robert', '', 'pfA+TsxwG1V0u7AE7Tqagl1fT1A=', '4L75U8vaKT0=','admin');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('robert','pfA+TsxwG1V0u7AE7Tqagl1fT1A=', '4L75U8vaKT0=','admin');
+VALUES ('kyle', '', 'Fjhd4G3BwUgJ4SYdtL1oWk8eFPo=', 'xWO2yPBd7Sg=','admin');
 INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('kyle','Fjhd4G3BwUgJ4SYdtL1oWk8eFPo=', 'xWO2yPBd7Sg=','user');
-INSERT INTO users (username, password_hash, salt, user_role) 
-VALUES ('matt','XrITqHZWKG4kOj1U95ema/cbb20=', '8Vsd/EnDrOM=','user');
+VALUES ('matt', '', 'XrITqHZWKG4kOj1U95ema/cbb20=', '8Vsd/EnDrOM=','admin');
 INSERT INTO titles (title_name)
 VALUES ('host'),('guest');
 INSERT INTO diets (diet_name)

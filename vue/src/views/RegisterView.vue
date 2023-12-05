@@ -52,7 +52,7 @@ export default {
         password: '',
         confirmPassword: '',
         role: 'user',
-        dietRes: '',
+        dietRes: false,
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
