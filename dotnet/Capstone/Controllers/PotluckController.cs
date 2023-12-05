@@ -3,7 +3,8 @@ using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Capstone.Controllers
 {
@@ -21,6 +22,31 @@ namespace Capstone.Controllers
             this.userDao = userDao;
             this.dishDao = dishDao;
             this.potluckDao = potluckDao;
+        }
+        // TODO: Change route when ready
+        [HttpGet("/users/{userId}")]
+        public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
+        {
+            try
+            {
+                List<Potluck> output = new List<Potluck>(potluckDao.GetPotlucksByUserId(userId));
+                //foreach (Potluck potluck in output)
+                //{
+                //    if (potluck.Time > DateTime.Now)
+                //    {
+                //        potluck.Status = "Upcoming";
+                //    }
+                //    else
+                //    {
+                //        potluck.Status = "Past";
+                //    }
+                //}
+                return Ok(output);
+            }
+            catch (Exception)
+            {
+                throw new StatusCode(500);
+            }
         }
 
         [HttpGet("/users/potlucks/{id}")]  //Endpoint might change
@@ -63,7 +89,7 @@ namespace Capstone.Controllers
                 }
                 if (updatingPotluck.HostId != userId)
                 {
-                    return Unauthorized();
+                    return StatusCode(403);
                 }
 
                 updatingPotluck = potluckDao.UpdatePotluck(editedPotluck, potluckId);
@@ -75,6 +101,33 @@ namespace Capstone.Controllers
                 throw new Exception();
             }
 
+        }
+
+        [Serializable]
+        private class StatusCode : Exception
+        {
+            private int v;
+
+            public StatusCode()
+            {
+            }
+
+            public StatusCode(int v)
+            {
+                this.v = v;
+            }
+
+            public StatusCode(string message) : base(message)
+            {
+            }
+
+            public StatusCode(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected StatusCode(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
     }
 }
