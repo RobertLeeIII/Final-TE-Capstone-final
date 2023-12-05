@@ -7,7 +7,7 @@ namespace Capstone.DAO
     {
         public IList<Potluck> GetPotlucks();
         public Potluck GetPotluckById(int potluckId);
-        public Potluck GetPotluckByName(int potluckName);
+        public Potluck GetPotluckByName(string potluckName);
         public IList<Potluck> GetPotlucksByUserId(int userId);
         public IList<Potluck> getPotluckByHostID(int hostId);
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck);

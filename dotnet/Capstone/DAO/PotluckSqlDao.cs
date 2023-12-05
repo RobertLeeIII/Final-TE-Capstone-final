@@ -73,7 +73,7 @@ namespace Capstone.DAO
             }
             return potluck;
         }
-        public Potluck GetPotluckByName(int potluckName)
+        public Potluck GetPotluckByName(string potluckName)
         {
             Potluck potluck = null;
             string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
@@ -152,7 +152,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@potluck_id", hostId);
+                    cmd.Parameters.AddWithValue("@host_id", hostId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -265,6 +265,7 @@ namespace Capstone.DAO
                 "WHERE potluck_user.user_id = @user_id " +
                 "AND potluck_user.potluck_id = @potluck_id;";
             // TODO: figure out second SQL statement that lets us remove a dish that the removed user was bringing
+            string sql2 = "DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id IN (SELECT dish_id from dishes WHERE dish_id IN (select user_id FROM user_dish WHERE user_id = @user_id));"
 
             try
             {
