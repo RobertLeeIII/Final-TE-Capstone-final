@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Capstone.Controllers
 {
@@ -99,34 +98,6 @@ namespace Capstone.Controllers
             catch (Exception)
             {
                 throw new Exception();
-            }
-
-        }
-
-        [Serializable]
-        private class StatusCode : Exception
-        {
-            private int v;
-
-            public StatusCode()
-            {
-            }
-
-            public StatusCode(int v)
-            {
-                this.v = v;
-            }
-
-            public StatusCode(string message) : base(message)
-            {
-            }
-
-            public StatusCode(string message, Exception innerException) : base(message, innerException)
-            {
-            }
-
-            protected StatusCode(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
             }
         }
     }
