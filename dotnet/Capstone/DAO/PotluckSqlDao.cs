@@ -109,11 +109,7 @@ namespace Capstone.DAO
             string sql = "SELECT potluck.potluck_id, host_id, potluck_name, summary, location, " +
                 "time, theme, is_recurring, repeat_interval " +
                 "FROM potlucks " +
-<<<<<<< HEAD
                 "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id " +
-=======
-                "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id" +
->>>>>>> 24aba8c8420b9881b318e93670ffdc685662b162
                 "JOIN users AS u ON u.user_id = pu.user_id " +
                 "WHERE u.user_id = @user_id;";
 
