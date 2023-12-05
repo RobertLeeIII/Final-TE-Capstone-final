@@ -15,6 +15,7 @@ namespace Capstone.Models
         public int RepeatInterval { get; set; }
         public string Status { get; set; }
     }
+    //TODO: Revisit this model
     public class NewPotluckDTO
     {
         public int HostId { get; set; }
