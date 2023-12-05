@@ -42,25 +42,25 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost("/users/{userId}/potlucks?action=create")]
-        public ActionResult<Potluck> CreateNewPotluck(newPotluckDto newPotluck, int userId)
-        {
-            Potluck addedPotluck = potluckDao.CreateNewPotluck(newPotluck);
-            //Check the date, make sure it's after today
+        //[HttpPost("/users/{userId}/potlucks?action=create")]
+        //public ActionResult<Potluck> CreateNewPotluck(newPotluckDto newPotluck, int userId)
+        //{
+        //    Potluck addedPotluck = potluckDao.CreateNewPotluck(newPotluck);
+        //    //Check the date, make sure it's after today
 
 
-            return Created($"/users/{addedPotluck.hostId}/transfers/{addedPotluck.potluckId}", addedPotluck);
-        }
+        //    return Created($"/users/{addedPotluck.hostId}/transfers/{addedPotluck.potluckId}", addedPotluck);
+        //}
 
-        [HttpPut("/users/{userId}/potlucks/{potluckId}")]
-        public ActionResult<Potluck> UpdatePotluck(PotluckStatusUpdateDto potluckStatusUpdateDto, int userId, int potluckId)
-        {
-            Potluck updatingPotluck = potluckDao.GetPotluckById(potluckId);
-            if(updatingPotluck == null)
-            {
-                return NotFound();
-            }
-            //Flip the potluck status
-        }
+        //[HttpPut("/users/{userId}/potlucks/{potluckId}")]
+        //public ActionResult<Potluck> UpdatePotluck(PotluckStatusUpdateDto potluckStatusUpdateDto, int userId, int potluckId)
+        //{
+        //    Potluck updatingPotluck = potluckDao.GetPotluckById(potluckId);
+        //    if(updatingPotluck == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //Flip the potluck status
+        //}
     }
 }
