@@ -28,7 +28,7 @@
       </div>
       <div class="form-input-group control has-icons-left">
         <input class="input is-rounded  " type="password" id="password" placeholder="Password"
-          v-model="user.confirmPassword" required />
+          v-model="user.password" required />
         <span class="icon is-left">
           <i class="fas fa-lock"></i>
         </span>

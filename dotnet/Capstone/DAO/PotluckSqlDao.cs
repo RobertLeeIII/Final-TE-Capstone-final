@@ -106,11 +106,12 @@ namespace Capstone.DAO
         public IList<Potluck> GetPotlucksByUserId(int userId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
-            string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
+            string sql = "SELECT potluck.potluck_id, host_id, potluck_name, summary, location, " +
                 "time, theme, is_recurring, repeat_interval " +
                 "FROM potlucks " +
-                "JOIN users AS u ON u.user_id = potlucks.host_id " +
-                "WHERE user_id = @user_id;";
+                "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id"
+                "JOIN users AS u ON u.user_id = pu.user_id " +
+                "WHERE u.user_id = @user_id;";
 
             try
             {
@@ -131,7 +132,40 @@ namespace Capstone.DAO
             }
             catch (SqlException ex)
             {
-                throw new DaoException("A SQL error occured", ex);
+                throw new DaoException("A SQL error occurred", ex);
+            }
+            return potlucks;
+        }
+        public IList<Potluck> getPotluckByHostID(int hostId)
+        {
+            IList<Potluck> potlucks = new List<Potluck>();
+            string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
+                "time, theme, is_recurring, repeat_interval " +
+                "FROM potlucks " +
+                "JOIN users ON user_id = host_id " +
+                "WHERE host_id = @host_id;";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@potluck_id", hostId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Potluck potluck = MapRowToPotluck(reader);
+                        potlucks.Add(potluck);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw new DaoException("A SQL error occurred", ex;
             }
             return potlucks;
         }

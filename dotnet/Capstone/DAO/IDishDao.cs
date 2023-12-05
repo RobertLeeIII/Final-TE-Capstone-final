@@ -10,5 +10,6 @@ namespace Capstone.DAO
         public Dish GetDishByUserId(int userId);
         public Dish GetDishByPotluckId(int potluckId);
 
+
     }
 }
