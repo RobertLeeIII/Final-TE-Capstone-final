@@ -27,11 +27,11 @@
           v-model="user.confirmPassword" required />
         <span class="icon is-left">
           <i class="fas fa-lock"></i>
-        </span>t 
+        </span> 
       </div>
       <div class="form-input-group">
         <label for="dietRes">Dietary Restrictions?</label>
-        <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" required />
+        <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes"  />
       </div>
       <br>
       <button class="button is-primary" type="submit">Create Account</button>
