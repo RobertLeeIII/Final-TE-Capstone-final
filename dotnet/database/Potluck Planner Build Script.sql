@@ -19,11 +19,12 @@ CREATE TABLE users (
 	username NVARCHAR(50) NOT NULL UNIQUE,
     first_name NVARCHAR(100) NULL,
     last_name NVARCHAR(100) NULL,
-    email NVARCHAR(100) NULL,
+    email NVARCHAR(100) NOT NULL,
     password_hash NVARCHAR(100) NOT NULL,
     salt NVARCHAR(50) NOT NULL,
     user_role NVARCHAR(20) NOT NULL DEFAULT 'user',
-	user_summary NVARCHAR(MAX) NULL
+	user_summary NVARCHAR(MAX) NULL,
+	diet_rest BIT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE potlucks (
