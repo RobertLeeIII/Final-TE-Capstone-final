@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Capstone.DAO;
+using Capstone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using Capstone.DAO;
-using Capstone.Models;
-
+using System.Runtime.Serialization;
 
 namespace Capstone.Controllers
 {
@@ -23,14 +23,39 @@ namespace Capstone.Controllers
             this.dishDao = dishDao;
             this.potluckDao = potluckDao;
         }
+        // TODO: Change route when ready
+        [HttpGet("/users/{userId}")]
+        public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
+        {
+            try
+            {
+                List<Potluck> output = new List<Potluck>(potluckDao.GetPotlucksByUserId(userId));
+                //foreach (Potluck potluck in output)
+                //{
+                //    if (potluck.Time > DateTime.Now)
+                //    {
+                //        potluck.Status = "Upcoming";
+                //    }
+                //    else
+                //    {
+                //        potluck.Status = "Past";
+                //    }
+                //}
+                return Ok(output);
+            }
+            catch (Exception)
+            {
+                throw new StatusCode(500);
+            }
+        }
 
-        [HttpGet("/potlucks/{id}")]  //Endpoint might change
+        [HttpGet("/users/potlucks/{id}")]  //Endpoint might change
         public ActionResult<Potluck> GetPotluckById(int potluckId)
         {
             try
             {
                 Potluck output = potluckDao.GetPotluckById(potluckId);
-                if(output == null)
+                if (output == null)
                 {
                     return NotFound();
                 }
@@ -42,25 +67,67 @@ namespace Capstone.Controllers
             }
         }
 
-        //[HttpPost("/users/{userId}/potlucks?action=create")]
-        //public ActionResult<Potluck> CreateNewPotluck(newPotluckDto newPotluck, int userId)
-        //{
-        //    Potluck addedPotluck = potluckDao.CreateNewPotluck(newPotluck);
-        //    //Check the date, make sure it's after today
+        [HttpPost("/users/{userId}/potlucks")]
+        public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck, int userId)
+        {
+            Potluck addedPotluck = potluckDao.CreatePotluck(newPotluck);
+            //Check the date, make sure it's after today
 
 
-        //    return Created($"/users/{addedPotluck.hostId}/transfers/{addedPotluck.potluckId}", addedPotluck);
-        //}
+            return Created($"/users/{addedPotluck.HostId}/potlucks/{addedPotluck.PotluckId}", addedPotluck);
+        }
 
-        //[HttpPut("/users/{userId}/potlucks/{potluckId}")]
-        //public ActionResult<Potluck> UpdatePotluck(PotluckStatusUpdateDto potluckStatusUpdateDto, int userId, int potluckId)
-        //{
-        //    Potluck updatingPotluck = potluckDao.GetPotluckById(potluckId);
-        //    if(updatingPotluck == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //Flip the potluck status
-        //}
+        [HttpPut("/users/{userId}/potlucks/{potluckId}")]
+        public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int userId, int potluckId)
+        {
+            try
+            {
+                Potluck updatingPotluck = potluckDao.GetPotluckById(potluckId);
+                if (updatingPotluck == null)
+                {
+                    return NotFound();
+                }
+                if (updatingPotluck.HostId != userId)
+                {
+                    return StatusCode(403);
+                }
+
+                updatingPotluck = potluckDao.UpdatePotluck(editedPotluck, potluckId);
+                return Ok(updatingPotluck);
+                //Flip the potluck status
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
+        }
+
+        [Serializable]
+        private class StatusCode : Exception
+        {
+            private int v;
+
+            public StatusCode()
+            {
+            }
+
+            public StatusCode(int v)
+            {
+                this.v = v;
+            }
+
+            public StatusCode(string message) : base(message)
+            {
+            }
+
+            public StatusCode(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected StatusCode(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
+        }
     }
 }
