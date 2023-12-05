@@ -23,7 +23,7 @@ namespace Capstone.Controllers
             this.potluckDao = potluckDao;
         }
         // TODO: Change route when ready
-        [HttpGet("/users/{userId}")]
+        [HttpGet("/{userId}")]
         public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
         {
             try
