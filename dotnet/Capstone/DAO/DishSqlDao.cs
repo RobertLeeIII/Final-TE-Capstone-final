@@ -16,7 +16,7 @@ namespace Capstone.DAO
         public IList<Dish> GetDishes()
         {
             IList<Dish> dishes = new List<Dish>();
-            string sql = "SELECT dish_id, dish_name, recipe, rating FROM dishes;";
+            string sql = "SELECT dish_id, dish_name, recipe FROM dishes;";
 
             try
             {
@@ -43,7 +43,7 @@ namespace Capstone.DAO
         public Dish GetDishById(int dishId)
         {
             Dish dish = null;
-            string sql = "SELECT dish_id, dish_name, recipe, rating " +
+            string sql = "SELECT dish_id, dish_name, recipe " +
                 "FROM dishes " +
                 "WHERE dish_id = @dish_id;";
 
@@ -75,7 +75,7 @@ namespace Capstone.DAO
             Dish dish = null;
             // TODO: I think this SQL statement will work, but when I execute it I'm not getting what I expect
             // May need to add UserId as a property of Dish?
-            string sql = "SELECT dishes.dish_id, dish_name, recipe, rating " +
+            string sql = "SELECT dishes.dish_id, dish_name, recipe " +
                 "FROM dishes " +
                 "JOIN user_dish AS ud ON ud.dish_id = dishes.dish_id " +
                 "JOIN users AS u ON u.user_id = ud.user_id " +
@@ -108,7 +108,7 @@ namespace Capstone.DAO
             Dish dish = null;
             // TODO: Again, I believe this SQL statement will work,
             // but some connection is missing when I try to execute it in the DB
-            string sql = "SELECT dishes.dish_id, dish_name, recipe, rating " +
+            string sql = "SELECT dishes.dish_id, dish_name, recipe " +
                 "FROM dishes " +
                 "JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id " +
                 "JOIN potlucks AS p ON p.potluck_id = pd.potluck_id " +
@@ -143,7 +143,6 @@ namespace Capstone.DAO
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
-            dish.Rating = Convert.ToDouble(reader["rating"]);
 
             return dish;
         }
