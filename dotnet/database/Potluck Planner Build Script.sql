@@ -35,15 +35,21 @@ CREATE TABLE potlucks (
     time DATETIME NOT NULL,
     theme NVARCHAR(100) NULL,
     is_recurring BIT DEFAULT 0,
-    repeat_interval INT NULL,
+    repeat_interval INT NOT NULL DEFAULT 0,
 	status NVARCHAR(20) NOT NULL DEFAULT 'active'
+);
+
+CREATE TABLE courses (
+	course_id INT IDENTITY(1,1) PRIMARY KEY,
+	course_name NVARCHAR(25) NOT NULL
 );
 
 CREATE TABLE dishes (
     dish_id INT NOT NULL IDENTITY(1501,1) PRIMARY KEY,
     dish_name NVARCHAR(50) NOT NULL,
     recipe NVARCHAR(MAX) NOT NULL,
-	rating numeric(2,1) NULL
+	rating numeric(2,1) NULL,
+	course_id int NOT NULL FOREIGN KEY references courses(course_id)
 );
 
 CREATE TABLE ingredients (
@@ -59,11 +65,6 @@ CREATE TABLE diets (
 CREATE TABLE titles (
     title_id INT NOT NULL IDENTITY(401,1) PRIMARY KEY,
     title_name NVARCHAR(20) NOT NULL
-);
-
-CREATE TABLE courses (
-	course_id INT IDENTITY(1,1) PRIMARY KEY,
-	course_name NVARCHAR(25) NOT NULL
 );
 
 CREATE TABLE user_title (
@@ -172,7 +173,7 @@ VALUES ('kyle','Fjhd4G3BwUgJ4SYdtL1oWk8eFPo=', 'xWO2yPBd7Sg=','user');
 INSERT INTO users (username, password_hash, salt, user_role) 
 VALUES ('matt','XrITqHZWKG4kOj1U95ema/cbb20=', '8Vsd/EnDrOM=','user');
 INSERT INTO titles (title_name)
-VALUES ('host'),('creator'),('guest');
+VALUES ('host'),('guest');
 INSERT INTO diets (diet_name)
 VALUES ('Gluten Free'), ('Vegetarian'), ('Vegan'), ('Tree Nut Allergy'), ('Seafood Allergy'), ('Nut Allergy'), 
 	   ('Lactose Intolerant'), ('Soy Allergy');
