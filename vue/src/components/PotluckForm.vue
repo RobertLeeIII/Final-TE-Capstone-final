@@ -1,45 +1,26 @@
 <template>
-    <form v-on:submit.prevent="submitForm" class="potluck-form">
+    <form>
         <label for="potluck-name">Name</label>
-        <input type="text" name="Name" id="potluck-name" v-model="newPotluck.name">
+        <input type="text" name="Name" id="potluck-name">
 
         <label for="summary">Summary</label>
-        <input type="text" name="Summary" id="summary" v-model="newPotluck.summary">
+        <input type="text" name="Summary" id="summary">
 
         <label for="location">Location</label>
-        <input type="text" name="location" id="location" v-model="newPotluck.location">
+        <input type="text" name="location" id="location">
 
-        <label for="time">Date</label>
-        <input type="datetime-local" name="time" id="time" v-model="newPotluck.date">
+        <label for="time">When</label>
+        <input type="datetime-local" name="time" id="time">
 
         <label for="potluck-theme">Theme</label>
-        <select id="potluck-theme" v-model="newPotluck.theme">
-            <option>None</option>
-            <option>Spring</option>
-            <option>Summer</option>
-            <option>Fall</option>
-            <option>Winter</option>
-        </select>
-        <button type="submit">Submit</button>
+        <input type="text" name="Theme" id="potluck-theme">
+
 
     </form>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-        newPotluck: {
-            name: '',
-            summary: '',
-            location: '',
-            date: '',
-            theme: 'None'
-        }
-    }
-    }
-    
-}
 </script>
 
-<style></style>
+<style>
+</style>
