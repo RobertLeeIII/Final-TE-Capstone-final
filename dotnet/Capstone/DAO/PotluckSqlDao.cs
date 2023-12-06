@@ -172,9 +172,9 @@ namespace Capstone.DAO
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck)
         {
             Potluck newPotluck = null;
-            string sql = "INSERT INTO potlucks (host_id, potluck_name, location, time) " +
+            string sql = "INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) " +
                 "OUTPUT INSERTED.potluck_id " +
-                "VALUES (@host_id, @potluck_name, @location, @time);";
+                "VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
 
             int newPotluckId = 0;
             try
@@ -186,8 +186,13 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
                     cmd.Parameters.AddWithValue("@potluck_name", incomingPotluck.Name);
+                    cmd.Parameters.AddWithValue("@summary", incomingPotluck.Summary);
                     cmd.Parameters.AddWithValue("@location", incomingPotluck.Location);
                     cmd.Parameters.AddWithValue("@time", incomingPotluck.Time);
+                    cmd.Parameters.AddWithValue("@theme", incomingPotluck.Theme);
+                    cmd.Parameters.AddWithValue("@isRecurring", incomingPotluck.isRecurring);
+                    cmd.Parameters.AddWithValue("@repeatInterval", incomingPotluck.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@status", incomingPotluck.Status);
 
                     newPotluckId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
