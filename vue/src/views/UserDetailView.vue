@@ -1,8 +1,6 @@
 <template>
   <div>
     <potluck class="potluck" v-for="potluck in potlucks" :Potluck="potluck" :key="potluck.potluckId"></potluck>
-
-
     <div class="card-container">
       <div v-for="potluck in potlucks" :key="potluck.hostId" class="card">
         <div class="card-image">
