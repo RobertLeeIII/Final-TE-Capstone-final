@@ -106,10 +106,10 @@ namespace Capstone.DAO
         public IList<Potluck> GetPotlucksByUserId(int userId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
-            string sql = "SELECT potluck.potluck_id, host_id, potluck_name, summary, location, " +
-                "time, theme, is_recurring, repeat_interval " +
+            string sql = "SELECT potlucks.potluck_id, host_id, potluck_name, summary, location, " +
+                "time, theme, is_recurring, repeat_interval, potlucks.status " +
                 "FROM potlucks " +
-                "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id" +
+                "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id " +
                 "JOIN users AS u ON u.user_id = pu.user_id " +
                 "WHERE u.user_id = @user_id;";
 

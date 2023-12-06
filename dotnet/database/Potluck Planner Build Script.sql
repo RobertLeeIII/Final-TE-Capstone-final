@@ -2,16 +2,16 @@ USE master
 GO
 
 --drop database if it exists
-IF DB_ID('potluck_planner') IS NOT NULL
+IF DB_ID('final_capstone') IS NOT NULL
 BEGIN
-	ALTER DATABASE potluck_planner SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-	DROP DATABASE potluck_planner;
+	ALTER DATABASE final_capstone SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	DROP DATABASE final_capstone;
 END
 
-CREATE DATABASE potluck_planner
+CREATE DATABASE final_capstone
 GO
 
-USE potluck_planner
+USE final_capstone
 GO
 
 CREATE TABLE users (
@@ -143,12 +143,6 @@ CREATE TABLE dish_rating (
 	rater INT FOREIGN KEY references users(user_id),
 	rating INT NOT NULL
 	PRIMARY KEY (dish_id, rater)
-);
-
-CREATE TABLE dish_course (
-	dish_id INT FOREIGN KEY references dishes(dish_id),
-	course_id INT FOREIGN KEY references courses(course_id),
-	PRIMARY KEY (dish_id, course_id)
 );
 
 CREATE TABLE potluck_course (
