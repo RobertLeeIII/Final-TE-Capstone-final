@@ -48,7 +48,7 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet("/users/potlucks/{id}")]  //Endpoint might change
+        [HttpGet("/{userId}/potlucks/{potluckId}")]  //Endpoint might change
         public ActionResult<Potluck> GetPotluckById(int potluckId)
         {
             try

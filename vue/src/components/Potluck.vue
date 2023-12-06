@@ -1,4 +1,5 @@
 <template>
+  <router-link :to="{ name: 'potluck-details', params: {userId: $store.state.user.userId, potluckId: Potluck.potluckId}}">
   <div class="potluck">
     <h2>{{ Potluck.name }}</h2>
     <p>When: {{ new Date(Potluck.time).toDateString() }}</p>
@@ -9,47 +10,19 @@
       </li>
     </ul>
   </div>
+</router-link>
 </template>
   
 <script>
-import PotluckService from '@/services/PotluckService.js'
 export default {
   data() {
     return {
-      potlucks: [],
+      //potlucks: [],
     }
   },
   props: {
     Potluck: Object,
   },
-  methods: {
-    retrieveGuests() {
-      PotluckService.showPotlucks(this.$route.params.userId)
-        .then(response => {
-          this.guests = response.data;
-        })
-        .catch(error => {
-          this.handleErrorResponse(error);
-        }
-        )
-
-    },
-    handleErrorResponse(error) {
-      if (error.response) {
-        if (error.response.status == 404) {
-          console.log("404 PROBLEM")
-        } else if (error.request) {
-          console.log("OTHER PROBLEM")
-        } else {
-          console.log("ANOTHER PROBLEM")
-
-        }
-      }
-    },
-    created() {
-      this.retrieveGuests()
-    }
-  }
 }
 </script>
   
