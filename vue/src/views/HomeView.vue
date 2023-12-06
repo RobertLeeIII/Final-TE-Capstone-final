@@ -47,12 +47,6 @@
         Cras mollis rhoncus faucibus.</p>
     </div>
   </div>
-  <p>
-    <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-  </p>
-  <p>
-    <router-link v-bind:to="{ name: 'login' }">Have an account? Login.</router-link>
-  </p>
 </template>
 
 <script>
