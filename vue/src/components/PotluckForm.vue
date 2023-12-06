@@ -9,8 +9,13 @@
         <label for="location">Location</label>
         <input type="text" name="location" id="location">
 
-        <label for="time">WHEN?</label>
+        <label for="time">When</label>
         <input type="datetime-local" name="time" id="time">
+
+        <label for="potluck-theme">Theme</label>
+        <input type="text" name="Theme" id="potluck-theme">
+
+
     </form>
 </template>
 

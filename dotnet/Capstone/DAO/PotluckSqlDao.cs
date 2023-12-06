@@ -73,7 +73,7 @@ namespace Capstone.DAO
             }
             return potluck;
         }
-        public Potluck GetPotluckByName(int potluckName)
+        public Potluck GetPotluckByName(string potluckName)
         {
             Potluck potluck = null;
             string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
@@ -152,7 +152,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@potluck_id", hostId);
+                    cmd.Parameters.AddWithValue("@host_id", hostId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -172,9 +172,9 @@ namespace Capstone.DAO
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck)
         {
             Potluck newPotluck = null;
-            string sql = "INSERT INTO potlucks (host_id, potluck_name, location, time) " +
+            string sql = "INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) " +
                 "OUTPUT INSERTED.potluck_id " +
-                "VALUES (@host_id, @potluck_name, @location, @time);";
+                "VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
 
             int newPotluckId = 0;
             try
@@ -186,8 +186,13 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
                     cmd.Parameters.AddWithValue("@potluck_name", incomingPotluck.Name);
+                    cmd.Parameters.AddWithValue("@summary", incomingPotluck.Summary);
                     cmd.Parameters.AddWithValue("@location", incomingPotluck.Location);
                     cmd.Parameters.AddWithValue("@time", incomingPotluck.Time);
+                    cmd.Parameters.AddWithValue("@theme", incomingPotluck.Theme);
+                    cmd.Parameters.AddWithValue("@isRecurring", incomingPotluck.isRecurring);
+                    cmd.Parameters.AddWithValue("@repeatInterval", incomingPotluck.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@status", incomingPotluck.Status);
 
                     newPotluckId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -265,6 +270,7 @@ namespace Capstone.DAO
                 "WHERE potluck_user.user_id = @user_id " +
                 "AND potluck_user.potluck_id = @potluck_id;";
             // TODO: figure out second SQL statement that lets us remove a dish that the removed user was bringing
+            string sql2 = "DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id IN (SELECT dish_id from dishes WHERE dish_id IN (select user_id FROM user_dish WHERE user_id = @user_id));"
 
             try
             {
