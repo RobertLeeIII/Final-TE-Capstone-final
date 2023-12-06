@@ -1,20 +1,45 @@
 <template :class="this.potluck.theme">
-<h1>This is the details view for a potluck.</h1>
-
-<p>The class is bound to the theme property
-of the potluck displayed here.</p>
-
-<p>Potluck should display list of dishes from
-users who are attending. (Loop through array of 
-attending users). Removing/uninviting a user
-removes their dishes</p>
+    <potluck-detail :Potluck="currentPotluck"></potluck-detail>
 </template>
 
 <script>
-export default{
-    
+import PotluckService from '@/services/PotluckService.js'
+import PotluckDetail from '@/components/PotluckDetail.vue'
+export default {
+    data() {
+        return {
+            currentPotluck: {}
+        }
+    },
+    components: {
+        PotluckDetail,
+    },
+    methods: {
+        retrieveSpecificPotluck() {
+            PotluckService.getPotluckById(this.$store.state.user.userId, this.$route.params.potluckId)
+                .then(response => {
+                    this.currentPotluck = response.data;
+                })
+                .catch(error => {
+                    this.handleErrorResponse(error);
+                })
+        },
+        handleErrorResponse(error) {
+            if (error.response) {
+                if (error.response.status == 404) {
+                    console.log("404 PROBLEM")
+                } else if (error.request) {
+                    console.log("OTHER PROBLEM")
+                } else {
+                    console.log("ANOTHER PROBLEM")
+                }
+            }
+        },
+    },
+    created() {
+        this.retrieveSpecificPotluck()
+    }
 }
 </script>
 
-<style>
-</style>
+<style></style>
