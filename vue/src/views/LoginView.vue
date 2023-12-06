@@ -36,8 +36,9 @@
 
       <button class="button is-primary" type="submit">Sign in</button>
       <p>
-        <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-      </p>
+        <br>
+    <router-link v-bind:to="{ name: 'register' }" class="button is-link" >Need an account? Sign up.</router-link>
+  </p>
     </form>
   </div>
 </template>

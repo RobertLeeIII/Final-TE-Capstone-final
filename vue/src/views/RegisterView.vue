@@ -45,7 +45,6 @@
       </div>
       <br>
       <button class="button is-primary" type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
 </template>
