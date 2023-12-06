@@ -1,8 +1,10 @@
 <template>
   <div>
-    <potluck class="potluck" v-for="potluck in potlucks" :Potluck="potluck" :key="potluck.potluckId"></potluck>
     <div class="card-container">
-      <div v-for="potluck in potlucks" :key="potluck.hostId" class="card">
+      <potluck class="potluck" v-for="potluck in potlucks" :Potluck="potluck" :key="potluck.potluckId"></potluck>
+    </div>
+    <!-- <div class="card-container"> -->
+    <!-- <div v-for="potluck in potlucks" :key="potluck.hostId" class="card">
         <div class="card-image">
           <figure class="image is-4by3">
             <img src="/public/potluck.jpg" alt="Potluck Image">
@@ -27,8 +29,8 @@
             <time :datetime="potluck.time">{{ formatDate(potluck.time) }}</time>
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     <p><br></p>
     <button class="button is-primary">
       <router-link :to="{ name: 'potluck-create' }"> HOST A POTLUCK </router-link>
@@ -38,12 +40,16 @@
 
 <script>
 import PotluckService from '@/services/PotluckService.js';
+import Potluck from '@/components/Potluck.vue'
 
 export default {
   data() {
     return {
       potlucks: [],
     };
+  },
+  components: {
+    Potluck
   },
   methods: {
     getUserPotlucks(userId) {
@@ -80,7 +86,7 @@ export default {
 };
 </script>
 
-<style>
+<!-- <style>
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -90,4 +96,4 @@ export default {
 .card {
   width: 300px;
 }
-</style>
+</style> -->
