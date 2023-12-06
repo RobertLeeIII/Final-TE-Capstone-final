@@ -136,12 +136,38 @@ namespace Capstone.DAO
             }
             return dish;
         }
+        public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
+        {
+            Dish newDish = null;
+
+            //insert into dishes
+            //insert into dish_user.
+            //insert into dish_potluck.
+
+
+
+            return newDish;
+        }
+        public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
+        {
+
+            //UPDATE dishes SET col = value, col2 = value WHERE dish_id = @dishId
+
+            Dish modifiedDish = GetDishById(dishId);
+            if(modifiedDish == null)
+            {
+                
+            }
+            return modifiedDish;
+        }
         private Dish MapRowToDish(SqlDataReader reader)
         {
             Dish dish = new Dish();
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
+            dish.CourseId = Convert.ToInt32(reader["course_id"]);
+
 
             return dish;
         }
