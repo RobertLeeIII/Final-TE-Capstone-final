@@ -1,9 +1,8 @@
 <template>
   <div class="potluck">
     <h2>{{ Potluck.name }}</h2>
-    <p>Date: {{ new Date(Potluck.time).toDateString() }}</p>
-    <p>Location: {{ Potluck.location }}</p>
-    <h3>Guests:</h3>
+    <p>When: {{ new Date(Potluck.time).toDateString() }}</p>
+    <p>Where: {{ Potluck.location }}</p>
     <ul>
       <li v-for="guest in potlucks" :key="guest.id">
         {{ guest.email }}
