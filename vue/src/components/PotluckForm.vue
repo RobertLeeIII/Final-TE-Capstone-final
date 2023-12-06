@@ -1,13 +1,13 @@
 <template>
     <section class="hero">
-    <div class="hero-body">
-      <p class="title">
-        Create Potluck
-      </p>
-      <p class="subtitle">
-      </p>
-    </div>
-  </section>
+        <div class="hero-body">
+            <p class="title">
+                Create Potluck
+            </p>
+            <p class="subtitle">
+            </p>
+        </div>
+    </section>
     <form v-on:submit.prevent="submitForm" class="potluck-form">
         <label for="potluck-name">Name</label>
         <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="newPotluck.name">
@@ -21,20 +21,24 @@
         <label for="time">Date</label>
         <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.date">
 
-        <label for="courses">Courses</label>
         <div>
-            <select id="course" class="input is-rounded" v-model="newPotluck.course">
-                <option>--Select a Course--</option>
-                <option>Appetizers</option>
-                <option>Sides</option>
-                <option>Mains</option>
-                <option>Desserts</option>
-            </select>
-            
-            <div id="courseCounterContainer">
-                <input type="number" id="courseCounter" class="input is-rounded" placeholder="0" v-show="newPotluck.course !== '--Select a Course--'" />
+            <label for="courses">Courses</label>
+            <div>
+                <select id="course" class="input is-rounded" v-model="newPotluck.course">
+                    <option>--Select a Course--</option>
+                    <option>Appetizers</option>
+                    <option>Sides</option>
+                    <option>Mains</option>
+                    <option>Desserts</option>
+                </select>
+
+                <div id="courseCounterContainer">
+                    <input type="number" id="courseCounter" v-model="newPotluck.count" class="input is-rounded"
+                        placeholder="0" v-on:click="showButton = true"
+                        v-show="newPotluck.course !== '--Select a Course--'" />
+                </div>
+                <button type="submit" v-if="moreThanZero">+</button>
             </div>
-            <button type="submit">+</button>
         </div>
 
         <label for="potluck-theme">Theme</label>
@@ -49,8 +53,8 @@
 
     </form>
     <br>
-    <div>    <img src="/7637317.jpg" style="width:100%;" alt="">
-</div>
+    <div> <img src="/7637317.jpg" style="width:100%;" alt="">
+    </div>
 </template>
 
 <script>
@@ -64,8 +68,15 @@ export default {
                 location: '',
                 date: '',
                 course: '--Select a Course--',
-                theme: 'None'
+                theme: 'None',
+                count: 0
             },
+            showButton: false,
+        }
+    },
+    computed: {
+        moreThanZero() {
+            return this.newPotluck.count > 0;
         }
     }
 
@@ -73,7 +84,7 @@ export default {
 </script>
 
 <style>
-.hero{
-    background-color:rgb(255, 193, 146);
+.hero {
+    background-color: rgb(255, 193, 146);
 }
 </style>
