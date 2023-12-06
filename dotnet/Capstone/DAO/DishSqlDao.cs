@@ -13,9 +13,9 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-        public IList<Dish> GetDishes()
+        public List<Dish> GetDishes()
         {
-            IList<Dish> dishes = new List<Dish>();
+            List<Dish> dishes = new List<Dish>();
             string sql = "SELECT dish_id, dish_name, recipe FROM dishes;";
 
             try
@@ -70,7 +70,7 @@ namespace Capstone.DAO
             return dish;
         }
 
-        public Dish GetDishByUserId(int userId)
+        public Dish GetDishesByUserId(int userId)
         {
             Dish dish = null;
             // TODO: I think this SQL statement will work, but when I execute it I'm not getting what I expect
@@ -103,7 +103,7 @@ namespace Capstone.DAO
             }
             return dish;
         }
-        public Dish GetDishByPotluckId(int potluckId)
+        public Dish GetDishesByPotluckId(int potluckId)
         {
             Dish dish = null;
             // TODO: Again, I believe this SQL statement will work,
