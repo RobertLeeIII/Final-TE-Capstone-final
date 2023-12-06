@@ -270,7 +270,7 @@ namespace Capstone.DAO
                 "WHERE potluck_user.user_id = @user_id " +
                 "AND potluck_user.potluck_id = @potluck_id;";
             // TODO: figure out second SQL statement that lets us remove a dish that the removed user was bringing
-            string sql2 = "DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id IN (SELECT dish_id from dishes WHERE dish_id IN (select user_id FROM user_dish WHERE user_id = @user_id));"
+            string sql2 = "DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id IN (SELECT dish_id from dishes WHERE dish_id IN (select user_id FROM user_dish WHERE user_id = @user_id));";
 
             try
             {
