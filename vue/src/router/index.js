@@ -10,7 +10,7 @@ import UserDetailView from '../views/UserDetailView.vue';
 import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
-import UpdatePotluckView from '../views/UpdatePotluckView.vue';
+import PotluckUpdateView from '../views/PotluckUpdateView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -78,7 +78,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucksActioncreate",
+    path: "/:userId/potlucks/newPotluck",
     name: "potluck-create",
     component: CreatePotluckView,
     meta: {
@@ -86,9 +86,9 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucks/:potluckIdActionupdate",
+    path: "/:userId/potlucks/:potluckId/update",
     name: "potluck-update",
-    component: UpdatePotluckView,
+    component: PotluckUpdateView,
     meta: {
       requiresAuth: false
     }

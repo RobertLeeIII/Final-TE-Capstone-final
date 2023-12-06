@@ -1,7 +1,11 @@
 <template>
-    Not sure what goes here.
     <router-link :to="{ name: 'potluck-list' }">This takes you to the list of potlucks!</router-link>
-    <potluck class="potluck" v-for="potluck in potlucks" :Potluck="potluck" :key="potluck.hostId"></potluck>
+    <div>
+        <potluck class="potluck" v-for="potluck in potlucks" :Potluck="potluck" :key="potluck.hostId"></potluck>
+    </div>
+    <button>
+        <router-link :to="{ name: 'potluck-create' }"> HOST A POTLUCK </router-link>
+    </button>
 </template>
 
 <script>
@@ -53,7 +57,7 @@ export default {
 </script>
 
 <style>
-.potluck{
+.potluck {
     margin: 20px;
 }
 </style>
