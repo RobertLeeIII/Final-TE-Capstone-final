@@ -83,11 +83,10 @@ export default {
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Adjust the gap between cards */
+  gap: 20px;
 }
 
 .card {
-  width: 300px; /* Set a specific width for each card */
-  /* Add other card styles as needed */
+  width: 300px;
 }
 </style>
