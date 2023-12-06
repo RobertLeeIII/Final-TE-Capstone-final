@@ -1,5 +1,4 @@
 <template>
-Form for creating new potluck. HTTP POST
 <potluck-form></potluck-form>
 </template>
 
@@ -14,4 +13,5 @@ export default{
 </script>
 
 <style>
+
 </style>
