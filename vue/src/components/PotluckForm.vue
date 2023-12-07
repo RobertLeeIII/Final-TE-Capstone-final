@@ -8,7 +8,7 @@
             </p>
         </div>
     </section>
-    <form v-on:submit.prevent="submitForm" class="potluck-form">
+    <form v-on:submit.prevent="saveNewPotluck" class="potluck-form">
         <label for="potluck-name">Name</label>
         <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="newPotluck.name">
 
@@ -76,6 +76,7 @@ export default {
         return {
 
             newPotluck: {
+                hostId: this.$store.state.user.userId,
                 name: '',
                 summary: '',
                 location: '',
@@ -118,10 +119,17 @@ export default {
             PotluckService
                 .addPotluck(this.newPotluck)
                 .then(response => {
-                    this.resetPotluckForm
+                    this.resetPotluckForm;
+                    this.$router.push(`/${response.data.hostId}/potlucks/${response.data.potluckId}`);
                 })
                 .catch(error => {
-                    console.log();
+                    if (error.response && error.response.status === 404) {
+                        this.handleErrorResponse(error)
+                    } else if (error.request) {
+                        console.log("OTHER PROBLEM");
+                    } else {
+                        console.log("ANOTHER PROBLEM");
+                    }
                 })
         },
 
@@ -140,11 +148,13 @@ export default {
                 theme: 'None'
             }
         },
-        computed: {
-            moreThanZero() {
-                return this.newPotluck.count > 0;
+        handleErrorResponse(error) {
+            if (error.response) {
+                if (error.response.status == 404) {
+                    console.log("404 PROBLEM");
+                }
             }
-        }
+        },
     }
 }
 </script>
