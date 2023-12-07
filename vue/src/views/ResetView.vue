@@ -3,7 +3,7 @@
     </template>
     
     <script>
-    import Reset from '@/components/Reset.vue'
+    import Reset from '@/components/ResetPassword.vue'
     
     export default{
         components: {

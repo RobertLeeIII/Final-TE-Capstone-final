@@ -99,9 +99,15 @@ const routes = [
     name: "forgot",
     component: ForgotEmailView
   },
-  path: "/Reset",
+  {
+    path: "/Reset/:userId",
   name: "reset",
-  component: ResetPasswordView
+  component: ResetPasswordView,
+  meta: {
+    requiresAuth: false
+  }
+  },
+  
 ];
 
 // Create the router
