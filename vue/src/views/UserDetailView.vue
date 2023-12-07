@@ -60,7 +60,6 @@
     <button class="button is-primary">
       <router-link :to="{ name: 'potluck-create' }"> HOST A POTLUCK </router-link>
     </button>
-  </div>
 </template>
 
 <script>
