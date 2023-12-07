@@ -7,7 +7,10 @@ export default{
     },
     getPotluckById(userId, potluckId) {
         return axios.get(`/${userId}/potlucks/` + potluckId)
-    }
+    },
+    addPotluck(userId, potluck) {
+        return axios.post(`${userId}/potlucks/`, potluck);
+    },
 
 
 }
