@@ -21,6 +21,17 @@
         <label for="time">Date</label>
         <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.date">
 
+        <label for="apps">Appetizers</label>
+        <input class="input is-rounded" type="number" name="apps" id="time" v-model="newPotluck.course.apps">
+        <label for="sides">Sides</label>
+        <input class="input is-rounded" type="number" name="sides" id="time" v-model="newPotluck.course.sides">
+        <label for="mains">Mains</label>
+        <input class="input is-rounded" type="number" name="mains" id="time" v-model="newPotluck.course.mains">
+        <label for="desserts">Desserts</label>
+        <input class="input is-rounded" type="number" name="desserts" id="time" v-model="newPotluck.course.desserts">
+
+
+        <!-- <label for="courses">Courses</label>
         <div>
             <label for="courses">Courses</label>
             <div>
@@ -40,7 +51,7 @@
                 <button type="submit" v-if="moreThanZero">+</button>
             </div>
         </div>
-
+ -->
         <label for="potluck-theme">Theme</label>
         <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
             <option>None</option>
@@ -67,9 +78,19 @@ export default {
                 summary: '',
                 location: '',
                 date: '',
+<<<<<<< HEAD
                 course: '--Select a Course--',
                 theme: 'None',
                 count: 0
+=======
+                course: {
+                    apps: 0,
+                    sides: 0,
+                    mains: 0,
+                    desserts: 0,
+                },
+                theme: 'None'
+>>>>>>> 85c93a920651bd6011bf8f0786949b902238c18b
             },
             showButton: false,
         }
