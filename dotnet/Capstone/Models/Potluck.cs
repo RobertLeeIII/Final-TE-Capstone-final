@@ -15,13 +15,14 @@ namespace Capstone.Models
         public bool isRecurring { get; set; }
         public int RepeatInterval { get; set; }
         public string Status { get; set; }
-        public Dictionary<string, int> CourseRequest { get; set; } //= new Dictionary<string, int>();
-            //{
-            //    {"apps", 1},
-            //    {"main", 1},
-            //    {"side", 1},
-            //    {"dessert", 1}
-            //};
+        public Courses CourseRequest { get; set; } //= new Courses();
+        //public Dictionary<string, int> CourseRequest { get; set; } //= new Dictionary<string, int>();
+        //{
+        //    {"apps", 1},
+        //    {"main", 1},
+        //    {"side", 1},
+        //    {"dessert", 1}
+        //};
 
     }
     //TODO: Revisit this model
@@ -36,13 +37,15 @@ namespace Capstone.Models
         public bool isRecurring { get; set; }
         public int RepeatInterval { get; set; }
         public string Status { get; set; }
-        public Dictionary<string, int> CourseRequest { get; set; }
-            //= new Dictionary<string, int> {
-            //    {"apps", 0},
-            //    {"main", 0},
-            //    {"side", 0},
-            //    {"dessert", 0}
-            //};
+        public Courses CourseRequest { get; set; } //= new Courses();
+
+        //public Dictionary<string, int> CourseRequest { get; set; }
+        //= new Dictionary<string, int> {
+        //    {"apps", 0},
+        //    {"main", 0},
+        //    {"side", 0},
+        //    {"dessert", 0}
+        //};
 
     }
     public class UpdatePotluckDTO
@@ -54,5 +57,7 @@ namespace Capstone.Models
         public string Theme { get; set; }
         public bool isRecurring { get; set; }
         public int RepeatInterval { get; set; }
+        public Courses CourseRequest { get; set; } //= new Courses();
+
     }
 }

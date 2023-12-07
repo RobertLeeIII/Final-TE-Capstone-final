@@ -19,16 +19,16 @@
         <input class="input is-rounded" type="text" name="location" id="location" v-model="newPotluck.location">
 
         <label for="time">Date</label>
-        <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.date">
+        <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.time">
 
         <label for="apps">Appetizers</label>
-        <input class="input is-rounded" type="number" name="apps" id="time" v-model="newPotluck.course.apps">
+        <input class="input is-rounded" type="number" name="apps" id="apps" v-model="newPotluck.courseRequest.apps">
         <label for="sides">Sides</label>
-        <input class="input is-rounded" type="number" name="sides" id="time" v-model="newPotluck.course.sides">
+        <input class="input is-rounded" type="number" name="sides" id="sides" v-model="newPotluck.courseRequest.sides">
         <label for="mains">Mains</label>
-        <input class="input is-rounded" type="number" name="mains" id="time" v-model="newPotluck.course.mains">
+        <input class="input is-rounded" type="number" name="mains" id="mains" v-model="newPotluck.courseRequest.mains">
         <label for="desserts">Desserts</label>
-        <input class="input is-rounded" type="number" name="desserts" id="time" v-model="newPotluck.course.desserts">
+        <input class="input is-rounded" type="number" name="desserts" id="desserts" v-model="newPotluck.courseRequest.desserts">
 
 
         <!-- <label for="courses">Courses</label>
@@ -80,14 +80,15 @@ export default {
                 name: '',
                 summary: '',
                 location: '',
-                date: '',
-                course: {
+                time: '',
+                courseRequest: {
                     apps: 0,
                     sides: 0,
                     mains: 0,
                     desserts: 0,
                 },
-                theme: 'None'
+                theme: 'None',
+                status: 'active'
             },
             showButton: false,
         }
@@ -107,26 +108,27 @@ export default {
             if (this.newPotluck.date.length === 0) {
                 message += 'The new potluck needs a date.';
             }
-            if (this.newPotluck.course.apps === 0 &&
-                this.newPotluck.course.sides === 0 &&
-                this.newPotluck.course.mains === 0 &&
-                this.newPotluck.course.desserts === 0) {
+            if (this.newPotluck.courseRequest.apps === 0 &&
+                this.newPotluck.courseRequest.sides === 0 &&
+                this.newPotluck.courseRequest.mains === 0 &&
+                this.newPotluck.courseRequest.desserts === 0) {
                 message += 'The new potluck needs at least one course.';
             }
             return true;
         },
         saveNewPotluck() {
             PotluckService
-                .addPotluck(this.newPotluck)
+                .addPotluck(this.$store.state.user.userId, this.newPotluck)
                 .then(response => {
                     this.resetPotluckForm;
                     // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-                    //this.$router.push({name: 'potluck-details', params: {userId: response.data.hostId, potluckId: response.data.potluckId}});
+                    this.$router.push({name: 'potluck-details', params: {userId: response.data.hostId, potluckId: response.data.potluckId}});
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 404) {
                         this.handleErrorResponse(error)
                     } else if (error.request) {
+                        console.log(error.response.data);
                         console.log("OTHER PROBLEM");
                     } else {
                         console.log("ANOTHER PROBLEM");
@@ -139,7 +141,7 @@ export default {
                 name: '',
                 summary: '',
                 location: '',
-                date: '',
+                time: '',
                 course: {
                     apps: 0,
                     sides: 0,
