@@ -19,14 +19,14 @@
             <a class="navbar-item">
               <router-link v-bind:to="{ name: 'home' }">Welcome</router-link>
             </a>
-
+            
             <a class="navbar-item">
-              <router-link v-bind:to="{ name: '' }" v-if="this.$store.state.token != ''">Home</router-link>
+              <router-link     :to="{ name: 'user-view', params: { userId: this.$store.state.user.userId} }" v-if="this.$store.state.token != ''">Home</router-link>
             </a>
+            
             <a class="navbar-item">
               <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
             </a>
-
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
                 More
@@ -55,14 +55,14 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-primary">
-                  <p>
-                    <router-link v-bind:to="{ name: 'register' }">Sign up</router-link>
-                  </p>
-                </a>
-                <a class="button is-primary is-light">
+                <a class="button is-secondary is-light">
                   <p>
                     <router-link v-bind:to="{ name: 'login' }">Login</router-link>
+                  </p>
+                </a>
+                <a class="button is-warning">
+                  <p>
+                    <router-link v-bind:to="{ name: 'register' }">Sign up</router-link>
                   </p>
                 </a>
               </div>

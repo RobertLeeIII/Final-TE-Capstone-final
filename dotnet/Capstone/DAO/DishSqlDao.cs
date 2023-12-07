@@ -70,9 +70,9 @@ namespace Capstone.DAO
             return dish;
         }
 
-        public Dish GetDishesByUserId(int userId)
+        public IList<Dish> GetDishesByUserId(int userId)
         {
-            Dish dish = null;
+            IList<Dish> dishes = new List<Dish>();
             // TODO: I think this SQL statement will work, but when I execute it I'm not getting what I expect
             // May need to add UserId as a property of Dish?
             string sql = "SELECT dishes.dish_id, dish_name, recipe " +
@@ -91,9 +91,10 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        dish = MapRowToDish(reader);
+                        Dish dish = MapRowToDish(reader);
+                        dishes.Add(dish);
                     }
                 }
             }
@@ -101,11 +102,11 @@ namespace Capstone.DAO
             {
                 throw new DaoException("A SQL error occured.", ex);
             }
-            return dish;
+            return dishes;
         }
-        public Dish GetDishesByPotluckId(int potluckId)
+        public IList<Dish> GetDishesByPotluckId(int potluckId)
         {
-            Dish dish = null;
+            IList<Dish> dishes = new List<Dish>();
             // TODO: Again, I believe this SQL statement will work,
             // but some connection is missing when I try to execute it in the DB
             string sql = "SELECT dishes.dish_id, dish_name, recipe " +
@@ -124,9 +125,10 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        dish = MapRowToDish(reader);
+                        Dish dish = MapRowToDish(reader);
+                        dishes.Add(dish);
                     }
                 }
             }
@@ -134,32 +136,32 @@ namespace Capstone.DAO
             {
                 throw new DaoException("A SQL error occured.", ex);
             }
-            return dish;
+            return dishes;
         }
-        public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
-        {
-            Dish newDish = null;
+        //public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
+        //{
+        //    Dish newDish = null;
 
-            //insert into dishes
-            //insert into dish_user.
-            //insert into dish_potluck.
+        //    //insert into dishes
+        //    //insert into dish_user.
+        //    //insert into dish_potluck.
 
 
 
-            return newDish;
-        }
-        public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
-        {
+        //    return newDish;
+        //}
+        //public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
+        //{
 
-            //UPDATE dishes SET col = value, col2 = value WHERE dish_id = @dishId
+        //    //UPDATE dishes SET col = value, col2 = value WHERE dish_id = @dishId
 
-            Dish modifiedDish = GetDishById(dishId);
-            if (modifiedDish == null)
-            {
+        //    Dish modifiedDish = GetDishById(dishId);
+        //    if (modifiedDish == null)
+        //    {
 
-            }
-            return modifiedDish;
-        }
+        //    }
+        //    return modifiedDish;
+        //}
         private Dish MapRowToDish(SqlDataReader reader)
         {
             Dish dish = new Dish();

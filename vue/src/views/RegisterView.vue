@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-success">
+  <section class="hero is-warning">
     <div class="hero-body">
       <p class="title">
         Potluck planner
