@@ -68,7 +68,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost("/{userId}/potlucks")]
-        public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck, int userId)
+        public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck)
         {
             Potluck addedPotluck = potluckDao.CreatePotluck(newPotluck);
             //Check the date, make sure it's after today
