@@ -11,7 +11,7 @@ import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
-
+import Forgot from '../components/Forgot.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -92,6 +92,11 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/forgot",
+    name: "forgot",
+    component: Forgot,
   }
 ];
 

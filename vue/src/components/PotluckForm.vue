@@ -34,22 +34,22 @@
             <div id="courseCounterContainer">
                 <input type="number" id="courseCounter" class="input is-rounded" placeholder="0" v-show="newPotluck.course !== '--Select a Course--'" />
             </div>
-            <button type="submit">+</button>
+            <button type="submit" v-show="newPotluck.course != '--Select a Course--' && 'submit!=0'" placeholder=''>+</button>
         </div>
 
         <label for="potluck-theme">Theme</label>
         <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
-            <option>None</option>
+            <option>None </option>
             <option>Spring</option>
             <option>Summer</option>
             <option>Fall</option>
-            <option>Winter</option>
+            <option>Winter<i class="fas fa-snowflake"></i></option>
         </select>
         <button type="submit">Submit</button>
 
     </form>
     <br>
-    <div>    <img src="/7637317.jpg" style="width:100%;" alt="">
+    <div><img src="/7637317.jpg" style="width:100%;" alt="">
 </div>
 </template>
 
