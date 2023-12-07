@@ -21,7 +21,7 @@
             </a>
             
             <a class="navbar-item">
-              <router-link v-bind:to="{ name: '' }" v-if="this.$store.state.token != ''">Home</router-link>
+              <router-link     :to="{ name: 'user-view', params: { userId: this.$store.state.user.userId} }" v-if="this.$store.state.token != ''">Home</router-link>
             </a>
             
             <a class="navbar-item">
