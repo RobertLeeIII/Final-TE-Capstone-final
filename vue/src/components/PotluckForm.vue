@@ -54,11 +54,11 @@
  -->
         <label for="potluck-theme">Theme</label>
         <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
-            <option>None</option>
+            <option>None </option>
             <option>Spring</option>
             <option>Summer</option>
             <option>Fall</option>
-            <option>Winter</option>
+            <option>Winter<i class="fas fa-snowflake"></i></option>
         </select>
         <button type="submit">Submit</button>
 
