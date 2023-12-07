@@ -11,7 +11,8 @@ import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
-
+import ForgotEmailView from '../views/ForgotEmailView.vue';
+import ResetPasswordView from '../views/ResetView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -92,7 +93,21 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/forgot",
+    name: "forgot",
+    component: ForgotEmailView
+  },
+  {
+    path: "/Reset/:userId",
+  name: "reset",
+  component: ResetPasswordView,
+  meta: {
+    requiresAuth: false
   }
+  },
+  
 ];
 
 // Create the router
