@@ -208,9 +208,21 @@ namespace Capstone.DAO
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck)
         {
             Potluck newPotluck = null;
-            string sql = "INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) " +
-                "OUTPUT INSERTED.potluck_id " +
-                "VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
+            newPotluck.CourseRequest = new Dictionary<string, int>();
+            //string sql = "INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) " +
+                //"OUTPUT INSERTED.potluck_id " +
+                //"VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
+
+            string sql = @"INSERT INTO potlucks(host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) 
+                            OUTPUT INSERTED.potluck_id VALUES(@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);
+
+                            INSERT INTO potluck_course(potluck_id, course_id, how_many)
+                            VALUES(@ID, 1, @apps)
+                            (@ID, 2, @main),
+                            (@ID, 3, @side),
+                            (@ID, 4, @dess);";
+
+
 
             int newPotluckId = 0;
             try
@@ -218,7 +230,7 @@ namespace Capstone.DAO
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-
+                    
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
                     cmd.Parameters.AddWithValue("@potluck_name", incomingPotluck.Name);
@@ -229,6 +241,11 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@isRecurring", incomingPotluck.isRecurring);
                     cmd.Parameters.AddWithValue("@repeatInterval", incomingPotluck.RepeatInterval);
                     cmd.Parameters.AddWithValue("@status", incomingPotluck.Status);
+                    cmd.Parameters.AddWithValue("@apps", incomingPotluck.CourseRequest["apps"]);
+                    cmd.Parameters.AddWithValue("@main", incomingPotluck.CourseRequest["main"]);
+                    cmd.Parameters.AddWithValue("@side", incomingPotluck.CourseRequest["side"]);
+                    cmd.Parameters.AddWithValue("@dess", incomingPotluck.CourseRequest["dessert"]);
+
 
                     newPotluckId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
