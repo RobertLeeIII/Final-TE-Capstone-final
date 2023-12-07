@@ -67,17 +67,17 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost("/users/{userId}/potlucks")]
+        [HttpPost("/{userId}/potlucks")]
         public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck, int userId)
         {
             Potluck addedPotluck = potluckDao.CreatePotluck(newPotluck);
             //Check the date, make sure it's after today
 
 
-            return Created($"/users/{addedPotluck.HostId}/potlucks/{addedPotluck.PotluckId}", addedPotluck);
+            return Created($"/{addedPotluck.HostId}/potlucks/{addedPotluck.PotluckId}", addedPotluck);
         }
 
-        [HttpPut("/users/{userId}/potlucks/{potluckId}")]
+        [HttpPut("/{userId}/potlucks/{potluckId}")]
         public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int userId, int potluckId)
         {
             try
