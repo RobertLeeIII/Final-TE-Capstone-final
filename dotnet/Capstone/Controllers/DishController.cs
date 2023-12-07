@@ -23,12 +23,14 @@
 //        }
 
 //        [HttpGet("")]  //BLAAAHHH ENDPOINTS
-//        public ActionResult<List<Dish>> GetDishes(){
-//            try{
-//            IList<Dish> output = new List<Dish>();
-//            output = dishDao.GetDishes();
-//            return Ok(output);
-//        }
+//        public ActionResult<List<Dish>> GetDishes()
+//        {
+//            try
+//            {
+//                IList<Dish> output = new List<Dish>();
+//                output = dishDao.GetDishes();
+//                return Ok(output);
+//            }
 //            catch (Exception)
 //            {
 //                return StatusCode(500);
@@ -36,10 +38,13 @@
 //        }
 
 //        [HttpGet("")]  //NEED THE ENDPOINT
-//        public ActionResult<Dish> GetDishById(int dishId){
-//            try{
+//        public ActionResult<Dish> GetDishById(int dishId)
+//        {
+//            try
+//            {
 //                Dish output = dishDao.GetDishById(dishId);
-//                if(output == null){
+//                if (output == null)
+//                {
 //                    return NotFound();
 //                }
 //                return output;
@@ -51,46 +56,53 @@
 //        }
 
 //        [HttpGet("")]  //NEED THE ENDPOINT
-//        public ActionResult<List<Dish>> GetDishesByUserId(int userId){
-//            try{
+//        public ActionResult<List<Dish>> GetDishesByUserId(int userId)
+//        {
+//            try
+//            {
 //                List<Dish> output = new List<Dish>(dishDao.GetDishesByUserId(userId));
-//                if (output == null){
+//                if (output == null)
+//                {
 //                    return NotFound();
 //                }
 //                return output;
 //            }
-//            catch(Exception)
+//            catch (Exception)
 //            {
 //                return StatusCode(500);
 //            }
 //        }
 
 //        [HttpGet("")]  //NEED THE ENDPOINT
-//        public ActionResult<List<Dish>> GetDishesByPotluckId(int potluckId){
-//            try{
+//        public ActionResult<List<Dish>> GetDishesByPotluckId(int potluckId)
+//        {
+//            try
+//            {
 //                List<Dish> output = new List<Dish>(dishDao.GetDishesByPotluckId(potluckId));
-//                if (output == null){
+//                if (output == null)
+//                {
 //                    return NotFound();
 //                }
 //                return output;
 //            }
-//            catch(Exception)
+//            catch (Exception)
 //            {
 //                return StatusCode(500);
 //            }
 //        }
 
-//         [HttpPost("/users/{userId}/dishes")]  //NEED ENDPOINT
+//        [HttpPost("/users/{userId}/dishes")]  //NEED ENDPOINT
 //        public ActionResult<Dish> CreateNewDish(NewDishDTO newDish, int userId, int potluckId)
 //        {
 //            Dish addedDish = dishDao.CreateNewDish(newDish, userId, potluckId);
-        
+
 
 //            return Created($"/users/{userId}/dishes/{addedDish.DishId}", addedDish);
 //        }
 
 //        [HttpPut("/users/{userId}/dishes/{dishId}")]  //ENDPOINT ENDPOINT ENDPOINT BLAH
-//        public ActionResult<Dish> UpdateDish(UpdateDishDTO editedDish, int userId, int dishId){
+//        public ActionResult<Dish> UpdateDish(UpdateDishDTO editedDish, int userId, int dishId)
+//        {
 //            try
 //            {
 //                Dish dishToUpdate = dishDao.GetDishById(dishId);
@@ -107,7 +119,6 @@
 //            }
 //        }
 
- 
 
 
 
@@ -118,4 +129,6 @@
 
 
 
-//    }}
+
+//    }
+//}
