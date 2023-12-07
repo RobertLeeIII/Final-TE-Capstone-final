@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <section class="hero">
         <div class="hero-body">
             <p class="title">
@@ -50,6 +51,24 @@
             <option>Winter</option>
         </select>
         <button type="submit">Submit</button>
+=======
+    <form>
+        <label for="potluck-name">Name</label>
+        <input type="text" name="Name" id="potluck-name">
+
+        <label for="summary">Summary</label>
+        <input type="text" name="Summary" id="summary">
+
+        <label for="location">Location</label>
+        <input type="text" name="location" id="location">
+
+        <label for="time">When</label>
+        <input type="datetime-local" name="time" id="time">
+
+        <label for="potluck-theme">Theme</label>
+        <input type="text" name="Theme" id="potluck-theme">
+
+>>>>>>> c05bc21a5352ce46c1ddee5f4127a64c46e1fbde
 
     </form>
     <br>
@@ -58,6 +77,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 export default {
     data() {
         return {
@@ -88,3 +108,9 @@ export default {
     background-color: rgb(255, 193, 146);
 }
 </style>
+=======
+</script>
+
+<style>
+</style>
+>>>>>>> c05bc21a5352ce46c1ddee5f4127a64c46e1fbde
