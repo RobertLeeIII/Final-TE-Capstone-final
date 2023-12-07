@@ -47,7 +47,7 @@ namespace Capstone.DAO
         public Potluck GetPotluckById(int potluckId)
         {
             Potluck potluck = new Potluck();
-            potluck.CourseRequest = new Dictionary<string, int>();
+            potluck.CourseRequest = new Courses();
             string sql = @"SELECT potlucks.potluck_id, host_id, potluck_name, summary, 
                          location, time, theme, is_recurring, repeat_interval, 
                          potlucks.status, course_name, how_many FROM potlucks 
@@ -135,20 +135,19 @@ namespace Capstone.DAO
                     int currentId = -1;
 
                     Potluck potluck = new Potluck();
-                    potluck.CourseRequest = new Dictionary<string, int>();
                     while (reader.Read())
                     {
-                        while(currentId == -1)
+                        while (currentId == -1)
                         {
                             currentId = Convert.ToInt32(reader["potluck_id"]);
-
                         }
+                        //potluck = MapRowToPotluck(reader);
 
                         
                         if (currentId == Convert.ToInt32(reader["potluck_id"]))
                         {
                             potluck = MapRowToPotluck(reader, potluck);
-                            potluck = MapRowToPotluckCourses(reader, potluck);
+                            //potluck = MapRowToPotluckCourses(reader, potluck);
                         }
                         else
                         {
@@ -156,9 +155,8 @@ namespace Capstone.DAO
                             potlucks.Add(potluck);
                             currentId = Convert.ToInt32(reader["potluck_id"]);
                             potluck = new Potluck();
-                            potluck.CourseRequest = new Dictionary<string, int>();
                             potluck = MapRowToPotluck(reader, potluck);
-                            potluck = MapRowToPotluckCourses(reader, potluck);
+                            //potluck = MapRowToPotluckCourses(reader, potluck);
 
                         }
                     }
@@ -207,20 +205,24 @@ namespace Capstone.DAO
         }
         public Potluck CreatePotluck(NewPotluckDTO incomingPotluck)
         {
-            Potluck newPotluck = null;
-            newPotluck.CourseRequest = new Dictionary<string, int>();
+            Potluck newPotluck = new Potluck();
+            newPotluck.Time = DateTime.Now;
+            newPotluck.CourseRequest = new Courses();
             //string sql = "INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) " +
-                //"OUTPUT INSERTED.potluck_id " +
-                //"VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
+            //"OUTPUT INSERTED.potluck_id " +
+            //"VALUES (@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
 
-            string sql = @"INSERT INTO potlucks(host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) 
-                            OUTPUT INSERTED.potluck_id VALUES(@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);
+            string sql1 = @"INSERT INTO potlucks (host_id, potluck_name, summary, location, time, theme, is_recurring, repeat_interval, status) 
+                            OUTPUT INSERTED.potluck_id VALUES(@host_id, @potluck_name, @summary, @location, @time, @theme, @isRecurring, @repeatInterval, @status);";
 
-                            INSERT INTO potluck_course(potluck_id, course_id, how_many)
-                            VALUES(@ID, 1, @apps)
-                            (@ID, 2, @main),
-                            (@ID, 3, @side),
-                            (@ID, 4, @dess);";
+            string sql2 = @"INSERT INTO potluck_course (potluck_id, course_id, how_many)
+                            VALUES (@ID, 1, @apps),
+                                   (@ID, 2, @main),
+                                   (@ID, 3, @side),
+                                   (@ID, 4, @dess);
+
+                            INSERT INTO potluck_user (potluck_id, user_id, status)
+                                        VALUES (@ID, @host_id, 'Active');";
 
 
 
@@ -231,7 +233,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
                     
-                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlCommand cmd = new SqlCommand(sql1, conn);
+
                     cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
                     cmd.Parameters.AddWithValue("@potluck_name", incomingPotluck.Name);
                     cmd.Parameters.AddWithValue("@summary", incomingPotluck.Summary);
@@ -241,13 +244,21 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@isRecurring", incomingPotluck.isRecurring);
                     cmd.Parameters.AddWithValue("@repeatInterval", incomingPotluck.RepeatInterval);
                     cmd.Parameters.AddWithValue("@status", incomingPotluck.Status);
-                    cmd.Parameters.AddWithValue("@apps", incomingPotluck.CourseRequest["apps"]);
-                    cmd.Parameters.AddWithValue("@main", incomingPotluck.CourseRequest["main"]);
-                    cmd.Parameters.AddWithValue("@side", incomingPotluck.CourseRequest["side"]);
-                    cmd.Parameters.AddWithValue("@dess", incomingPotluck.CourseRequest["dessert"]);
+                    
 
 
                     newPotluckId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    cmd = new SqlCommand(sql2, conn);
+
+                    cmd.Parameters.AddWithValue("@ID", newPotluckId);
+                    cmd.Parameters.AddWithValue("@host_id", incomingPotluck.HostId);
+                    cmd.Parameters.AddWithValue("@apps", incomingPotluck.CourseRequest.apps);
+                    cmd.Parameters.AddWithValue("@main", incomingPotluck.CourseRequest.mains);
+                    cmd.Parameters.AddWithValue("@side", incomingPotluck.CourseRequest.sides);
+                    cmd.Parameters.AddWithValue("@dess", incomingPotluck.CourseRequest.desserts);
+
+                    cmd.ExecuteScalar();
                 }
                 newPotluck = GetPotluckById(newPotluckId);
             }
@@ -362,7 +373,7 @@ namespace Capstone.DAO
                     while (reader.Read())
                     {
                         output = MapRowToPotluck(reader, output);
-                        output = MapRowToPotluckCourses(reader, output);
+                        //output = MapRowToPotluckCourses(reader, output);
                     }
 
                 }
@@ -376,26 +387,47 @@ namespace Capstone.DAO
         }
         private Potluck MapRowToPotluck(SqlDataReader reader, Potluck input)
         {
-            
-            input.PotluckId = Convert.ToInt32(reader["potluck_id"]);
-            input.HostId = Convert.ToInt32(reader["host_id"]);
-            input.Name = Convert.ToString(reader["potluck_name"]);
-            input.Summary = Convert.ToString(reader["summary"]);
-            input.Location = Convert.ToString(reader["location"]);
-            input.Time = Convert.ToDateTime(reader["time"]);
-            input.Theme = Convert.ToString(reader["theme"]);
-            input.isRecurring = Convert.ToBoolean(reader["is_recurring"]);
-            input.RepeatInterval = Convert.ToInt32(reader["repeat_interval"]);
-            input.Status = Convert.ToString(reader["status"]);
-            input.CourseRequest = input.CourseRequest;
+            Potluck output = new Potluck();
+            output.PotluckId = Convert.ToInt32(reader["potluck_id"]);
+            output.HostId = Convert.ToInt32(reader["host_id"]);
+            output.Name = Convert.ToString(reader["potluck_name"]);
+            output.Summary = Convert.ToString(reader["summary"]);
+            output.Location = Convert.ToString(reader["location"]);
+            output.Time = Convert.ToDateTime(reader["time"]);
+            output.Theme = Convert.ToString(reader["theme"]);
+            output.isRecurring = Convert.ToBoolean(reader["is_recurring"]);
+            output.RepeatInterval = Convert.ToInt32(reader["repeat_interval"]);
+            output.Status = Convert.ToString(reader["status"]);
+            output.CourseRequest = input.CourseRequest;
+            //output.CourseRequest.apps = Convert.ToInt32(reader["apps"]);
+            //output.CourseRequest.mains = Convert.ToInt32(reader["main"]);
+            //output.CourseRequest.sides = Convert.ToInt32(reader["side"]);
+            //output.CourseRequest.desserts = Convert.ToInt32(reader["dessert"]);
 
-            return input;
+            return output;
         }
-        private Potluck MapRowToPotluckCourses(SqlDataReader reader, Potluck potluck)
-        {   
-            potluck.CourseRequest.Add(Convert.ToString(reader["course_name"]), Convert.ToInt32(reader["how_many"]));
+        private Potluck MapRowToPotluckCourses(SqlDataReader reader, Potluck input)
+        {
+            Potluck output = input;
+            if(Convert.ToString(reader["course_name"]) == "apps")
+            {
+                output.CourseRequest.apps = Convert.ToInt32(reader["how_many"]);
+            }
+            else if (Convert.ToString(reader["course_name"]) == "main")
+            {
+                output.CourseRequest.mains = Convert.ToInt32(reader["how_many"]);
+            }
+            else if (Convert.ToString(reader["course_name"]) == "side")
+            {
+                output.CourseRequest.sides = Convert.ToInt32(reader["how_many"]);
+            }
+            else if (Convert.ToString(reader["course_name"]) == "dessert")
+            {
+                output.CourseRequest.desserts = Convert.ToInt32(reader["how_many"]);
+            }
+                //(Convert.ToString(reader["course_name"]), Convert.ToInt32(reader["how_many"]));
 
-            return potluck;
+                return output;
         }
     }
 }

@@ -17,15 +17,16 @@
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item">
-              <router-link v-bind:to="{ name: 'home' }">Welcome</router-link>
+              <router-link class='routerlink' :to="{ name: 'home' }">Welcome</router-link>
             </a>
-            
+
             <a class="navbar-item">
-              <router-link     :to="{ name: 'user-view', params: { userId: this.$store.state.user.userId} }" v-if="this.$store.state.token != ''">Home</router-link>
+              <router-link class='routerlink' :to="{ name: 'user-view', params: { userId: this.$store.state.user.userId } }"
+                v-if="this.$store.state.token != ''">Home</router-link>
             </a>
-            
+
             <a class="navbar-item">
-              <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
+              <router-link class='routerlink' :to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
             </a>
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link">
@@ -75,3 +76,14 @@
     <router-view />
   </div>
 </template>
+<style>
+.navbar {
+  background-color: rgb(36, 62, 52);
+}
+a.router-link-active {
+  color: rgb(241, 247, 237)
+}
+.routerlink{
+  color: rgb(241, 247, 237); /* Set background color for the header */
+}
+</style>
