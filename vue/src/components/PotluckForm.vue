@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import PotluckService from '@/services/PotluckService.js';
+
 export default {
     data() {
         return {
@@ -78,11 +80,6 @@ export default {
                 summary: '',
                 location: '',
                 date: '',
-<<<<<<< HEAD
-                course: '--Select a Course--',
-                theme: 'None',
-                count: 0
-=======
                 course: {
                     apps: 0,
                     sides: 0,
@@ -90,17 +87,65 @@ export default {
                     desserts: 0,
                 },
                 theme: 'None'
->>>>>>> 85c93a920651bd6011bf8f0786949b902238c18b
             },
             showButton: false,
         }
     },
-    computed: {
-        moreThanZero() {
-            return this.newPotluck.count > 0;
+    methods: {
+        validateNewPotluck() {
+            let message = '';
+            if (this.newPotluck.name.length === 0) {
+                message += 'The new potluck needs a name.';
+            }
+            if (this.newPotluck.summary.length === 0) {
+                message += 'The new potluck needs a summary.';
+            }
+            if (this.newPotluck.location.length === 0) {
+                message += 'The new potluck needs a location';
+            }
+            if (this.newPotluck.date.length === 0) {
+                message += 'The new potluck needs a date.';
+            }
+            if (this.newPotluck.course.apps === 0 &&
+                this.newPotluck.course.sides === 0 &&
+                this.newPotluck.course.mains === 0 &&
+                this.newPotluck.course.desserts === 0) {
+                message += 'The new potluck needs at least one course.';
+            }
+            return true;
+        },
+        saveNewPotluck() {
+            PotluckService
+                .addPotluck(this.newPotluck)
+                .then(response => {
+                    this.resetPotluckForm
+                })
+                .catch(error => {
+                    console.log();
+                })
+        },
+
+        resetPotluckForm() {
+            this.newPotluck = {
+                name: '',
+                summary: '',
+                location: '',
+                date: '',
+                course: {
+                    apps: 0,
+                    sides: 0,
+                    mains: 0,
+                    desserts: 0,
+                },
+                theme: 'None'
+            }
+        },
+        computed: {
+            moreThanZero() {
+                return this.newPotluck.count > 0;
+            }
         }
     }
-
 }
 </script>
 
