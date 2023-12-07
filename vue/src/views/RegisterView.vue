@@ -1,16 +1,11 @@
 <template>
-  <section class="hero is-warning">
-    <div class="hero-body">
-      <p class="title">
-        Potluck planner
-      </p>
-      <p class="subtitle">
-        Register User
-      </p>
-    </div>
-  </section>
-  <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
+  <div>
+    <section class="layout">
+      <div class="header">
+        <div class="header-content">
+          <div class="header-text">
+            <h1 class="header-title">Pot·luck</h1>
+            <h2 class="header-phonetic">    <form v-on:submit.prevent="register">
       <h1>Register User</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -44,8 +39,14 @@
         <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" />
       </div>
       <br>
-      <button class="button is-primary" type="submit">Create Account</button>
-    </form>
+      <button class="button is-warning" type="submit">Create Account</button>
+    </form></h2>
+    </div>
+    </div>
+    </div>
+  </section>
+  <div id="register" class="text-center">
+  </div>
   </div>
 </template>
 
@@ -108,4 +109,84 @@ export default {
 label {
   margin-right: 0.5rem;
 }
-</style>
+.layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Adjust as needed */
+  gap: 8px;
+  background-color: rgb(124, 169, 130); /* Salmon-colored background */
+  min-height: 95vh; /* Set minimum height of layout to full viewport height */
+
+  padding-bottom: 20px; /* Increase bottom padding */
+}
+
+.centerFooter {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px; /* Move the footer down */
+  color: white; /* Change text color */
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 20px;
+  background-color: rgb(241, 247, 237); /* Set background color for the header */
+}
+
+.header-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 4px solid rgb(124, 169, 130)   ;
+  padding: 20px; /* Add padding as needed */
+}
+
+.header-text {
+  text-align: left;
+
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.header-title {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.header-phonetic {
+  font-size: 18px;
+  margin-left: 50px;
+
+  color: #888;
+}
+
+.header-definition {
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 50px;
+
+}
+
+.header-description {
+  font-size: 16px;
+
+  margin-left: 50px;
+  line-height: 1.5;
+}
+
+.header-image {
+  flex-shrink: 0;
+}
+
+.header-img {
+  width: 380px;
+  height: auto;
+  border-radius: 4%;
+}
+
+.main{
+  color: white; /* Change text color */
+
+}</style>
+

@@ -80,7 +80,7 @@ export default {
   display: grid;
   grid-template-rows: auto 1fr auto; /* Adjust as needed */
   gap: 8px;
-  background-color: salmon; /* Salmon-colored background */
+  background-color: rgb(124, 169, 130); /* Salmon-colored background */
   min-height: 95vh; /* Set minimum height of layout to full viewport height */
 
   padding-bottom: 20px; /* Increase bottom padding */
@@ -97,14 +97,14 @@ export default {
 .header {
   text-align: left;
   margin-bottom: 20px;
-  background-color: white; /* Set background color for the header */
+  background-color: rgb(241, 247, 237); /* Set background color for the header */
 }
 
 .header-content {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  border: 4px solid salmon;
+  border: 4px solid rgb(124, 169, 130)   ;
   padding: 20px; /* Add padding as needed */
 }
 
