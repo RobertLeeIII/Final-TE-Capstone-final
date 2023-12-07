@@ -32,7 +32,8 @@ namespace Capstone.DAO
 
                     while (reader.Read())
                     {
-                        Potluck potluck = MapRowToPotluck(reader);
+                        Potluck potluck = new Potluck();
+                        potluck = MapRowToPotluck(reader, potluck);
                         potlucks.Add(potluck);
                     }
                 }
@@ -45,11 +46,16 @@ namespace Capstone.DAO
         }
         public Potluck GetPotluckById(int potluckId)
         {
-            Potluck potluck = null;
-            string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
-                "time, theme, is_recurring, repeat_interval, status " +
-                "FROM potlucks " +
-                "WHERE potluck_id = @potluck_id;";
+            Potluck potluck = new Potluck();
+            potluck.CourseRequest = new Dictionary<string, int>();
+            string sql = @"SELECT potlucks.potluck_id, host_id, potluck_name, summary, 
+                         location, time, theme, is_recurring, repeat_interval, 
+                         potlucks.status, course_name, how_many FROM potlucks 
+                         JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id 
+                         JOIN users AS u ON u.user_id = pu.user_id 
+                         JOIN potluck_course as pc ON pc.potluck_id = potlucks.potluck_id 
+                         JOIN courses ON courses.course_id = pc.course_id WHERE potlucks.potluck_id = @potluckId 
+                         ORDER BY potlucks.potluck_id;";
 
             try
             {
@@ -58,12 +64,13 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.Parameters.AddWithValue("@potluckId", potluckId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        potluck = MapRowToPotluck(reader);
+                        potluck = MapRowToPotluck(reader, potluck);
+                        potluck = MapRowToPotluckCourses(reader, potluck);
                     }
                 }
             }
@@ -93,7 +100,7 @@ namespace Capstone.DAO
 
                     if (reader.Read())
                     {
-                        potluck = MapRowToPotluck(reader);
+                        potluck = MapRowToPotluck(reader, potluck);
                     }
                 }
             }
@@ -106,12 +113,14 @@ namespace Capstone.DAO
         public IList<Potluck> GetPotlucksByUserId(int userId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
-            string sql = "SELECT potlucks.potluck_id, host_id, potluck_name, summary, location, " +
-                "time, theme, is_recurring, repeat_interval, potlucks.status " +
-                "FROM potlucks " +
-                "JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id " +
-                "JOIN users AS u ON u.user_id = pu.user_id " +
-                "WHERE u.user_id = @user_id;";
+            string sql = @"SELECT potlucks.potluck_id, host_id, potluck_name, summary, 
+                         location, time, theme, is_recurring, repeat_interval, 
+                         potlucks.status, course_name, how_many FROM potlucks 
+                         JOIN potluck_user AS pu ON pu.potluck_id = potlucks.potluck_id 
+                         JOIN users AS u ON u.user_id = pu.user_id 
+                         JOIN potluck_course as pc ON pc.potluck_id = potlucks.potluck_id 
+                         JOIN courses ON courses.course_id = pc.course_id WHERE u.user_id = @user_id 
+                         ORDER BY potlucks.potluck_id;";
 
             try
             {
@@ -123,11 +132,37 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int currentId = -1;
+
+                    Potluck potluck = new Potluck();
+                    potluck.CourseRequest = new Dictionary<string, int>();
                     while (reader.Read())
                     {
-                        Potluck potluck = MapRowToPotluck(reader);
-                        potlucks.Add(potluck);
+                        while(currentId == -1)
+                        {
+                            currentId = Convert.ToInt32(reader["potluck_id"]);
+
+                        }
+
+                        
+                        if (currentId == Convert.ToInt32(reader["potluck_id"]))
+                        {
+                            potluck = MapRowToPotluck(reader, potluck);
+                            potluck = MapRowToPotluckCourses(reader, potluck);
+                        }
+                        else
+                        {
+
+                            potlucks.Add(potluck);
+                            currentId = Convert.ToInt32(reader["potluck_id"]);
+                            potluck = new Potluck();
+                            potluck.CourseRequest = new Dictionary<string, int>();
+                            potluck = MapRowToPotluck(reader, potluck);
+                            potluck = MapRowToPotluckCourses(reader, potluck);
+
+                        }
                     }
+                    potlucks.Add(potluck);
                 }
             }
             catch (SqlException ex)
@@ -157,7 +192,8 @@ namespace Capstone.DAO
 
                     while (reader.Read())
                     {
-                        Potluck potluck = MapRowToPotluck(reader);
+                        Potluck potluck = new Potluck();
+                        potluck = MapRowToPotluck(reader, potluck);
                         potlucks.Add(potluck);
                     }
                 }
@@ -290,19 +326,57 @@ namespace Capstone.DAO
             }
             return rowsAffected;
         }
-        private Potluck MapRowToPotluck(SqlDataReader reader)
+        public Potluck GetPotluckDetailsById(int potluckId)
         {
-            Potluck potluck = new Potluck();
-            potluck.PotluckId = Convert.ToInt32(reader["potluck_id"]);
-            potluck.HostId = Convert.ToInt32(reader["host_id"]);
-            potluck.Name = Convert.ToString(reader["potluck_name"]);
-            potluck.Summary = Convert.ToString(reader["summary"]);
-            potluck.Location = Convert.ToString(reader["location"]);
-            potluck.Time = Convert.ToDateTime(reader["time"]);
-            potluck.Theme = Convert.ToString(reader["theme"]);
-            potluck.isRecurring = Convert.ToBoolean(reader["is_recurring"]);
-            potluck.RepeatInterval = Convert.ToInt32(reader["repeat_interval"]);
-            potluck.Status = Convert.ToString(reader["status"]);
+            Potluck output = null;
+            string sql = @"SELECT p.potluck_id, potluck_name, course_name, how_many, host_id, summary, 
+                          location, time, theme, is_recurring, repeat_interval, status 
+                          FROM potlucks as p JOIN potluck_course as pu ON p.potluck_id = pu.potluck_id 
+                          JOIN courses ON pu.course_id = courses.course_id WHERE p.potluck_id = @id";
+            try
+            {
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", potluckId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        output = MapRowToPotluck(reader, output);
+                        output = MapRowToPotluckCourses(reader, output);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new DaoException("A SQL exception occured.", ex);
+            }
+            return output;
+        }
+        private Potluck MapRowToPotluck(SqlDataReader reader, Potluck input)
+        {
+            
+            input.PotluckId = Convert.ToInt32(reader["potluck_id"]);
+            input.HostId = Convert.ToInt32(reader["host_id"]);
+            input.Name = Convert.ToString(reader["potluck_name"]);
+            input.Summary = Convert.ToString(reader["summary"]);
+            input.Location = Convert.ToString(reader["location"]);
+            input.Time = Convert.ToDateTime(reader["time"]);
+            input.Theme = Convert.ToString(reader["theme"]);
+            input.isRecurring = Convert.ToBoolean(reader["is_recurring"]);
+            input.RepeatInterval = Convert.ToInt32(reader["repeat_interval"]);
+            input.Status = Convert.ToString(reader["status"]);
+            input.CourseRequest = input.CourseRequest;
+
+            return input;
+        }
+        private Potluck MapRowToPotluckCourses(SqlDataReader reader, Potluck potluck)
+        {   
+            potluck.CourseRequest.Add(Convert.ToString(reader["course_name"]), Convert.ToInt32(reader["how_many"]));
 
             return potluck;
         }

@@ -42,17 +42,18 @@ namespace Capstone.Controllers
                 //}
                 return Ok(output);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
             }
         }
 
         [HttpGet("/{userId}/potlucks/{potluckId}")]  //Endpoint might change
-        public ActionResult<Potluck> GetPotluckById(int potluckId)
+        public ActionResult<Potluck> GetPotluckById(int userId, int potluckId)
         {
             try
             {
+                //Potluck output = potluckDao.GetPotluckById(potluckId);
                 Potluck output = potluckDao.GetPotluckById(potluckId);
                 if (output == null)
                 {
