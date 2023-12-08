@@ -24,24 +24,10 @@
         </div>
       </div>
       <div class="main">
-        <h2>Your Potluck Events:</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pretium dolor sit amet est gravida, vitae
-          efficitur
-          ex mattis. Sed at ante ex. Vivamus ut ligula eu ex eleifend malesuada. Donec auctor sit amet neque venenatis
-          rutrum. Suspendisse consectetur dictum aliquam. Sed rutrum ullamcorper leo, ac venenatis tellus auctor in. Duis
-          finibus lobortis metus nec rhoncus. Ut metus quam, aliquam sit amet elit in, hendrerit facilisis nunc.
-          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Mauris tempor libero non
-          lacus fringilla, eu lobortis sapien viverra.</p>
-
-
-        <p>Nullam congue volutpat risus vel interdum. Vivamus non velit iaculis, feugiat tellus nec, gravida erat.
-          Aliquam id feugiat elit, in sagittis velit. Maecenas eget nibh eget sapien tincidunt euismod. Vivamus felis
-          eros,
-          vestibulum vitae fringilla nec, tincidunt eu enim. Morbi nec elementum orci. Cras lobortis, felis elementum
-          molestie convallis, lorem arcu cursus sapien, sed eleifend urna ligula sit amet nulla. Nullam blandit eleifend
-          libero. Curabitur convallis mattis tempor. Ut sed ante metus. Proin malesuada, felis non sollicitudin tempus,
-          orci lacus tristique nisi, imperdiet aliquam nisl libero at ante. Nullam at justo lobortis, imperdiet diam in,
-          maximus erat.</p>
+        <h2>Mission Statement:</h2><br>
+        <p>At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in fostering a sense of community and connection by simplifying the process of organizing and participating in potluck events. Our goal is to provide a user-friendly
+          platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of togetherness one potluck at a time. Join us in building a 
+          world where every meal is an opportunity for shared joy and lasting connections.</p>
       </div>
       <div class="centerFooter">
         <p><strong>potluckPlanner:</strong> Written by TE capstone team 2</p>
