@@ -1,7 +1,19 @@
 <template>
-<p></p>
+<form action="submit">
+    <div>
+    <label for="email">Invite</label>
+</div>
+</form>
 </template>
 
-<script></script>
+<script>
+export default{
+    data() {
+        return {
+            invites: 1
+        }
+    }
+}
+</script>
 
 <style></style>

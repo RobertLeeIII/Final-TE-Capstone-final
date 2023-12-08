@@ -65,17 +65,9 @@ const routes = [
     }
   },
   {
-    path: "/potlucks",
+    path: "/users/:userId/potlucks",
     name: "potluck-list",
     component: PotluckListView,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: "/potlucks/:potluckId",
-    name: "potluck-details",
-    component: PotluckDetailsView,
     meta: {
       requiresAuth: false
     }
@@ -84,6 +76,14 @@ const routes = [
     path: "/potlucks",
     name: "potluck-create",
     component: CreatePotluckView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/potlucks/:potluckId",
+    name: "potluck-details",
+    component: PotluckDetailsView,
     meta: {
       requiresAuth: false
     }

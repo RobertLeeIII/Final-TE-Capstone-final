@@ -3,7 +3,7 @@ import axios from 'axios';
 export default{
 
     getPotlucks(userId){
-        return axios.get("/users/" + userId);
+        return axios.get("/users/" + userId + "/potlucks");
     },
     getPotluck(potluckId) {
         return axios.get(`/potlucks/` + potluckId)
