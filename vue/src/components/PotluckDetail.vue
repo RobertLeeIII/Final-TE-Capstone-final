@@ -118,15 +118,15 @@ body {
   background-color: #297fb8;
 }
 .spring {
-    color: rgb(166, 255, 166);
+    background-color: rgb(166, 255, 166);
 }
 
 .summer {
-    color: rgb(255, 255, 154);
+    background-color: rgb(255, 255, 154);
 }
 
 .fall {
-    color: rgb(241, 200, 138);
+    background-color: rgb(241, 200, 138);
 }
 
 .winter {
