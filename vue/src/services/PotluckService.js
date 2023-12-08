@@ -2,14 +2,14 @@ import axios from 'axios';
 
 export default{
 
-    showPotlucks(userId){
-        return axios.get("/" + userId);
+    getPotlucks(userId){
+        return axios.get("/users/" + userId);
     },
-    getPotluckById(userId, potluckId) {
-        return axios.get(`/${userId}/potlucks/` + potluckId)
+    getPotluck(potluckId) {
+        return axios.get(`/potlucks/` + potluckId)
     },
-    addPotluck(userId, potluck) {
-        return axios.post(`${userId}/potlucks/`, potluck);
+    addPotluck(userId, newPotluck) {
+        return axios.post(`/potlucks/`, newPotluck);
     },
 
 

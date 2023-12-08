@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'potluck-details', params: { userId: $store.state.user.userId, potluckId: Potluck.potluckId } }">
+    :to="{ name: 'potluck-details', params: { potluckId: Potluck.potluckId } }">
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
@@ -27,6 +27,7 @@
         </div>
       </div>
     </div>
+
   </router-link>
 </template>
 

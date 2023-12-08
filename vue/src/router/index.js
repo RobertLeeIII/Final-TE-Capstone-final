@@ -12,6 +12,8 @@ import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
 import InviteToPotluckForm from '../components/InviteToPotluckForm.vue'
+import ForgotEmailView from '../views/ForgotEmailView.vue';
+import ResetPasswordView from '../views/ResetView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -55,7 +57,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId",
+    path: "/users/:userId",
     name: "user-view",
     component: UserDetailView,
     meta: {
@@ -63,7 +65,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucks",
+    path: "/potlucks",
     name: "potluck-list",
     component: PotluckListView,
     meta: {
@@ -71,7 +73,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucks/:potluckId",
+    path: "/potlucks/:potluckId",
     name: "potluck-details",
     component: PotluckDetailsView,
     meta: {
@@ -79,7 +81,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucks/newPotluck",
+    path: "/potlucks",
     name: "potluck-create",
     component: CreatePotluckView,
     meta: {
@@ -101,7 +103,21 @@ const routes = [
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/forgot",
+    name: "forgot",
+    component: ForgotEmailView
+  },
+  {
+    path: "/Reset/:userId",
+  name: "reset",
+  component: ResetPasswordView,
+  meta: {
+    requiresAuth: false
   }
+  },
+  
 ];
 
 // Create the router
