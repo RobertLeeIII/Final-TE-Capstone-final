@@ -16,7 +16,7 @@ export default {
     },
     methods: {
         retrieveSpecificPotluck() {
-            PotluckService.getPotluckById(this.$store.state.user.userId, this.$route.params.potluckId)
+            PotluckService.getPotluckById(this.$route.params.potluckId)
                 .then(response => {
                     this.currentPotluck = response.data;
                 })
