@@ -26,36 +26,9 @@
         </div>
     </div>
     <div class="centerFooter">
-        <p><strong>potluckPlanner:</strong> Written by TE capstone team 2</p>
+        <p><strong>PotluckPlanner:</strong> Written by TE capstone team 2</p>
     </div>
-    <!-- <div class="card-container"> -->
-    <!-- <div v-for="potluck in potlucks" :key="potluck.hostId" class="card">
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="/public/potluck.jpg" alt="Potluck Image">
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48">
-                <img src="/public/logo.png" alt="Logo">
-              </figure>
-            </div>
-            <div class="media-content">
-              <p class="title is-4">{{ potluck.name }}</p>
-              <p class="subtitle is-6">@{{ this.$store.state.user.userId }}</p>
-            </div>
-          </div>
-          <div class="content">
-            <P>{{ potluck.summary }}</P>
-            <a href="#">#{{ potluck.location }}</a> <a href="#"></a>
-            <br>
-            <time :datetime="potluck.time">{{ formatDate(potluck.time) }}</time>
-          </div>
-        </div>
-      </div> -->
-    <!-- </div> -->
+    
     <p><br></p>
     <button class="button is-primary">
       <router-link :to="{ name: 'potluck-create' }"> HOST A POTLUCK </router-link>
