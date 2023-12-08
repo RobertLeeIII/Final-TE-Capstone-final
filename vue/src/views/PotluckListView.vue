@@ -5,7 +5,7 @@
 
 <script>
 import PotluckService from '../services/PotluckService.js';
-import PotlucksDisplay from '../components/PotlucksDisplay.vue';
+import PotlucksDisplay from '@/components/PotlucksDisplay.vue';
 import PotluckForm from '../components/PotluckForm.vue';
 
 export default {
@@ -44,6 +44,13 @@ export default {
                     }
                 });
         },
+    },
+    handleErrorResponse(error) {
+      if (error.response) {
+        if (error.response.status == 404) {
+          console.log("404 PROBLEM");
+        }
+      }
     },
     created() {
         this.getUserPotlucks(this.$store.state.user.userId);

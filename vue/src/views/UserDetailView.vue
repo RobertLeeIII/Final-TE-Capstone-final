@@ -1,5 +1,4 @@
 <template>
-
   <div class="main">
 
     <div class="card-container">
@@ -122,4 +121,5 @@ export default {
 .image.is-centered {
   display: flex;
   justify-content: center;
-}</style>
+}
+</style>
