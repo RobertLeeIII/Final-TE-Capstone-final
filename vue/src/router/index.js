@@ -88,14 +88,14 @@ const routes = [
       requiresAuth: false
     }
   },
-  {
-    path: "/invite",
-    name: "potluck-invite",
-    component: InviteToPotluckForm,
-    meta: {
-      requiresAuth: false
-    }
-  },
+  // {
+  //   path: "/invite",
+  //   name: "potluck-invite",
+  //   component: InviteToPotluckForm,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  //},
   {
     path: "/potlucks/:potluckId",
     name: "potluck-update",

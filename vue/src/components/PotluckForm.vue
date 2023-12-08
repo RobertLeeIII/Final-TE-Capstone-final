@@ -96,16 +96,6 @@ export default {
             showButton: false,
         }
     },
-    computed: {
-        updating() {
-            let action = this.$route.query.action;
-            if(action === 'update')
-            {
-                return true;
-            }
-            return false;
-        }
-    },
     methods: {
         validateNewPotluck() {
             let message = '';
