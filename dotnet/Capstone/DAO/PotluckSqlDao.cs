@@ -305,10 +305,15 @@ namespace Capstone.DAO
             }
             return editedPotluck;
         }
-        public int DeletePotluck(int potluckId)
+        public int DeletePotluck(int potluckId, int userId, int courseId)
         {
             int rowsAffected = 0;
-            string sql = "DELETE FROM potlucks WHERE potluck_id = @potluck_id;";
+            string sql = @"DELETE FROM potluck_user WHERE potluck_id = @potluck_id AND user_id = @user_id; 
+                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id = @dish_id; 
+                           DELETE FROM potluck_course WHERE potluck_id = @potluck_id AND course_id = @course_id; 
+                           DELETE FROM potlucks WHERE potluck_id = @potluck_id;";
+                           // Add this back as needed.
+                           //DELETE FROM potluck_diet WHERE potluck_id = @potluck_id AND diet_id = @diet_id;
 
             try
             {
@@ -318,6 +323,8 @@ namespace Capstone.DAO
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@course_id", courseId);
                     cmd.ExecuteNonQuery();
                 }
             }
