@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     getUserPotlucks(userId) {
-      PotluckService.showPotlucks(userId)
+      PotluckService.getPotlucks(userId)
         .then(response => {
           this.potlucks = response.data;
         })

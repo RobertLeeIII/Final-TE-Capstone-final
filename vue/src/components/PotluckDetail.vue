@@ -9,7 +9,9 @@
         <h2>Main Dishes: {{ Potluck.courseRequest.mains }}</h2>
         <h2>Sides: {{ Potluck.courseRequest.sides }}</h2>
         <h2>Desserts: {{ Potluck.courseRequest.desserts }}</h2>
-        <router-link :to="{name: invitationList}">Invite People</router-link>
+        <router-link v-if="isHost" :to="{name: invitationList}">Invite People</router-link>
+        <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}, 
+                                        query: {action: 'update'}}">Update This Potluck</router-link>
     </div>
 </template>
 
@@ -18,6 +20,11 @@ export default {
     data() {
         return {
             //currentPotluck: {}
+        }
+    },
+    computed: {
+        isHost() {
+            return this.Potluck.hostId == this.$store.state.user.userId;
         }
     },
     props: {
