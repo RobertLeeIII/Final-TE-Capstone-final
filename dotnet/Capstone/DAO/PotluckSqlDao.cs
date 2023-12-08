@@ -169,7 +169,7 @@ namespace Capstone.DAO
             }
             return potlucks;
         }
-        public IList<Potluck> getPotluckByHostID(int hostId)
+        public IList<Potluck> GetPotluckByHostID(int hostId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
             string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
