@@ -5,6 +5,11 @@
         <h2>{{ Potluck.time }}</h2>
         <h2>{{ Potluck.theme }}</h2>
         <h2>{{ Potluck.summary }}</h2>
+        <h2>Appetizers: {{ Potluck.courseRequest.apps }}</h2>
+        <h2>Main Dishes: {{ Potluck.courseRequest.mains }}</h2>
+        <h2>Sides: {{ Potluck.courseRequest.sides }}</h2>
+        <h2>Desserts: {{ Potluck.courseRequest.desserts }}</h2>
+        <router-link :to="{name: invitationList}">Invite People</router-link>
     </div>
 </template>
 
