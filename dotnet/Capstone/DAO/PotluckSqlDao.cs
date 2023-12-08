@@ -308,9 +308,9 @@ namespace Capstone.DAO
         public int DeletePotluck(int potluckId, int userId, int courseId)
         {
             int rowsAffected = 0;
-            string sql = @"DELETE FROM potluck_user WHERE potluck_id = @potluck_id AND user_id = @user_id; 
-                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND user_id = @user_id;
-                           DELETE FROM potluck_course WHERE potluck_id = @potluck_id AND course_id = @course_id; 
+            string sql = @"DELETE FROM potluck_user WHERE potluck_id = @potluck_id;  
+                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id; 
+                           DELETE FROM potluck_course WHERE potluck_id = @potluck_id;  
                            DELETE FROM potlucks WHERE potluck_id = @potluck_id;"; 
                            // Add this one back as needed.
                            //DELETE FROM potluck_diet WHERE potluck_id = @potluck_id AND diet_id = @diet_id;
