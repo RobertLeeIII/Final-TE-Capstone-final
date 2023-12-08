@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit.prevent="updateRecipe">
+    <form v-on:submit.prevent="updateDish">
         <label for="recipe">Recipe</label>
         <input type="text" v-model="recipe">
 
