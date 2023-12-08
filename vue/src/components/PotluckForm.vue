@@ -122,7 +122,7 @@ export default {
                 .then(response => {
                     this.resetPotluckForm;
                     // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-                    this.$router.push({name: 'potluck-details', params: {userId: response.data.hostId, potluckId: response.data.potluckId}});
+                    this.$router.push({name: 'potluck-details', params: { potluckId: response.data.potluckId}});
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 404) {

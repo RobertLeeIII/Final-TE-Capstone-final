@@ -23,33 +23,23 @@ namespace Capstone.Controllers
             this.potluckDao = potluckDao;
         }
         // TODO: Change route when ready
-        [HttpGet("/{userId}")]
+        [HttpGet("/users/{userId}")]
         public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
         {
             try
             {
                 List<Potluck> output = new List<Potluck>(potluckDao.GetPotlucksByUserId(userId));
-                //foreach (Potluck potluck in output)
-                //{
-                //    if (potluck.Time > DateTime.Now)
-                //    {
-                //        potluck.Status = "Upcoming";
-                //    }
-                //    else
-                //    {
-                //        potluck.Status = "Past";
-                //    }
-                //}
+           
                 return Ok(output);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
         }
 
-        [HttpGet("/{userId}/potlucks/{potluckId}")]  //Endpoint might change
-        public ActionResult<Potluck> GetPotluckById(int userId, int potluckId)
+        [HttpGet("/potlucks/{potluckId}")]  //Endpoint might change
+        public ActionResult<Potluck> GetPotluckById(int potluckId)
         {
             try
             {
@@ -67,7 +57,7 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost("/{userId}/potlucks")]
+        [HttpPost("/potlucks")]
         public ActionResult<Potluck> CreateNewPotluck(NewPotluckDTO newPotluck)
         {
             Potluck addedPotluck = potluckDao.CreatePotluck(newPotluck);
@@ -77,7 +67,7 @@ namespace Capstone.Controllers
             return Created($"/{addedPotluck.HostId}/potlucks/{addedPotluck.PotluckId}", addedPotluck);
         }
 
-        [HttpPut("/{userId}/potlucks/{potluckId}")]
+        [HttpPut("/potlucks/{potluckId}")]
         public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int userId, int potluckId)
         {
             try

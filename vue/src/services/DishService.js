@@ -2,10 +2,10 @@ import axios from 'axios'
 
 export default {
     postNewDish(newDish, userId, potluckId){
-        return axios.post(`/${userId}/potlucks/${potluckId}`, newDish);
+        return axios.post(`/potlucks/${potluckId}/menu`, userId, newDish);
     },
 
-    updateDish(updatedDish, userId, dishId){
-        return axios.put(`/${userId}/dishes/${dishId}/update`, updatedDish)
+    updateDish(updatedDish, dishId){
+        return axios.put(`/dishes/${dishId}/update`, updatedDish)
     }
 }
