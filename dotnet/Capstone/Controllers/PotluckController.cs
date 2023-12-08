@@ -23,7 +23,7 @@ namespace Capstone.Controllers
             this.potluckDao = potluckDao;
         }
         // TODO: Change route when ready
-        [HttpGet("/users/{userId}")]
+        [HttpGet("/users/{userId}/potlucks")] //This should be in user Controller. THIS one should be called at /users/userId/potlucks
         public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
         {
             try

@@ -26,16 +26,16 @@
 
         <label for="apps">Appetizers</label>
         <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="apps" id="apps"
-            v-model="newPotluck.course.apps">
+            v-model="newPotluck.courseRequest.apps">
         <label for="sides">Sides</label>
         <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="sides" id="sides"
-            v-model="newPotluck.course.sides">
+            v-model="newPotluck.courseRequest.sides">
         <label for="mains">Mains</label>
         <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="mains" id="mains"
-            v-model="newPotluck.course.mains">
+            v-model="newPotluck.courseRequest.mains">
         <label for="desserts">Desserts</label>
         <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="desserts"
-            id="desserts" v-model="newPotluck.course.desserts">
+            id="desserts" v-model="newPotluck.courseRequest.desserts">
 
 
         <!-- <label for="courses">Courses</label> 

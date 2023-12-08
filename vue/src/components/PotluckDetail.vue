@@ -1,5 +1,5 @@
 <template>
-    <div class="potluck-detail">
+    <div class="potluck-detail" v-if="Potluck.courseRequest"> <!--Wait until the Potluck is fully loaded-->
         <h2>{{ Potluck.name }}</h2>
         <h2>{{ Potluck.location }}</h2>
         <h2>{{ Potluck.time }}</h2>
@@ -9,7 +9,7 @@
         <h2>Main Dishes: {{ Potluck.courseRequest.mains }}</h2>
         <h2>Sides: {{ Potluck.courseRequest.sides }}</h2>
         <h2>Desserts: {{ Potluck.courseRequest.desserts }}</h2>
-        <router-link v-if="isHost" :to="{name: invitationList}">Invite People</router-link>
+        <!-- <router-link v-if="isHost" :to="{name: invitationList}">Invite People</router-link> -->
         <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}, 
                                         query: {action: 'update'}}">Update This Potluck</router-link>
     </div>
