@@ -22,16 +22,16 @@
         <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.date">
 
         <label for="apps">Appetizers</label>
-        <input class="input is-rounded" type="number" name="apps" id="time" v-model="newPotluck.course.apps">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="apps" id="time" v-model="newPotluck.course.apps">
         <label for="sides">Sides</label>
-        <input class="input is-rounded" type="number" name="sides" id="time" v-model="newPotluck.course.sides">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="sides" id="time" v-model="newPotluck.course.sides">
         <label for="mains">Mains</label>
-        <input class="input is-rounded" type="number" name="mains" id="time" v-model="newPotluck.course.mains">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="mains" id="time" v-model="newPotluck.course.mains">
         <label for="desserts">Desserts</label>
-        <input class="input is-rounded" type="number" name="desserts" id="time" v-model="newPotluck.course.desserts">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="desserts" id="time" v-model="newPotluck.course.desserts">
 
 
-        <!-- <label for="courses">Courses</label>
+        <!-- <label for="courses">Courses</label> 
         <div>
             <label for="courses">Courses</label>
             <div>

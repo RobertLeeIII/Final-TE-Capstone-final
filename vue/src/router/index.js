@@ -11,6 +11,7 @@ import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
+import InviteToPotluckForm from '../components/InviteToPotluckForm.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -81,6 +82,14 @@ const routes = [
     path: "/:userId/potlucks/newPotluck",
     name: "potluck-create",
     component: CreatePotluckView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/invite",
+    name: "potluck-invite",
+    component: InviteToPotluckForm,
     meta: {
       requiresAuth: false
     }
