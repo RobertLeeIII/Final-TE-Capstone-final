@@ -13,7 +13,7 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-        public List<Dish> GetDishes()
+        public IList<Dish> GetDishes()
         {
             List<Dish> dishes = new List<Dish>();
             string sql = "SELECT dish_id, dish_name, recipe FROM dishes;";

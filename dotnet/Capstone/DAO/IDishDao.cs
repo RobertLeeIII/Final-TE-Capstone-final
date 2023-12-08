@@ -13,5 +13,6 @@ namespace Capstone.DAO
         public Dish UpdateDish(UpdateDishDTO updateDish, int dishId);
         public int DeleteDish(int dishId, int potluckId, int userId);
 
+
     }
 }
