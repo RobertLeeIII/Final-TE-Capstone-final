@@ -16,7 +16,7 @@
           </div>
           <div class="media-content">
             <p class="title is-4">{{ propPotluck.name }}</p>
-            <p class="subtitle is-6">@{{ $store.state.user.userId }}</p>
+            <p class="subtitle is-6">{{ $store.state.user.username }}</p>
           </div>
         </div>
         <div class="content">
