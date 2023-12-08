@@ -55,10 +55,10 @@
         <label for="potluck-theme">Theme</label>
         <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
             <option>None </option>
-            <option>Spring</option>
-            <option>Summer</option>
-            <option>Fall</option>
-            <option>Winter<i class="fas fa-snowflake"></i></option>
+            <option>🍀Spring</option>
+            <option>🌞Summer</option>
+            <option>🎃Fall</option>
+            <option>❄️Winter</option>
         </select>
         <button type="submit">Submit</button>
 
@@ -166,4 +166,5 @@ export default {
 .hero {
     background-color: rgb(255, 193, 146);
 }
+
 </style>

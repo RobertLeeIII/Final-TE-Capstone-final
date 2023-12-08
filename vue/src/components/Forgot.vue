@@ -1,13 +1,19 @@
 <template @submit.prevent="handleSubmit">
-    <form>
+    <form class="box">
     <h3>Forgot Password?</h3>
-    <div class="form-group">
+    <br>
+    <div class="field">
         <label>Email</label>
+        <div class='control'>
         <input type="email" class="form-control" v-model="email" placeholder="Email">
+        </div>
     </div>
 
-    <button class="btn btn-primary btn-block">Submit</button>
+    <button class="button is-primary">Submit</button>
     </form>
+    <div class="forimage">
+    <img class='img-size' src="/public\wall.jpg">
+    </div>
 </template>
 
 <script>
@@ -24,8 +30,17 @@ export default{
             const response = await axios.post('forgot', {
                     email: this.email
             });
-            console.log(response);
+            /* console.log(response); */
         }
     }
 }
 </script>
+<style>
+.img-size{
+    height: 650px; 
+}
+.forimage{
+    display: flex;
+    justify-content: center;
+}
+</style>
