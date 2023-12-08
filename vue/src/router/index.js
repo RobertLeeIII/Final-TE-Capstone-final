@@ -11,8 +11,10 @@ import PotluckListView from '../views/PotluckListView.vue';
 import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
+import InviteToPotluckForm from '../components/InviteToPotluckForm.vue'
 import ForgotEmailView from '../views/ForgotEmailView.vue';
-import ResetPasswordView from '../views/ResetView.vue';
+import ResetPasswordView from '../views/ResetView.vue'
+
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -63,17 +65,9 @@ const routes = [
     }
   },
   {
-    path: "/potlucks",
+    path: "/users/:userId/potlucks",
     name: "potluck-list",
     component: PotluckListView,
-    meta: {
-      requiresAuth: false
-    }
-  },
-  {
-    path: "/potlucks/:potluckId",
-    name: "potluck-details",
-    component: PotluckDetailsView,
     meta: {
       requiresAuth: false
     }
@@ -88,6 +82,22 @@ const routes = [
   },
   {
     path: "/potlucks/:potluckId",
+    name: "potluck-details",
+    component: PotluckDetailsView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  // {
+  //   path: "/invite",
+  //   name: "potluck-invite",
+  //   component: InviteToPotluckForm,
+  //   meta: {
+  //     requiresAuth: false
+  //   }
+  //},
+  {
+    path: "/potlucks/:potluckId/update",
     name: "potluck-update",
     component: PotluckUpdateView,
     meta: {
@@ -101,13 +111,13 @@ const routes = [
   },
   {
     path: "/Reset/:userId",
-  name: "reset",
-  component: ResetPasswordView,
-  meta: {
-    requiresAuth: false
-  }
+    name: "reset",
+    component: ResetPasswordView,
+    meta: {
+      requiresAuth: false
+    }
   },
-  
+
 ];
 
 // Create the router
@@ -126,7 +136,7 @@ router.beforeEach((to) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return { name: "login" };
   }
   // Otherwise, do nothing and they'll go to their next destination
 });

@@ -1,7 +1,10 @@
 <template>
     <section class="hero">
         <div class="hero-body">
-            <p class="title">
+            <p v-if="updating" class="title">
+                Update Potluck
+            </p>
+            <p v-else class="title">
                 Create Potluck
             </p>
             <p class="subtitle">
@@ -22,16 +25,20 @@
         <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.time">
 
         <label for="apps">Appetizers</label>
-        <input class="input is-rounded" type="number" name="apps" id="apps" v-model="newPotluck.courseRequest.apps">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="apps" id="apps"
+            v-model="newPotluck.courseRequest.apps">
         <label for="sides">Sides</label>
-        <input class="input is-rounded" type="number" name="sides" id="sides" v-model="newPotluck.courseRequest.sides">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="sides" id="sides"
+            v-model="newPotluck.courseRequest.sides">
         <label for="mains">Mains</label>
-        <input class="input is-rounded" type="number" name="mains" id="mains" v-model="newPotluck.courseRequest.mains">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="mains" id="mains"
+            v-model="newPotluck.courseRequest.mains">
         <label for="desserts">Desserts</label>
-        <input class="input is-rounded" type="number" name="desserts" id="desserts" v-model="newPotluck.courseRequest.desserts">
+        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="desserts"
+            id="desserts" v-model="newPotluck.courseRequest.desserts">
 
 
-        <!-- <label for="courses">Courses</label>
+        <!-- <label for="courses">Courses</label> 
         <div>
             <label for="courses">Courses</label>
             <div>
@@ -69,7 +76,7 @@
 </template>
 
 <script>
-import PotluckService from '@/services/PotluckService.js';
+import PotluckService from '../services/PotluckService.js';
 
 export default {
     data() {
@@ -91,6 +98,15 @@ export default {
                 status: 'active'
             },
             showButton: false,
+        }
+    },
+    computed: {
+        updating() {
+            let action = this.$route.query.action;
+            if (action === 'update') {
+                return true;
+            }
+            return false;
         }
     },
     methods: {
@@ -122,7 +138,7 @@ export default {
                 .then(response => {
                     this.resetPotluckForm;
                     // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-                    this.$router.push({name: 'potluck-details', params: { potluckId: response.data.potluckId}});
+                    this.$router.push({ name: 'potluck-details', params: { potluckId: response.data.potluckId } });
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 404) {
@@ -165,5 +181,4 @@ export default {
 <style>
 .hero {
     background-color: rgb(255, 193, 146);
-}
-</style>
+}</style>

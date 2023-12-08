@@ -1,7 +1,7 @@
 <template>
     <body>
-        <div :class="changingTheme">
-            <ul class="container">
+    <div :class="changingTheme" v-if="Potluck.courseRequest">
+        <ul class="container">
                 <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
                 <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
                 <li><i :class="changingIcon"></i> {{ Potluck.time }}</li>
@@ -12,13 +12,11 @@
                 <li><i :class="changingIcon"></i> Sides: {{ Potluck.courseRequest.sides }}</li>
                 <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
             </ul>
-            <router-link v-if="isHost" :to="{ name: invitationList }">Invite People</router-link>
-            <router-link v-if="isHost" :to="{
-                name: 'potluck-update', params: { potluckId: Potluck.potluckId },
-                query: { action: 'update' }
-            }">Update This Potluck</router-link>
-        </div>
-    </body>
+        <router-link v-if="isHost" :to="{name: invitationList}">Invite People</router-link>
+        <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}, 
+                                        query: {action: 'update'}}">Update This Potluck</router-link>
+    </div>
+</body>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'potluck-details', params: { potluckId: Potluck.potluckId } }">
+    :to="{ name: 'potluck-details', params: { potluckId: propPotluck.potluckId } }">
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
@@ -15,15 +15,15 @@
             </figure>
           </div>
           <div class="media-content">
-            <p class="title is-4">{{ Potluck.name }}</p>
+            <p class="title is-4">{{ propPotluck.name }}</p>
             <p class="subtitle is-6">@{{ $store.state.user.userId }}</p>
           </div>
         </div>
         <div class="content">
-          <p>{{ Potluck.summary }}</p>
-          <a :href="`#${Potluck.location}`">#{{ Potluck.location }}</a>
+          <p>{{ propPotluck.summary }}</p>
+          <a :href="`#${propPotluck.location}`">#{{ propPotluck.location }}</a>
           <br>
-          <time :datetime="Potluck.time">{{ formatDate(Potluck.time) }}</time>
+          <time :datetime="propPotluck.time">{{ formatDate(propPotluck.time) }}</time>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
 <script>
 export default {
   props: {
-    Potluck: Object
+    propPotluck: Object,
   },
   methods: {
     formatDate(dateTimeString) {
