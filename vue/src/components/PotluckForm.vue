@@ -1,7 +1,10 @@
 <template>
     <section class="hero">
         <div class="hero-body">
-            <p class="title">
+            <p v-if="updating" class="title">
+                Update Potluck
+            </p>
+            <p v-else class="title">
                 Create Potluck
             </p>
             <p class="subtitle">
@@ -91,6 +94,16 @@ export default {
                 status: 'active'
             },
             showButton: false,
+        }
+    },
+    computed: {
+        updating() {
+            let action = this.$route.query.action;
+            if(action === 'update')
+            {
+                return true;
+            }
+            return false;
         }
     },
     methods: {
