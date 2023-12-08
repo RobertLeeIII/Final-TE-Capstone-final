@@ -1,44 +1,60 @@
 <template>
+  <div>
     <section class="hero">
-        <div class="hero-body">
-            <p v-if="updating" class="title">
-                Update Potluck
-            </p>
-            <p v-else class="title">
-                Create Potluck
-            </p>
-            <p class="subtitle">
-            </p>
-        </div>
+      <div class="hero-body">
+        <p v-if="updating" class="title">Update Potluck</p>
+        <p v-else class="title">Create Potluck</p>
+        <p class="subtitle"></p>
+      </div>
     </section>
     <form v-on:submit.prevent="saveNewPotluck" class="potluck-form">
-        <label for="potluck-name">Name</label>
-        <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="newPotluck.name">
+      <label for="potluck-name">Name</label>
+      <input
+        class="input is-rounded"
+        type="text"
+        name="Name"
+        id="potluck-name"
+        v-model="newPotluck.name"
+      />
 
-        <label for="summary">Summary</label>
-        <input class="input is-rounded" type="text" name="Summary" id="summary" v-model="newPotluck.summary">
+      <label for="summary">Summary</label>
+      <input
+        class="input is-rounded"
+        type="text"
+        name="Summary"
+        id="summary"
+        v-model="newPotluck.summary"
+      />
 
-        <label for="location">Location</label>
-        <input class="input is-rounded" type="text" name="location" id="location" v-model="newPotluck.location">
+      <label for="location">Location</label>
+      <input
+        class="input is-rounded"
+        type="text"
+        name="location"
+        id="location"
+        v-model="newPotluck.location"
+      />
 
-        <label for="time">Date</label>
-        <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.time">
+      <label for="time">Date</label>
+      <input
+        class="input is-rounded"
+        type="datetime-local"
+        name="time"
+        id="time"
+        v-model="newPotluck.time"
+      />
 
         <label for="apps">Appetizers</label>
-        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="apps" id="apps"
-            v-model="newPotluck.courseRequest.apps">
+        <input class="input is-rounded" type="number" name="apps" id="apps" v-model="newPotluck.courseRequest.apps">
         <label for="sides">Sides</label>
-        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="sides" id="sides"
-            v-model="newPotluck.courseRequest.sides">
+        <input class="input is-rounded" type="number" name="sides" id="sides" v-model="newPotluck.courseRequest.sides">
         <label for="mains">Mains</label>
-        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="mains" id="mains"
-            v-model="newPotluck.courseRequest.mains">
+        <input class="input is-rounded" type="number" name="mains" id="mains" v-model="newPotluck.courseRequest.mains">
         <label for="desserts">Desserts</label>
-        <input class="input is-rounded" type="number" min=0 oninput="validity.valid||(value='')" name="desserts"
-            id="desserts" v-model="newPotluck.courseRequest.desserts">
+        <input class="input is-rounded" type="number" name="desserts" id="desserts" v-model="newPotluck.courseRequest.desserts">
 
 
-        <!-- <label for="courses">Courses</label> 
+      <!-- <label for="courses">Courses</label> 
         <div>
             <label for="courses">Courses</label>
             <div>
@@ -59,24 +75,26 @@
             </div>
         </div>
  -->
-        <label for="potluck-theme">Theme</label>
-        <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
-            <option>None </option>
-            <option>Spring</option>
-            <option>Summer</option>
-            <option>Fall</option>
-            <option>Winter</option>
-        </select>
-        <button type="submit">Submit</button>
-
+      <label for="potluck-theme">Theme</label>
+      <select
+        class="input is-rounded"
+        id="potluck-theme"
+        v-model="newPotluck.theme"
+      >
+        <option>None</option>
+        <option>🍀Spring</option>
+        <option>🌞Summer</option>
+        <option>🎃Fall</option>
+        <option>❄️Winter</option>
+      </select>
+      <button type="submit">Submit</button>
     </form>
-    <br>
-    <div> <img src="/7637317.jpg" style="width:100%;" alt="">
-    </div>
+    <img src="/7637317.jpg" style="width: 100%" />
+  </div>
 </template>
 
 <script>
-import PotluckService from '../services/PotluckService.js';
+import PotluckService from "../services/PotluckService.js";
 
 export default {
     data() {
@@ -98,15 +116,6 @@ export default {
                 status: 'active'
             },
             showButton: false,
-        }
-    },
-    computed: {
-        updating() {
-            let action = this.$route.query.action;
-            if (action === 'update') {
-                return true;
-            }
-            return false;
         }
     },
     methods: {
@@ -138,7 +147,7 @@ export default {
                 .then(response => {
                     this.resetPotluckForm;
                     // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-                    this.$router.push({ name: 'potluck-details', params: { potluckId: response.data.potluckId } });
+                    this.$router.push({name: 'potluck-details', params: { potluckId: response.data.potluckId}});
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 404) {
@@ -152,33 +161,34 @@ export default {
                 })
         },
 
-        resetPotluckForm() {
-            this.newPotluck = {
-                name: '',
-                summary: '',
-                location: '',
-                time: '',
-                course: {
-                    apps: 0,
-                    sides: 0,
-                    mains: 0,
-                    desserts: 0,
-                },
-                theme: 'None'
-            }
+    resetPotluckForm() {
+      this.newPotluck = {
+        name: "",
+        summary: "",
+        location: "",
+        time: "",
+        course: {
+          apps: 0,
+          sides: 0,
+          mains: 0,
+          desserts: 0,
         },
-        handleErrorResponse(error) {
-            if (error.response) {
-                if (error.response.status == 404) {
-                    console.log("404 PROBLEM");
-                }
-            }
-        },
-    }
-}
+        theme: "None",
+      };
+    },
+    handleErrorResponse(error) {
+      if (error.response) {
+        if (error.response.status == 404) {
+          console.log("404 PROBLEM");
+        }
+      }
+    },
+  },
+};
 </script>
 
 <style>
 .hero {
     background-color: rgb(255, 193, 146);
-}</style>
+}
+</style>
