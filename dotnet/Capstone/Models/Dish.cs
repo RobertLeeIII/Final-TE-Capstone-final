@@ -6,6 +6,8 @@ namespace Capstone.Models
     public class Dish
     {
         public int DishId { get; set; }
+        //This points to the userId
+        public string Creator { get; set; }
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
@@ -29,12 +31,14 @@ namespace Capstone.Models
     }
     public class NewDishDTO
     {
+        public string Creator { get; set; }
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
     }
     public class UpdateDishDTO
     {
+        public string Creator { get; set; }
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int NewReview { get; set; }
