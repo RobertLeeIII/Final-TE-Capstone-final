@@ -97,7 +97,7 @@ const routes = [
     }
   },
   {
-    path: "/:userId/potlucks/:potluckId/update",
+    path: "/potlucks/:potluckId",
     name: "potluck-update",
     component: PotluckUpdateView,
     meta: {
