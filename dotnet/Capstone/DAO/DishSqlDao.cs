@@ -138,18 +138,38 @@ namespace Capstone.DAO
             }
             return dishes;
         }
-        //public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
-        //{
-        //    Dish newDish = null;
+        public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
+        {
+            //insert into dishes
+            //insert into dish_user.
+            //insert into dish_potluck.
+            Dish newDish = null;
+            string sql1 = @"INSERT INTO dishes (dish_name, recipe, rating, course_id)
+                            OUTPUT INSERTED.dish_id
+                            VALUES (@dish_name, @recipe, @rating, @course_id);";
 
-        //    //insert into dishes
-        //    //insert into dish_user.
-        //    //insert into dish_potluck.
+            string sql2 = @"INSERT INTO user_dish (user_id, dish_id)
+                            VALUES (@ID, @ID)";
 
+            int newDishId = 0;
 
-
-        //    return newDish;
-        //}
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(sql1, conn);
+                    cmd.Parameters.AddWithValue("@dish_name", addedDish.Name);
+                    cmd.Parameters.AddWithValue("@recipe", addedDish.Recipe);
+                    cmd.Parameters.AddWithValue("@rating", addedDish.Rating);
+                    cmd.Parameters.AddWithValue("@course_id", addedDish.CourseId);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("A SQL error occured.", ex);
+            }
+            return newDish;
+        }
         //public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
         //{
 
