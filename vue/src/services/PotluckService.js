@@ -11,6 +11,10 @@ export default{
     addPotluck(userId, newPotluck) {
         return axios.post(`/potlucks/`, newPotluck);
     },
+    updatePotluck(userId, updatedPotluck)
+    {
+        return axios.put(`${userId}/potlucks/${updatedPotluck.potluckId}`, updatedPotluck)
+    },
 
 
 }

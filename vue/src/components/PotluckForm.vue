@@ -65,7 +65,7 @@
             <option>Spring</option>
             <option>Summer</option>
             <option>Fall</option>
-            <option>Winter<i class="fas fa-snowflake"></i></option>
+            <option>Winter</option>
         </select>
         <button type="submit">Submit</button>
 
