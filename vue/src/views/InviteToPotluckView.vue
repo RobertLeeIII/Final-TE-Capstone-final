@@ -1,17 +1,15 @@
 <template>
     <InviteToPotluckForm></InviteToPotluckForm>
-    </template>
+</template>
     
-    <script>
-    import InviteToPotluckForm from '@/components/InviteToPotluckForm.vue'
-    
-    export default{
-        components: {
-            InviteToPotluckForm
-        }
+<script>
+import InviteToPotluckForm from '@/components/InviteToPotluckForm.vue'
+
+export default {
+    components: {
+        InviteToPotluckForm
     }
-    </script>
+}
+</script>
     
-    <style>
-    
-    </style>
+<style></style>
