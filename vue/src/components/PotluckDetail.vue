@@ -1,5 +1,5 @@
 <template>
-    <div class="potluck-detail">
+    <div class="potluck-detail" v-if="Potluck.courseRequest"> <!--Wait until the Potluck is fully loaded-->
         <h2>{{ Potluck.name }}</h2>
         <h2>{{ Potluck.location }}</h2>
         <h2>{{ Potluck.time }}</h2>
