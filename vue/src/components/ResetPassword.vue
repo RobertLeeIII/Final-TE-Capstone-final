@@ -39,7 +39,7 @@ export default {
     async handleSubmit() {
       try {
         // Make an API request to reset the password
-        const response = await axios.post('/api/reset-password', {
+        const response = await axios.post('/api/reset', {
           password: this.password,
           password_confirm: this.password_confirm,
           token: this.$route.params.token

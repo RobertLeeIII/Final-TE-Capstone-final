@@ -32,7 +32,7 @@
       async handleSubmit() {
         try {
           // Make an API request to send the reset link to the email
-          const response = await axios.post('/api/forgot-password', {
+          const response = await axios.post('/controller/forgot', {
             email: this.email
           });
   

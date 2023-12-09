@@ -6,12 +6,14 @@ using System.Net.Mail;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using Capstone.Security;
+using Microsoft.AspNetCore.DataProtection;
 
 [ApiController]
 [Route("controller")]
 public class PasswordResetController : ControllerBase
 {
-    private const string JwtSecret = "your-secret-key";
+    private readonly string JwtSecret = "your-secret-key";
     private const string EmailSender = "plannerpotluck@gmail.com";
     private const string EmailSenderPassword = "C#C#DotNet";
 

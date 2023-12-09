@@ -110,7 +110,7 @@ const routes = [
     component: ForgotEmailView
   },
   {
-    path: "/Reset/:userId",
+    path: "/reset/token",
     name: "reset",
     component: ResetPasswordView,
     meta: {
