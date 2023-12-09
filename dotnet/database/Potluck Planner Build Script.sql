@@ -90,8 +90,14 @@ CREATE TABLE potluck_user (
     potluck_id INT FOREIGN KEY references potlucks(potluck_id),
     user_id INT FOREIGN KEY references users(user_id),
 	status NVARCHAR(20) NOT NULL DEFAULT 'Invited', --Attending, Not Attenging, etc.
-    PRIMARY KEY (potluck_id, user_id)
-    
+    PRIMARY KEY (potluck_id, user_id)    
+);
+
+CREATE TABLE invitations (
+    potluck_id INT FOREIGN KEY references potlucks(potluck_id),
+    email NVARCHAR(200) NOT NULL,
+	status NVARCHAR(30) NOT NULL DEFAULT 'Invited', --Attending, Not Attenging, etc.
+    PRIMARY KEY (potluck_id)    
 );
 
 CREATE TABLE ingredient_dish (

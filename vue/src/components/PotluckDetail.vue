@@ -16,7 +16,7 @@
                                         query: {action: 'invite'}}">Invite People</router-link>
         <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}, 
                                         query: {action: 'update'}}">Update This Potluck</router-link>
-        <router-link v-if="isHost" :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}}">Who's Invited?</router-link>
+        <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId} }">Who's coming?</router-link>
     </div>
 </body>
 </template>

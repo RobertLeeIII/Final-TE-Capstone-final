@@ -36,5 +36,19 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpPut("/potlucks/{potluckId}/guestList")]
+        public ActionResult<IList<string>> SendInvitations(IList<string> invitations, int potluckId)
+        {
+            try
+            {
+                IList<User> output = userDao.GetUsersByPotluckId(potluckId);
+                return Ok(output);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
     }
 }

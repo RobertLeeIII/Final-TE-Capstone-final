@@ -1,7 +1,9 @@
 <template>
     <invite-to-potluck-form v-if="this.$route.query.action == 'invite'"></invite-to-potluck-form>
-    <uninvite-from-potluck v-else :potluckGuests="guests"></uninvite-from-potluck>
+    <uninvite-from-potluck v-else-if="this.$route.query.action == 'uninvite'" :potluckGuests="guests"></uninvite-from-potluck>
 
+    <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
+                      query: {action: 'uninvite'}}">Uninvite Someone?</router-link>
 </template>
 
 <script>
@@ -28,7 +30,7 @@ export default {
         getPotluckGuests(potluckId) {
             this.UserService.getGuestsByPotluckId(potluckId)
                 .then(response => {
-                    this.guests = response.data;
+                    this.potluckGuests = response.data;
                 })
                 .catch(error => {
                     if (error.response && error.response.status === 404) {
