@@ -1,6 +1,6 @@
 <template>
-    <invite-to-potluck-form></invite-to-potluck-form>
-    <uninvite-from-potluck :potluckGuests="guests"></uninvite-from-potluck>
+    <invite-to-potluck-form v-if="this.$route.query.action == 'invite'"></invite-to-potluck-form>
+    <uninvite-from-potluck v-else :potluckGuests="guests"></uninvite-from-potluck>
 
 </template>
 

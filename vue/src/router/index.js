@@ -90,7 +90,7 @@ const routes = [
     }
   },
   {
-    path: "/potlucks/:potluckId/guestList",
+    path: "/potlucks/:potluckId/guest-list",
     name: "guest-list",
     component: GuestListView,
     meta: {
