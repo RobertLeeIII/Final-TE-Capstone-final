@@ -21,7 +21,25 @@
                 </router-link>
 
             </div>
-            <potluck class="potluck" v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId"></potluck>
+            <potluck class="potluck" v-if="hasPotlucks" v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId"></potluck>
+            <div class="card-container" v-else>
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-centered">
+                            <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+
+                        <div class="media">
+                            <div class="media-center">
+                                <p>You have no potlucks :(</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -45,6 +63,11 @@ export default {
     props: {
         myPotlucks: Array
     },
+    computed: {
+        hasPotlucks() {
+            return this.myPotlucks[0].name !== null;
+        }
+    }
     // methods: {
     //     populatePotluckArray() {
     //         this.potlucks = this.myPotlucks;

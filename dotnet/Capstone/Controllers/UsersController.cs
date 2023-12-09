@@ -23,11 +23,11 @@ namespace Capstone.Controllers
             this.dishDao = dishDao;
         }
         [HttpGet("/potlucks/{potluckId}/guestList")]
-        public ActionResult<List<User>> GetUsersByPotluckID(int potluckId)
+        public ActionResult<IList<User>> GetUsersByPotluckID(int potluckId)
         {
             try
             {
-                List<User> output = userDao.GetUsersByPotluckId(potluckId);
+                IList<User> output = userDao.GetUsersByPotluckId(potluckId);
                 return Ok(output);
             }
             catch (System.Exception)

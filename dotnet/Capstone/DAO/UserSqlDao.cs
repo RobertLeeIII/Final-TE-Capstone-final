@@ -49,9 +49,9 @@ namespace Capstone.DAO
             return users;
         }
 
-        public List<User> GetUsersByPotluckId(int potluckId)
+        public IList<User> GetUsersByPotluckId(int potluckId)
         {
-            List<User> output = new List<User>();
+            IList<User> output = new List<User>();
 
             string sql = @"SELECT users.user_id, username, email FROM users 
                            JOIN potluck_user as pu ON users.user_id = pu.user_id 

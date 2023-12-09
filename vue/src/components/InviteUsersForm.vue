@@ -23,15 +23,14 @@ export default {
     },
     methods: {
         increaseCounter(index) {
-            if (event.target.value.trim()) {
-                if (index == this.invites) {
-                    if (index == this.guests.length + 1) {
+            if (event.target.value.trim()) {    // not empty
+                if (index == this.invites) {    // in the last field
+                    if (index == this.guests.length + 1) {  //
                         this.invites += 1;
-                        this.guests.push(event.target.value.trim());
                     }
                 }
                 else {
-                    if (index == this.invites - 1) {
+                    if (index <= this.invites - 1) {
                         this.guests[index - 1] = event.target.value.trim();
                     }
                 }

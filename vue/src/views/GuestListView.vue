@@ -1,10 +1,13 @@
 <template>
-    <invite-users-form :potluckGuests="guests"></invite-users-form>
+    <invite-to-potluck-form></invite-to-potluck-form>
+    <uninvite-from-potluck :potluckGuests="guests"></uninvite-from-potluck>
+
 </template>
 
 <script>
-import InviteUsersForm from '../components/InviteUsersForm.vue';
 import UserService from '../services/UserService.js';
+import UninviteFromPotluck from '@/components/UninviteFromPotluck.vue'
+import InviteToPotluckForm from '../components/InviteToPotluckForm.vue';
 
 export default {
     data() {
@@ -14,7 +17,9 @@ export default {
         }
     },
     components: {
-        InviteUsersForm
+        UninviteFromPotluck,
+        InviteToPotluckForm
+
     },
     props: {
 
