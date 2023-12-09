@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Capstone.Exceptions;
 using Capstone.Models;
 using Capstone.Security;
@@ -46,6 +47,28 @@ namespace Capstone.DAO
             }
 
             return users;
+        }
+
+        public List<User> GetUsersByPotluckId(int potluckId)
+        {
+            List<User> output = new List<User>();
+
+            string sql = @"SELECT users.user_id, username, email FROM users 
+                           JOIN potluck_user as pu ON users.user_id = pu.user_id 
+                           WHERE potluck_id = @potluckId;";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@potluckId", potluckId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    User holder = MapRowToUser(reader);
+                    output.Add(holder);
+                }
+            }
+            return output;
         }
 
         public User GetUserById(int userId)
