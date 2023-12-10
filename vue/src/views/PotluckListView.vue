@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import PotluckService from '../services/PotluckService.js';
+import PotluckService from '@/services/PotluckService.js';
 import PotlucksDisplay from '@/components/PotlucksDisplay.vue';
-import PotluckForm from '../components/PotluckForm.vue';
+import PotluckForm from '@/components/PotluckForm.vue';
 
 export default {
     data() {
