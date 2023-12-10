@@ -1,19 +1,24 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form class='box' @submit.prevent="handleSubmit">
   <h3>Reset Password</h3>
-
-<div class="form-group">
+<br>
+<div class="field">
   <label>Password</label>
-  <input type="password" class="form-control" v-model="password" placeholder="Password" />
+  <div class="control">
+  <input type="password" v-model="password" placeholder="********" />
+  </div>
 </div>
-
-<div class="form-group">
+<div class="field">
   <label>Password Confirm</label>
-  <input type="password" class="form-control" v-model="password_confirm" placeholder="Password Confirm"/>
+  <div class="control">
+  <input type="password" v-model="password_confirm" placeholder="********"/>
+</div>
 </div>
 
-<button class="btn btn-primary btn-block">Submit</button>
+<button class="button is-primary">Submit</button>
 </form>
+<div class="whatever"><img class='confused' src="/public\confusedstickfigure.jpg"></div>
+
 </template>
 
 <script>
@@ -34,10 +39,24 @@ export default{
         password_confirm: this.password_confirm,
         token: this.$route.params.token
       });
-
-      console.log(response);
       this.$router.push('/Login');
     }
   }
 }
 </script>
+<style scoped>
+.box{
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 450px;
+}
+.whatever{
+  display: flex;
+  justify-content: center;
+}
+.confused{
+  height: 590px; 
+}
+
+
+</style>

@@ -29,6 +29,10 @@ namespace Capstone.Controllers
             try
             {
                 List<Potluck> output = new List<Potluck>(potluckDao.GetPotlucksByUserId(userId));
+                if(output[0].Name == null)
+                {
+                    output.RemoveAt(0);
+                }
            
                 return Ok(output);
             }
@@ -68,7 +72,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/potlucks/{potluckId}")]
-        public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int userId, int potluckId)
+        public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int potluckId)
         {
             try
             {
@@ -77,7 +81,7 @@ namespace Capstone.Controllers
                 {
                     return NotFound();
                 }
-                if (updatingPotluck.HostId != userId)
+                if (updatingPotluck.HostId != editedPotluck.HostId)
                 {
                     return StatusCode(403);
                 }

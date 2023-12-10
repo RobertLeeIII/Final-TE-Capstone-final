@@ -1,4 +1,4 @@
-<template :class="this.potluck.theme">
+<template :class="this.currentPotluck.theme">
     <potluck-detail :Potluck="currentPotluck"></potluck-detail>
 </template>
 

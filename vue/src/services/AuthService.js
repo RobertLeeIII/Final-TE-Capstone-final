@@ -8,6 +8,9 @@ export default {
 
   register(user) {
     return axios.post('/register', user)
-  }
-
+  },
+  /*updateUser(userId){
+    return axios.put('/reset/', userId)
+  }*/
+  //This is for the password reset
 }

@@ -290,6 +290,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@theme", updatedPotluck.Theme);
                     cmd.Parameters.AddWithValue("@is_recurring", updatedPotluck.isRecurring);
                     cmd.Parameters.AddWithValue("@repeat_interval", updatedPotluck.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
