@@ -4,7 +4,7 @@
         <ul class="container">
                 <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
                 <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-                <li><i :class="changingIcon"></i> {{ Potluck.time }}</li>
+                <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
                 <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
                 <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
                 <li><i :class="changingIcon"></i> Appetizers: {{ Potluck.courseRequest.apps }}</li>
@@ -65,6 +65,13 @@ export default {
     props: {
         Potluck: Object
     },
+    methods: {
+        formatDate(dateTimeString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      const date = new Date(dateTimeString);
+      return date.toLocaleDateString('en-US', options);
+    }
+    }
 }
 </script>
 

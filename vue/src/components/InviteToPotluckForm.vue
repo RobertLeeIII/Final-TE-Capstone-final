@@ -4,7 +4,7 @@ import axios from 'axios';
   <section class="hero">
     <div class="hero-body">
       <p class="title">
-        Invite Friends
+        Step 2: Invite Friends
       </p>
       <p class="subtitle"></p>
     </div>
@@ -25,7 +25,9 @@ import axios from 'axios';
 </template>
   
 <script>
+import UserService from '../services/UserService';
 export default {
+
   data() {
     return {
       emailList: [''],
@@ -60,18 +62,16 @@ export default {
         }
       }
     },
-    async sendInvites() {
-      try {
-        const response = await this.$axios.post('/api/email/send', {
-          emails: this.emailList,
-          subject: 'You are Invited! ', // OR WHATEVER WE DECIDE
-          body: 'This is your invitation text.  I do not know what we are putting here.  I assume we need to pull in the potluck details, as well as provide a link that takes them to the account creation page.  Can we make it so that the link takes them to the page with the email filled out already?  Can we make it so that once the create and login to the account, they already have the potluck in their list?  ', // OR WHATEVER
-        });
+    sendInvites() {   
+      this.emailList.pop() 
+      UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
+      .then(response => {
+        this.emailList = response.data;
+        this.$router.push({name: 'potluck-details', params: {potluckId: this.$route.params.potluckId}})
+      })
+      .catch(error => {
 
-        console.log('Response:', response.data);
-      } catch (error) {
-        console.error('Error sending invites:', error);
-      }
+      })
     },
   },
 };

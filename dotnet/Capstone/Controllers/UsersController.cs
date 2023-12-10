@@ -11,7 +11,7 @@ namespace Capstone.Controllers
     [Route("[controller]")]
     [ApiController]
     [Authorize]
-    public class UsersController: ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IPotluckDao potluckDao;
         private readonly IDishDao dishDao;
@@ -44,22 +44,18 @@ namespace Capstone.Controllers
         {
             int total = invitations.Count;
             try
-            { 
+            {
                 IList<string> output = new List<string>();
                 foreach (string email in invitations)
                 {
-                    InviteUser temp = null;
-                    temp = userDao.GetUserByEmail(email);
-                    if(temp != null)
+                    InviteUser temp = userDao.GetUserByEmail(email);
+                    if (temp != null)
                     {
-                        userDao.SendRegisteredInvitation(potluckId, temp.UserId);
-                        output.Add(email);
+                        userDao.SendRegisteredInvitation(potluckId, temp.UserId); //if they have an account, send that way
                     }
-                    else
-                    {
-                        userDao.SendUnregisteredInvitation(potluckId, email);
-                        output.Add(email);
-                    }
+
+                    userDao.SendUnregisteredInvitation(potluckId, email); //  send to the invitations table whether they have an account or not
+                    output.Add(email); // return list of emails to the inviter
                 }
 
                 return Ok(output);
