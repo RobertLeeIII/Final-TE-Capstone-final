@@ -120,7 +120,7 @@ namespace Capstone.DAO
                          JOIN users AS u ON u.user_id = pu.user_id 
                          JOIN potluck_course as pc ON pc.potluck_id = potlucks.potluck_id 
                          JOIN courses ON courses.course_id = pc.course_id WHERE u.user_id = @user_id 
-                         ORDER BY potlucks.potluck_id;";
+                         ORDER BY time ASC, potlucks.potluck_id;";
 
             try
             {
