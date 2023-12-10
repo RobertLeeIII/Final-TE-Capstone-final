@@ -11,6 +11,8 @@
 //    [ApiController]
 //    public class DishController : ControllerBase
 //    {
+          //TODO: FOR ANY UPDATE YOU WANT TO COMPARE WHO IS BRINGING THE DISH WITH WHO SUBMITTED IT THE USERID OF WHO IS LOGGED IN
+          // WHO'S BRINGING THE DISH FROM THE GETDISHBYDISHID MAY NEED TO REFERENCE POTLUCKID
 //        private readonly IPotluckDao potluckDao;
 //        private readonly IDishDao dishDao;
 //        private readonly IUserDao userDao;
