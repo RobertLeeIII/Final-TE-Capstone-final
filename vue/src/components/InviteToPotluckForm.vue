@@ -4,7 +4,7 @@ import axios from 'axios';
   <section class="hero">
     <div class="hero-body">
       <p class="title">
-        Invite Friends
+        Step 2: Invite Friends
       </p>
       <p class="subtitle"></p>
     </div>
@@ -67,7 +67,7 @@ export default {
       UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
       .then(response => {
         this.emailList = response.data;
-        this.$router.push({name: 'guest-list', params: {potluckId: this.$route.params.potluckId}})
+        this.$router.push({name: 'potluck-details', params: {potluckId: this.$route.params.potluckId}})
       })
       .catch(error => {
 
