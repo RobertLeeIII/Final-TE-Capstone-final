@@ -14,6 +14,13 @@ namespace Capstone.Models
 
     }
 
+    public class InviteUser
+    {
+        public int UserId { get; set; }
+        public string Email { get; set; }
+
+    }
+
     /// <summary>
     /// Model of user data to return upon successful login
     /// </summary>

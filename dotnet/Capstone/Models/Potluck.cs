@@ -15,18 +15,11 @@ namespace Capstone.Models
         public bool isRecurring { get; set; }
         public int RepeatInterval { get; set; }
         public string Status { get; set; }
-        public Courses CourseRequest { get; set; } //= new Courses();
-        //public Dictionary<string, int> CourseRequest { get; set; } //= new Dictionary<string, int>();
-        //{
-        //    {"apps", 1},
-        //    {"main", 1},
-        //    {"side", 1},
-        //    {"dessert", 1}
-        //};
+        public Courses CourseRequest { get; set; } 
 
     }
     //TODO: Revisit this model
-    public class NewPotluckDTO
+    public class    NewPotluckDTO
     {
         public int HostId { get; set; }
         public string Name { get; set; }
@@ -50,6 +43,7 @@ namespace Capstone.Models
     }
     public class UpdatePotluckDTO
     {
+        public int HostId { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
         public string Location { get; set; }
@@ -57,7 +51,8 @@ namespace Capstone.Models
         public string Theme { get; set; }
         public bool isRecurring { get; set; }
         public int RepeatInterval { get; set; }
-        public Courses CourseRequest { get; set; } //= new Courses();
+        public Courses CourseRequest { get; set; }
+        public string Status { get; set; }
 
     }
 }

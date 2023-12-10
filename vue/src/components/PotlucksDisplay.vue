@@ -21,8 +21,8 @@
                 </router-link>
 
             </div>
-            <potluck class="potluck" v-if="hasPotlucks" v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId"></potluck>
-            <div class="card-container" v-else>
+                <potluck class="potluck"  v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId"></potluck>
+            <div class="card-container" v-if="!hasPotlucks">
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-centered">
@@ -65,7 +65,7 @@ export default {
     },
     computed: {
         hasPotlucks() {
-            return this.myPotlucks[0].name !== null;
+            return this.myPotlucks.length > 0;
         }
     }
     // methods: {

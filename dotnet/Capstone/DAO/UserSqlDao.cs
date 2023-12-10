@@ -7,6 +7,7 @@ using Capstone.Exceptions;
 using Capstone.Models;
 using Capstone.Security;
 using Capstone.Security.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Capstone.DAO
 {
@@ -130,7 +131,7 @@ namespace Capstone.DAO
 
             return user;
         }
-        public IList<User> getUsersByPotluckID(int potluckId)
+        public IList<User> getUsersByPotluckID(int potluckId) //TODO Fix sql statement - take out the *
         {
             IList<User> potLuckUsers = new List<User>();
 
@@ -163,6 +164,112 @@ namespace Capstone.DAO
             return potLuckUsers;
 
         }
+        public InviteUser GetUserByEmail(string email)
+        {
+            InviteUser output = new InviteUser();
+            string sql = @"SELECT user_id, email FROM users WHERE email = @email;";
+
+            try
+            {
+                using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@email", email);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        User holder = MapRowToUser(reader);
+                        output.Email = holder.Email;
+                        output.UserId = holder.UserId;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return output;
+        }
+        public User GetHostByPotluckId(int potluckId)
+        {
+            string sql = @"SELECT user_id, email, username, password_hash, salt, user_role, diet_rest FROM users 
+                           JOIN potlucks ON potlucks.host_id = users.user_id WHERE potluck_id = @potluckId;";
+            User output = null;
+            try
+            {
+                using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@potluckId", potluckId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        output = MapRowToUser(reader);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            { 
+                throw new DaoException("SQL exception occurred", ex);
+            }
+                return output;
+        }
+        public int SendRegisteredInvitation(int potluckId, int userId)
+        {
+            string sql = @"INSERT INTO potluck_user (potluck_id, user_id, status) 
+                           VALUES (@potluckId, @userId, 'invited');";
+            int output = -1;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@potluckId", potluckId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    output = cmd.ExecuteNonQuery(); 
+                }
+                if(output != 1)
+                {
+                    //What to do if the insert fails
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return output;
+        }
+        public int SendUnregisteredInvitation(int potluckId, string email)
+        {
+            string sql = @"INSERT INTO invitations (potluck_id, user_id) 
+                           VALUES (@potluckId, @email);";
+            int output = -1;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@potluckId", potluckId);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    output = cmd.ExecuteNonQuery();
+                }
+                if (output != 1)
+                {
+                    //What to do if the insert fails
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return output;
+        }
+
         public User CreateUser(string email, string username, string password, string role, bool dietaryRestriction)
         {
             User newUser = null;

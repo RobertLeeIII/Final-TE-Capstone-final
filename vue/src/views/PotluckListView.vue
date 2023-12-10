@@ -1,5 +1,6 @@
 <template>
     <potluck-form v-if="creating"></potluck-form>
+    <potluck-form v-else-if="updating"></potluck-form>
     <potlucks-display v-else :myPotlucks="potlucks"></potlucks-display>
 </template>
 
@@ -12,7 +13,6 @@ export default {
     data() {
         return {
             potlucks: [],
-            create: false
         }
     },
     components: {
@@ -22,11 +22,12 @@ export default {
     computed: {
         creating() {
             let action = this.$route.query.action;
-            if (action == 'create') {
-                return true;
-            }
-            return false;
-        }
+            return action == 'create'
+        },
+        updating() {
+            let action = this.$route.query.action;
+            return action == 'update';
+        },
     },
     methods: {
         getUserPotlucks(userId) {

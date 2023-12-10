@@ -24,7 +24,8 @@ export default {
 
     },
     props: {
-
+        Potluck: Object,
+        
     },
     methods: {
         getPotluckGuests(potluckId) {
