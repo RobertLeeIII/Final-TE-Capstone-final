@@ -2,7 +2,8 @@
   <div>
     <section class="hero">
       <div class="hero-body">
-        <p class="title">Create Potluck</p>
+        <p></p>
+        <p class="title">Step 1: Create a Potluck</p>
         <p class="subtitle"></p>
       </div>
     </section>
@@ -66,7 +67,7 @@
 </template>
 
 <script>
-import PotluckService from "../services/PotluckService.js";
+import PotluckService from "@/services/PotluckService.js";
 
 export default {
   data() {
@@ -87,11 +88,6 @@ export default {
         status: 'active'
       },
       showButton: false,
-    }
-  },
-  computed: {
-    updating() {
-      return this.$route.params.action == 'update';
     }
   },
   props: {
@@ -126,7 +122,7 @@ export default {
         .then(response => {
           this.resetPotluckForm;
           // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-          this.$router.push({ name: 'potluck-details', params: { potluckId: response.data.potluckId } });
+          this.$router.push({ name: 'guest-list', params: { potluckId: response.data.potluckId }, query: {action: 'invite'} });
         })
         .catch(error => {
           if (error.response && error.response.status === 404) {
