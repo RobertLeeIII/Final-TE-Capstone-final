@@ -169,7 +169,7 @@ namespace Capstone.DAO
             }
             return potlucks;
         }
-        public IList<Potluck> getPotluckByHostID(int hostId)
+        public IList<Potluck> GetPotluckByHostID(int hostId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
             string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
@@ -290,6 +290,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@theme", updatedPotluck.Theme);
                     cmd.Parameters.AddWithValue("@is_recurring", updatedPotluck.isRecurring);
                     cmd.Parameters.AddWithValue("@repeat_interval", updatedPotluck.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
@@ -305,10 +306,15 @@ namespace Capstone.DAO
             }
             return editedPotluck;
         }
-        public int DeletePotluck(int potluckId)
+        public int DeletePotluck(int potluckId, int userId, int courseId)
         {
             int rowsAffected = 0;
-            string sql = "DELETE FROM potlucks WHERE potluck_id = @potluck_id;";
+            string sql = @"DELETE FROM potluck_user WHERE potluck_id = @potluck_id;  
+                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id; 
+                           DELETE FROM potluck_course WHERE potluck_id = @potluck_id;  
+                           DELETE FROM potlucks WHERE potluck_id = @potluck_id;"; 
+                           // Add this one back as needed.
+                           //DELETE FROM potluck_diet WHERE potluck_id = @potluck_id AND diet_id = @diet_id;
 
             try
             {
@@ -318,6 +324,8 @@ namespace Capstone.DAO
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@course_id", courseId);
                     cmd.ExecuteNonQuery();
                 }
             }

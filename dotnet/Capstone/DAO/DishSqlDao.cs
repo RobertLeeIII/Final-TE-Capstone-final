@@ -13,7 +13,7 @@ namespace Capstone.DAO
         {
             connectionString = dbConnectionString;
         }
-        public List<Dish> GetDishes()
+        public IList<Dish> GetDishes()
         {
             List<Dish> dishes = new List<Dish>();
             string sql = "SELECT dish_id, dish_name, recipe FROM dishes;";
@@ -73,9 +73,7 @@ namespace Capstone.DAO
         public IList<Dish> GetDishesByUserId(int userId)
         {
             IList<Dish> dishes = new List<Dish>();
-            // TODO: I think this SQL statement will work, but when I execute it I'm not getting what I expect
-            // May need to add UserId as a property of Dish?
-            string sql = "SELECT dishes.dish_id, dish_name, recipe " +
+            string sql = "SELECT dishes.dish_id, dish_name, recipe, u.user_id " +
                 "FROM dishes " +
                 "JOIN user_dish AS ud ON ud.dish_id = dishes.dish_id " +
                 "JOIN users AS u ON u.user_id = ud.user_id " +
@@ -107,8 +105,7 @@ namespace Capstone.DAO
         public IList<Dish> GetDishesByPotluckId(int potluckId)
         {
             IList<Dish> dishes = new List<Dish>();
-            // TODO: Again, I believe this SQL statement will work,
-            // but some connection is missing when I try to execute it in the DB
+            // TODO: do we need to include p.potluck_id in the SELECT statement?
             string sql = "SELECT dishes.dish_id, dish_name, recipe " +
                 "FROM dishes " +
                 "JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id " +
@@ -138,58 +135,119 @@ namespace Capstone.DAO
             }
             return dishes;
         }
-        //public Dish CreateNewDish(NewDishDTO addedDish, int userId, int potluckId)
-        //{
-        //    //insert into dishes
-        //    //insert into dish_user.
-        //    //insert into dish_potluck.
-        //    Dish newDish = null;
-        //    string sql1 = @"INSERT INTO dishes (dish_name, recipe, rating, course_id)
-        //                    OUTPUT INSERTED.dish_id
-        //                    VALUES (@dish_name, @recipe, @rating, @course_id);";
+        public Dish CreateNewDish(NewDishDTO newDish, int userId, int potluckId)
+        {
+            Dish addedDish = null;
+            // First insert in SQL2 is effectively the creator of the dish
+            string sql1 = @"INSERT INTO dishes (dish_name, recipe, course_id) 
+                            OUTPUT INSERTED.dish_id 
+                            VALUES (@dish_name, @recipe, @course_id);";
 
-        //    string sql2 = @"INSERT INTO user_dish (user_id, dish_id)
-        //                    VALUES (@ID, @ID)";
+            // Second one is which potluck the dish is going to
+            string sql2 = @"INSERT INTO user_dish (user_id, dish_id) 
+                            VALUES (@userID, @dishID);
+                            
+                            INSERT INTO potluck_dish (potluck_id, dish_id) 
+                            VALUES (@potluckID, @dishID);";
 
-        //    int newDishId = 0;
+            int newDishId = 0;
 
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(connectionString))
-        //        {
-        //            SqlCommand cmd = new SqlCommand(sql1, conn);
-        //            cmd.Parameters.AddWithValue("@dish_name", addedDish.Name);
-        //            cmd.Parameters.AddWithValue("@recipe", addedDish.Recipe);
-        //            cmd.Parameters.AddWithValue("@rating", addedDish.Rating);
-        //            cmd.Parameters.AddWithValue("@course_id", addedDish.CourseId);
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw new DaoException("A SQL error occured.", ex);
-        //    }
-        //    return newDish;
-        //}
-        //public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
-        //{
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(sql1, conn);
+                    cmd.Parameters.AddWithValue("@dish_name", addedDish.Name);
+                    cmd.Parameters.AddWithValue("@recipe", addedDish.Recipe);
+                    cmd.Parameters.AddWithValue("@course_id", addedDish.CourseId);
 
-        //    //UPDATE dishes SET col = value, col2 = value WHERE dish_id = @dishId
+                    newDishId = Convert.ToInt32(cmd.ExecuteScalar());
 
-        //    Dish modifiedDish = GetDishById(dishId);
-        //    if (modifiedDish == null)
-        //    {
+                    cmd = new SqlCommand(sql2, conn);
+                    cmd.Parameters.AddWithValue("@user_ID", addedDish.Creator);
+                    cmd.Parameters.AddWithValue("@dish_ID", newDishId);
+                    cmd.Parameters.AddWithValue("@potluck_ID", potluckId);
 
-        //    }
-        //    return modifiedDish;
-        //}
+                    cmd.ExecuteScalar();
+                }
+                addedDish = GetDishById(newDishId);
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("A SQL error occured.", ex);
+            }
+            return addedDish;
+        }
+        public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
+        {
+            Dish modifiedDish = GetDishById(dishId);
+            //UPDATE dishes SET col = value, col2 = value WHERE dish_id = @dishId
+            string sql = @"UPDATE dishes 
+                           SET dish_name = @dish_name, recipe = @recipe 
+                           WHERE dish_id = @dish_id;";
+            
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@dish_name", updatedDish.Name);
+                    cmd.Parameters.AddWithValue("@recipe", updatedDish.Recipe);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected == 0)
+                    {
+                        throw new DaoException("Zero rows affected. Expecting at least one.");
+                    }
+                    modifiedDish = GetDishById(dishId);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("A SQL error occured.", ex);
+            }
+            return modifiedDish;
+        }
+        public int DeleteDish(int dishId, int potluckId, int userId)
+        {
+            int rowsAffected = 0;
+            string sql = @"DELETE FROM user_dish WHERE user_id = @user_id AND dish_id = @dish_id; 
+                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id = @dish_id; 
+                           DELETE FROM dishes WHERE dish_id = @dish_id;";
+                           // Add these back as needed
+                           //DELETE FROM dish_diet WHERE dish_id = @dish_id AND diet_id = @diet_id; 
+                           //DELETE FROM dish_rating WHERE dish_id = @dish_id AND rater = @user_id;
+                           //DELETE FROM ingredient_dish WHERE ingredient_id = @ingredient_id AND dish_id = @dish_id; 
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@dish_id", dishId);
+                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("A SQL error occured.", ex);
+            }
+            return rowsAffected;
+        }
         private Dish MapRowToDish(SqlDataReader reader)
         {
             Dish dish = new Dish();
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
+            dish.Creator = Convert.ToString(reader["user_id"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
             dish.CourseId = Convert.ToInt32(reader["course_id"]);
-
 
             return dish;
         }

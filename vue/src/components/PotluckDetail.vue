@@ -12,9 +12,10 @@
                 <li><i :class="changingIcon"></i> Sides: {{ Potluck.courseRequest.sides }}</li>
                 <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
             </ul>
-        <router-link v-if="isHost" :to="{name: invitationList}">Invite People</router-link>
-        <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}, 
-                                        query: {action: 'update'}}">Update This Potluck</router-link>
+        <router-link v-if="isHost" :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
+                                        query: {action: 'invite'}}">Invite People</router-link>
+        <router-link v-if="isHost" :to="{name: 'potluck-update', params: {potluckId: Potluck.potluckId}}">Update This Potluck</router-link>
+        <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId} }">Who's coming?</router-link>
     </div>
 </body>
 </template>
@@ -118,15 +119,15 @@ body {
   background-color: #297fb8;
 }
 .spring {
-    color: rgb(166, 255, 166);
+    background-color: rgb(166, 255, 166);
 }
 
 .summer {
-    color: rgb(255, 255, 154);
+    background-color: rgb(255, 255, 154);
 }
 
 .fall {
-    color: rgb(241, 200, 138);
+    background-color: rgb(241, 200, 138);
 }
 
 .winter {
