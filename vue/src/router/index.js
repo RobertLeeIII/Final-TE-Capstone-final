@@ -15,6 +15,7 @@ import ForgotEmailView from '../views/ForgotEmailView.vue';
 import ResetPasswordView from '../views/ResetView.vue'
 import GuestListView from '../views/GuestListView.vue'
 import InviteToPotluckForm from '../views/InviteToPotluckView.vue'
+import ApiTestView from '../views/ApiTestView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -126,6 +127,11 @@ const routes = [
       requiresAuth: false
     }
   },
+  {
+    path: "/test",
+    name: "api-test",
+    component: ApiTestView,
+  }
 
 ];
 
