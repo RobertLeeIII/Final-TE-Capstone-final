@@ -5,7 +5,7 @@
                 <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
                 <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
                 <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-                <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme }}</li>
+                <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
                 <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
                 <li><i :class="changingIcon"></i> Appetizers: {{ Potluck.courseRequest.apps }}</li>
                 <li><i :class="changingIcon"></i> Main Dishes: {{ Potluck.courseRequest.mains }}</li>
@@ -32,31 +32,31 @@ export default {
             return this.Potluck.hostId == this.$store.state.user.userId;
         },
         changingTheme() {
-            if (this.Potluck.theme === 'Spring') {
+            if (this.Potluck.theme.includes('Spring')) {
                 return { spring: true }
             }
-            else if (this.Potluck.theme === 'Summer') {
+            else if (this.Potluck.theme.includes('Summer')) {
                 return { summer: true }
             }
-            else if (this.Potluck.theme === 'Fall') {
+            else if (this.Potluck.theme.includes('Fall')) {
                 return { fall: true }
             }
-            else if (this.Potluck.theme === 'Winter') {
+            else if (this.Potluck.theme.includes('Winter')) {
                 return { winter: true }
             }
             return true;
         },
         changingIcon() {
-            if (this.Potluck.theme === 'Spring') {
+            if (this.Potluck.theme.includes('Spring')) {
                 return "fa-solid fa-cloud-sun-rain"
             }
-            else if (this.Potluck.theme === 'Summer') {
+            else if (this.Potluck.theme.includes('Summer')) {
                 return "fa-solid fa-sun"
             }
-            else if (this.Potluck.theme === 'Fall') {
+            else if (this.Potluck.theme.includes('Fall')) {
                 return "fa-solid fa-leaf"
             }
-            else if (this.Potluck.theme === 'Winter') {
+            else if (this.Potluck.theme.includes('Winter')) {
                 return "fa-regular fa-snowflake"
             }
             return true;
@@ -126,20 +126,24 @@ body {
   background-color: #297fb8;
 }
 .spring {
-    background-color: rgb(166, 255, 166);
+    /* background-color: rgb(166, 255, 166); */
+    background-color:rgb(242, 233, 224);
 }
 
 .summer {
-    background-color: rgb(255, 255, 154);
+    /* background-color: rgb(255, 255, 154); */
+background-color: rgb(0, 170, 195);
 }
 
 .fall {
-    background-color: rgb(241, 200, 138);
+    /* background-color: rgb(235, 163, 55); */
+    background-color: rgb(239, 228, 176)
 }
 
 .winter {
-    color: cadetblue;
-    background-color: rgb(189, 239, 251);
+  /*   color: cadetblue;
+    background-color: rgb(189, 239, 251); */
+    background-color:rgb(254, 216, 205);
 
 }
 </style>
