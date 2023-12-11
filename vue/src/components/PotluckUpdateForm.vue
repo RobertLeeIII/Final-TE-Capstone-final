@@ -1,4 +1,5 @@
 <template>
+    <div class="content">
     <div class="main">
       <div class="box">
         <p>Update a potluck</p>
@@ -60,6 +61,7 @@
       </select>
       <button type="submit">Update This Potluck</button>
     </form>
+  </div>
   </div>
 </template>
 <script>
@@ -170,15 +172,21 @@ export default {
     display: flex;
     justify-content: center;
   }
-  
   .box {
-    margin-left: 20px;
-    width: 450px;
-  }
+  margin-left: 20px;
+  width: 450px;
   
-  .main {
+}
+.main{
+background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+.content{
     background-image: url(/7637317.jpg);
-    background-color: rgb(255, 193, 146);
-    min-height: 95vh;
-  }</style>
+
+    display: flex;
+    justify-content: left;
+}</style>
   
