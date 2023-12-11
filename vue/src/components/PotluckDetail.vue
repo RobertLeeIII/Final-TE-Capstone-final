@@ -27,7 +27,7 @@
         <h3>The host has requested:</h3>
         <div class="requested-items-details">
           <div class="requested-item">
-            <span @click="toggleDishSignup('apps')">{{ Potluck.courseRequest.apps }} Appetizers</span>
+            <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
           </div>
           <div class="requested-item">
             <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
@@ -39,9 +39,10 @@
             <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
           </div>
         </div>
+        <router-link :to="{name: 'dish-test', params: {potluckId: this.$route.params.potluckId}}"><button>Bring a Dish!</button></router-link>
       </section>
     </div>
-    <dish-suggestion class="signup" @focusout="toggleDishSignup('')" v-if="dishSignup"></dish-suggestion>
+
   </div>
 </template>
 
@@ -59,7 +60,7 @@ export default {
         }
     },
     components: {
-        DishSuggestion
+        //DishSuggestion
     },
     computed: {
         isHost() {
@@ -105,15 +106,15 @@ export default {
             const date = new Date(dateTimeString);
             return date.toLocaleDateString('en-US', options);
         },
-        toggleDishSignup(courseName) {
-            if (this.currentCourse === '') {
-                this.currentCourse = courseName;
-            }
-            else {
-                this.currentCourse = '';
-            }
-            this.dishSignup = !this.dishSignup;
-        }
+        // toggleDishSignup(courseName) {
+        //     if (this.currentCourse === '') {
+        //         this.currentCourse = courseName;
+        //     }
+        //     else {
+        //         this.currentCourse = '';
+        //     }
+        //     this.dishSignup = !this.dishSignup;
+        // }
     },
 }
 </script>

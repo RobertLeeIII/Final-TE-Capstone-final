@@ -19,32 +19,32 @@
 
 
 
-        <div> <textarea v-model="directions" placeholder="Enter directions" style="height: 200px;"></textarea></div>
+        <div> <textarea v-model="newDish.directions" placeholder="Enter directions" style="height: 200px;"></textarea></div>
         <div>
           <button @click.prevent="toggleSpecialDiets" type="button">{{ showSpecialDiets ? 'Hide Special Diets' : 'Special Diets ? ' }}</button>
           <div v-if="showSpecialDiets">
             <label>
-              <input type="checkbox" v-model="isVegan" />
+              <input type="checkbox" value="vegan" v-model="newDish.diets" />
               Vegan
             </label>
             <label>
-              <input type="checkbox" v-model="isVegetarian" />
+              <input type="checkbox" value="vegetarian" v-model="newDish.diets" />
               Vegetarian
             </label>
             <label>
-              <input type="checkbox" v-model="isHalal" />
+              <input type="checkbox" value="halal" v-model="newDish.diets" />
               Halal
             </label>
             <label>
-              <input type="checkbox" v-model="isCeliacFriendly" />
+              <input type="checkbox" value="celiac" v-model="newDish.diets" />
               Celiac Friendly
             </label>
             <label>
-              <input type="checkbox" v-model="isDairyFree" />
+              <input type="checkbox" value="lactose" v-model="newDish.diets" />
               Dairy-Free
             </label>
             <label>
-              <input type="checkbox" v-model="isKosher" />
+              <input type="checkbox" value="kosher" v-model="newDish.diets" />
               Kosher
             </label>
           </div>
@@ -53,39 +53,39 @@
           }}</button>
           <div v-if="showAllergens">
             <label>
-              <input type="checkbox" v-model="hasFish" />
+              <input type="checkbox" value="fish" v-model="newDish.allergens" />
               Fish
             </label>
             <label>
-              <input type="checkbox" v-model="hasShellfish" />
+              <input type="checkbox" value="shellfish" v-model="newDish.allergens" />
               Shellfish
             </label>
             <label>
-              <input type="checkbox" v-model="hasMilk" />
+              <input type="checkbox" value="milk" v-model="newDish.allergens" />
               Milk
             </label>
             <label>
-              <input type="checkbox" v-model="hasEggs" />
+              <input type="checkbox" value="egg" v-model="newDish.allergens" />
               Eggs
             </label>
             <label>
-              <input type="checkbox" v-model="hasSoy" />
+              <input type="checkbox" value="soy" v-model="newDish.allergens" />
               Soy
             </label>
             <label>
-              <input type="checkbox" v-model="hasSesame" />
+              <input type="checkbox" value="sesame" v-model="newDish.allergens" />
               Sesame
             </label>
             <label>
-              <input type="checkbox" v-model="hasTreenuts" />
+              <input type="checkbox" value="treenuts" v-model="newDish.allergens" />
               Treenuts
             </label>
             <label>
-              <input type="checkbox" v-model="hasPeanuts" />
+              <input type="checkbox" value="peanuts" v-model="newDish.allergens" />
               Peanuts
             </label>
             <label>
-              <input type="checkbox" v-model="hasWheat" />
+              <input type="checkbox" value="wheat" v-model="newDish.allergens" />
               Wheat
             </label>
           </div>
@@ -97,43 +97,38 @@
       </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script src="app.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="app.js"></script> -->
   </body>
 </template>
 <script>
+import DishService from '@/services/DishService.js'
 export default {
 
   data() {
     return {
       //  ingredients: [{ name: '', amount: '' }],
-      directions: '',
-      isVegan: false,
-      isVegetarian: false,
-      isHalal: false,
-      isCeliacFriendly: false,
-      isDairyFree: false,
-      isKosher: false,
-      showSpecialDiets: false,
-      showAllergens: false,
-      hasFish: false,
-      hasShellfish: false,
-      hasMilk: false,
-      hasEggs: false,
-      hasSoy: false,
-      hasSesame: false,
-      hasTreenuts: false,
-      hasPeanuts: false,
-      hasWheat: false
+      newDish: {
+        userId: this.$store.state.user.userId,
+        creator: this.$store.state.user.username,
+        directions: '',
+        diets: [],
+        allergens: [],
+        course: -1 //IS THIS OK?
+      },
+      
+       showSpecialDiets: false,
+       showAllergens: false,
+     
     }
   },
   methods: {
-    addIngredient() {
-      this.ingredients.push({ name: '', amount: '' });
-    },
-    removeIngredient(index) {
-      this.ingredients.splice(index, 1);
-    },
+    // addIngredient() {
+    //   this.ingredients.push({ name: '', amount: '' });
+    // },
+    // removeIngredient(index) {
+    //   this.ingredients.splice(index, 1);
+    // },
     toggleSpecialDiets() {
       this.showSpecialDiets = !this.showSpecialDiets;
     },
@@ -141,25 +136,11 @@ export default {
       this.showAllergens = !this.showAllergens;
     },
     submitRecipe() {
-      console.log('Recipe submitted:', {
-        //  ingredients: this.ingredients,
-        directions: this.directions,
-        isVegan: this.isVegan,
-        isVegetarian: this.isVegetarian,
-        isHalal: this.isHalal,
-        isCeliacFriendly: this.isCeliacFriendly,
-        isDairyFree: this.isDairyFree,
-        isKosher: this.isKosher,
-        hasFish: this.hasFish,
-        hasShellfish: this.hasShellfish,
-        hasMilk: this.hasMilk,
-        hasEggs: this.hasEggs,
-        hasSoy: this.hasSoy,
-        hasSesame: this.hasSesame,
-        hasTreenuts: this.hasTreenuts,
-        hasPeanuts: this.hasPeanuts,
-        hasWheat: this.hasWheat
-      });
+
+      DishService.postNewDish(this.newDish, this.$route.params.potluckId)
+      .then()
+      .catch()
+      console.log('Recipe submitted:', this.newDish);
     }
   }
 }

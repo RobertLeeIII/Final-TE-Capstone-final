@@ -240,6 +240,8 @@ namespace Capstone.DAO
             }
             return rowsAffected;
         }
+
+        //TODO: FIX MAPROWTODISH so it handles the allergens and diets lists
         private Dish MapRowToDish(SqlDataReader reader)
         {
             Dish dish = new Dish();
