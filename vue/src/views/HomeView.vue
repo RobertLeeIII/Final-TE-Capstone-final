@@ -8,8 +8,7 @@
             <h2 class="header-phonetic">/ˌpätˈlək/</h2>
             <h3 class="header-definition">noun</h3>
             <p class="header-description">
-              Used in reference to a situation in which one must take a chance that whatever is available will prove to be
-              good or acceptable.
+              A meal or party to which each of the guests contributes a dish.
             </p>
             <p class="header-description">
               <br>
@@ -141,4 +140,8 @@ export default {
 .main{
   color: white; /* Change text color */
 
+}
+.nav{
+  background-color: red;
 }</style>
+

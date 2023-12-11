@@ -1,12 +1,9 @@
 <template>
-    <div>
-        <section class="hero">
-            <div class="hero-body">
-                <p class="title">Update Potluck</p>
-                <p class="subtitle"></p>
-            </div>
-        </section>
-        <form v-on:submit.prevent="saveUpdatedPotluck" class="potluck-form">
+    <div class="main">
+        <div class="box">
+  <p>Update a potluck</p>
+</div>
+        <form v-on:submit.prevent="saveUpdatedPotluck" class="box">
             <label for="potluck-name">Name</label>
             <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="updatedPotluck.name" />
 
@@ -61,8 +58,7 @@
             </select>
             <button type="submit">Update This Potluck</button>
         </form>
-        <img src="/7637317.jpg" style="width: 100%" />
-    </div>
+            </div>
 </template>
   
 <script>
@@ -170,8 +166,20 @@ export default {
 </script>
   
 <style>
-.hero {
-    background-color: rgb(255, 193, 146);
+.media{
+    display: flex;
+    justify-content: center;
+}
+.box {
+  margin-left: 20px;
+  width: 450px;
+  
+}
+.main{
+  background-image: url(/7637317.jpg);
+  background-color:  rgb(255, 193, 146);
+  min-height: 95vh; /* Set minimum height of layout to full viewport height */
+
 }
 </style>
   
