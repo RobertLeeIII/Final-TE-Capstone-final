@@ -6,13 +6,13 @@
       <div class="field">
         <label>Password</label>
         <div class="control">
-          <input type="password" v-model="password" placeholder="********" />
+          <input type="password" v-model="password" placeholder="********" required />
         </div>
       </div>
       <div class="field">
         <label>Password Confirm</label>
         <div class="control">
-          <input type="password" v-model="password_confirm" placeholder="********" />
+          <input type="password" v-model="password_confirm" placeholder="********" required />
         </div>
       </div>
 
@@ -38,6 +38,17 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        // Basic client-side validation
+        if (!this.password || !this.password_confirm) {
+          console.error('Please enter both password and confirmation.');
+          return;
+        }
+
+        if (this.password !== this.password_confirm) {
+          console.error('Password and confirmation do not match.');
+          return;
+        }
+
         // Make an API request to reset the password
         const response = await axios.post('/api/reset', {
           password: this.password,

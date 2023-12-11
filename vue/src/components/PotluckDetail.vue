@@ -38,44 +38,6 @@
                     class="whos-coming-link">Who's coming?</router-link> </li> 
             </ul>
                 </div>
-            <section class="requested-items">
-        <h3>The host has requested:</h3>
-        <div class="requested-items-details">
-          <div class="requested-item">
-            <span @click="toggleDishSignup('apps')">{{ Potluck.courseRequest.apps }} Appetizers</span>
-          </div>
-          <div class="requested-item">
-            <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
-          </div>
-          <div class="requested-item">
-            <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-          </div>
-          <div class="requested-item">
-            <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
-          </div>
-        </div>
-        <router-link :to="{name: 'dish-test', params: {potluckId: this.$route.params.potluckId}}"><button>Bring a Dish!</button></router-link>
-      </section>
-        <ul class="list">
-          <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-          <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-          <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-          <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-          <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
-
-        </ul>
-        <div class="links">
-            <ul>
-               <li><router-link v-if="isHost" 
-                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li> 
-               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link> </li> 
-                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link> </li> 
-            </ul>
-                </div>
-        
     </div>
 
   </div>

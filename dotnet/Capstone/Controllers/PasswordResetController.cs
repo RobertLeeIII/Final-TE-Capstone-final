@@ -1,154 +1,83 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Linq;
-using Capstone.Security;
-using Microsoft.AspNetCore.DataProtection;
-using System.Text; // Add this for Encoding
+﻿//using Capstone.DAO;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+//using System;
 
-[ApiController]
-[Route("controller")]
-public class PasswordResetController : ControllerBase
-{
-    private readonly string JwtSecret = "your-secret-key-with-at-least-128-bits"; // Update with a key of sufficient size
-    private const string EmailSender = "plannerpotluck@gmail.com";
-    private const string EmailSenderPassword = "C#C#DotNet";
+//[Route("controller")]
+//[ApiController]
+//[Authorize]
+//public class PasswordResetController : ControllerBase
+//{
+//    private readonly IUserDao _userDao;
 
-    [HttpPost("forgot")]
-    public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
-    {
-        if (string.IsNullOrEmpty(request?.Email))
-        {
-            return BadRequest("Email is required");
-        }
+//    public PasswordResetController(IUserDao userDao)
+//    {
+//        _userDao = userDao;
+//    }
 
-        var token = GenerateJwtToken(request.Email);
-        var emailSent = SendResetEmail(request.Email, token);
+//    [HttpPost("forgot")]
+//    public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
+//    {
+//        if (string.IsNullOrEmpty(request?.Email))
+//        {
+//            return BadRequest(new { Error = "Email is required" });
+//        }
 
-        if (emailSent)
-        {
-            return Ok(new { Token = token, Message = "Email sent successfully" });
-        }
+//        var user = _userDao.GetUserByEmailAddress(request.Email);
 
-        return StatusCode((int)HttpStatusCode.InternalServerError, new { Error = "Error sending email" });
-    }
+//        if (user == null)
+//        {
+//            return NotFound(new { Error = "User not found" });
+//        }
 
-    [HttpPost("reset/token")]
-    public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(request?.Token) || string.IsNullOrEmpty(request?.Password) || string.IsNullOrEmpty(request?.PasswordConfirm))
-            {
-                return BadRequest("Token, Password, and PasswordConfirm are required");
-            }
+//        // Return the user's security question for use in the frontend
+//        return Ok(new { SecurityQuestion = user.SecurityQuestion, Message = "Security question retrieved successfully" });
+//    }
 
-            var email = ValidateJwtToken(request.Token);
+//    [HttpPost("reset")]
+//    public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
+//    {
+//        try
+//        {
+//            if (string.IsNullOrEmpty(request?.Email) || string.IsNullOrEmpty(request?.SecurityAnswer) || string.IsNullOrEmpty(request?.NewPassword))
+//            {
+//                return BadRequest(new { Error = "Email, SecurityAnswer, and NewPassword are required" });
+//            }
 
-            if (email == null)
-            {
-                return Unauthorized("Invalid token");
-            }
+//            // Find the user by email
+//            var user = _userDao.GetUserByEmailAddress(request.Email);
 
-            // TODO: Implement password reset logic here (update the password in your database, for example)
+//            if (user == null)
+//            {
+//                return NotFound(new { Error = "User not found" });
+//            }
 
-            return Ok(new { Message = "Password reset successfully" });
-        }
-        catch (SecurityTokenExpiredException)
-        {
-            return BadRequest("Token has expired");
-        }
-        catch (Exception)
-        {
-            return StatusCode((int)HttpStatusCode.InternalServerError, new { Error = "Error resetting password" });
-        }
-    }
+//            // Check if the provided security answer matches the stored answer
+//            if (user.SecurityAnswer != request.SecurityAnswer)
+//            {
+//                return Unauthorized(new { Error = "Invalid security answer" });
+//            }
 
-    private string GenerateJwtToken(string email)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret));
+//            // Hash the new password before storing it
+//            user.PasswordHash = HashPassword(request.NewPassword);
 
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new[] { new Claim("email", email) }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-        };
+//            // Save changes to the database
+//            _userDao.UpdateUser(user);
 
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
-    }
+//            return Ok(new { Message = "Password reset successfully" });
+//        }
+//        catch (Exception)
+//        {
+//            // Log the exception for troubleshooting
+//            return StatusCode(500, new { Error = "Error resetting password" });
+//        }
+//    }
 
+//    private string HashPassword(string password)
+//    {
+//        // Implement password hashing logic (e.g., bcrypt)
+//        // ...
 
-    private string ValidateJwtToken(string token)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret)); // Use Encoding.UTF8.GetBytes to convert the key to bytes
-
-        tokenHandler.ValidateToken(token, new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key.Key),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ClockSkew = TimeSpan.Zero
-        }, out var validatedToken);
-
-        var jwtToken = (JwtSecurityToken)validatedToken;
-        return jwtToken?.Claims?.FirstOrDefault(x => x.Type == "email")?.Value;
-    }
-
-    private bool SendResetEmail(string email, string token)
-    {
-        try
-        {
-            var fromAddress = new MailAddress(EmailSender, "Your Name");
-            var toAddress = new MailAddress(email, "User Name");
-            const string subject = "Password Reset";
-            var body = $"Click the following link to reset your password: http://localhost:8080/reset/{token}";
-
-            using (var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, EmailSenderPassword)
-            })
-            {
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body
-                })
-                {
-                    smtp.Send(message);
-                    return true;
-                }
-            }
-        }
-        catch (Exception)
-        {
-            // Log or handle the exception
-            return false;
-        }
-    }
-}
-
-public class ForgotPasswordRequest
-{
-    public string Email { get; set; }
-}
-
-public class ResetPasswordRequest
-{
-    public string Token { get; set; }
-    public string Password { get; set; }
-    public string PasswordConfirm { get; set; }
-}
+//        return password; // Replace with actual hashed password
+//    }
+//}
