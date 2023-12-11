@@ -3,6 +3,8 @@ using Capstone.DAO;
 using Capstone.Exceptions;
 using Capstone.Models;
 using Capstone.Security;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Capstone.Controllers
 {
@@ -90,6 +92,15 @@ namespace Capstone.Controllers
 
             if (newUser != null)
             {
+                //SEARCH FOR ANONYMOUS INVITATIONS
+                IList<int> invitedPotlucks = userDao.FindInvitationsByEmail(newUser.Email);
+                if (invitedPotlucks.Count > 0) //They had anonymous invitations, so insert into 
+                {
+                    foreach(int potluckId in invitedPotlucks)
+                    {
+                        userDao.SendRegisteredInvitation(potluckId, newUser.UserId);    //NOW THEIR NEW ACCOUNT IS LINKED TO THE ANONYMOUS INVITES
+                    }
+                }
                 // Create a ReturnUser object to return to the client
                 ReturnUser returnUser = new ReturnUser() { UserId = newUser.UserId, Username = newUser.Username, Role = newUser.Role};
 

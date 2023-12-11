@@ -54,7 +54,9 @@ import Potluck from '@/components/Potluck.vue'
 export default {
     data() {
         return {
-            potlucks: []
+            potlucks: [],
+            futurePotlucks: [],
+            pastPotlucks: []
         }
     },
     components: {
@@ -68,15 +70,29 @@ export default {
             return this.myPotlucks.length > 0;
         },
         
+    },
+    methods: {
+        populatePotluckArrays() {
+            this.potlucks = JSON.parse(JSON.stringify(this.myPotlucks));
+            this.futurePotlucks = this.myPotlucks.filter((item) => {
+                const today = new Date().getDate()
+                const scheduled = new Date(item.time).getDate()
+                if(scheduled > today){
+                    return item;
+                }            
+            })
+            this.pastPotlucks = this.myPotlucks.filter((item) => {
+                const today = new Date().getDate()
+                const scheduled = new Date(item.time).getDate()
+                if(scheduled < today){
+                    return item;
+                }
+            })
+        }
+    },
+    created() {
+        this.populatePotluckArrays();
     }
-    // methods: {
-    //     populatePotluckArray() {
-    //         this.potlucks = this.myPotlucks;
-    //     }
-    // },
-    // created() {
-    //     this.populatePotluckArray();
-    // }
     
 
 }
