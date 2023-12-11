@@ -66,7 +66,8 @@ export default {
     computed: {
         hasPotlucks() {
             return this.myPotlucks.length > 0;
-        }
+        },
+        
     }
     // methods: {
     //     populatePotluckArray() {
