@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using Capstone.Exceptions;
 using Capstone.Models;
@@ -261,6 +262,33 @@ namespace Capstone.DAO
                 if (output != 1)
                 {
                     throw new DaoException("SQL error. Insertion not completed");
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return output;
+        }
+
+        public IList<int> FindInvitationsByEmail(string email)
+        {
+            string sql = @"SELECT potluck_id, email from invitations WHERE email = @email;";
+
+            IList<int> output = new List<int>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        output.Add(Convert.ToInt32(reader["potluck_id"]));
+                    }
                 }
             }
             catch (SqlException ex)
