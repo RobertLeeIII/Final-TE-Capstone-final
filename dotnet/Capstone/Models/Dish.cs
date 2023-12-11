@@ -36,6 +36,8 @@ namespace Capstone.Models
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
+        public List<string> Diets { get; set; }
+        public List<string> Allergens { get; set; }
     }
     public class UpdateDishDTO
     {
