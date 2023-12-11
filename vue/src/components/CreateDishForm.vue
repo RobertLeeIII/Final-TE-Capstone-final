@@ -17,9 +17,9 @@
 
             <button @click.prevent="addIngredient" type="button">Add Ingredient</button> -->
 
-
-
-        <div> <textarea v-model="newDish.directions" placeholder="Enter directions" style="height: 200px;"></textarea></div>
+            <label for="dishName">Dish Name</label>
+            <input id="dishName" type="text" v-model="newDish.name">
+        <div> <textarea v-model="newDish.recipe" placeholder="Enter directions" style="height: 200px;"></textarea></div>
         <div>
           <button @click.prevent="toggleSpecialDiets" type="button">{{ showSpecialDiets ? 'Hide Special Diets' : 'Special Diets ? ' }}</button>
           <div v-if="showSpecialDiets">
@@ -109,12 +109,13 @@ export default {
     return {
       //  ingredients: [{ name: '', amount: '' }],
       newDish: {
+        name: '',
         userId: this.$store.state.user.userId,
         creator: this.$store.state.user.username,
-        directions: '',
+        recipe: '',
         diets: [],
         allergens: [],
-        course: -1 //IS THIS OK?
+        courseId: 1 //IS THIS OK?
       },
       
        showSpecialDiets: false,

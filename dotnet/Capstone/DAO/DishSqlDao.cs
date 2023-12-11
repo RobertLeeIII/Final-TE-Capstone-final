@@ -149,6 +149,12 @@ namespace Capstone.DAO
                             
                             INSERT INTO potluck_dish (potluck_id, dish_id) 
                             VALUES (@potluckID, @dishID);";
+            // Third one for dish diet and Allergens
+            string sql3 = @"SELECT diet_id, diet_name from diets where diet_name = @diet;
+
+                            INSERT INTO dish_diet (dish_id, diet_id)
+                            VALUES (@dishId, @diet);";
+
 
             int newDishId = 0;
 
