@@ -49,7 +49,7 @@ namespace Capstone.Controllers
                 foreach (string email in invitations)
                 {
                     InviteUser temp = userDao.GetUserByEmail(email);
-                    if (temp != null)
+                    if (temp.Email != null)
                     {
                         userDao.SendRegisteredInvitation(potluckId, temp.UserId); //if they have an account, send that way
                     }

@@ -46,8 +46,8 @@ export default {
       this.emailList.push(''); // Add a new email to the list
     },
     autoAddField(index) {
-      if (event.target.value.trim()) {
-        if (index == this.emailList.length - 1) {
+      if (event.target.value.trim()) {  //not just whitespace
+        if (index == this.emailList.length - 1) { //if in the last input box
           this.emailList.push('');
         }
         else {
@@ -57,7 +57,7 @@ export default {
         }
       }
       else {
-        if (index < this.emailList.length && index > 0 && index !== this.emailList.length-1) {
+        if (index < this.emailList.length-1 && index > 0 && index !== this.emailList.length-1) {
           this.emailList.pop();
         }
       }
