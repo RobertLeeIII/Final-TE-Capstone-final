@@ -14,6 +14,7 @@ namespace Capstone.DAO
         public IList<int> FindInvitationsByEmail(string email);
         User GetUserById(int id);
         User GetUserByUsername(string username);
+        public int UninviteUser(int potluckId, int userId);
         User CreateUser(string email, string username, string password, string role, bool dietaryRestriction);
     }
 }
