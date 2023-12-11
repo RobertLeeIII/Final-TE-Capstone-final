@@ -43,7 +43,7 @@ namespace Capstone.DAO
         public Dish GetDishById(int dishId)
         {
             Dish dish = null;
-            string sql = "SELECT dish_id, dish_name, recipe " +
+            string sql = "SELECT dish_id, dish_name, recipe, username, course_id " +
                 "FROM dishes " +
                 "WHERE dish_id = @dish_id;";
 
@@ -150,10 +150,8 @@ namespace Capstone.DAO
                             INSERT INTO potluck_dish (potluck_id, dish_id) 
                             VALUES (@potluckID, @dishID);";
             // Third one for dish diet and Allergens
-            string sql3 = @"SELECT diet_id, diet_name from diets where diet_name = @diet;
-
-                            INSERT INTO dish_diet (dish_id, diet_id)
-                            VALUES (@dishId, @diet);";
+            string sql3 = @"INSERT INTO dish_diet (dish_id, diet_name)
+                            VALUES (@dishId, @diet_name);";
 
 
             int newDishId = 0;
@@ -162,17 +160,18 @@ namespace Capstone.DAO
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+                    conn.Open();
                     SqlCommand cmd = new SqlCommand(sql1, conn);
-                    cmd.Parameters.AddWithValue("@dish_name", addedDish.Name);
-                    cmd.Parameters.AddWithValue("@recipe", addedDish.Recipe);
-                    cmd.Parameters.AddWithValue("@course_id", addedDish.CourseId);
+                    cmd.Parameters.AddWithValue("@dish_name", newDish.Name);
+                    cmd.Parameters.AddWithValue("@recipe", newDish.Recipe);
+                    cmd.Parameters.AddWithValue("@course_id", newDish.CourseId);
 
                     newDishId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     cmd = new SqlCommand(sql2, conn);
-                    cmd.Parameters.AddWithValue("@user_ID", addedDish.Creator);
-                    cmd.Parameters.AddWithValue("@dish_ID", newDishId);
-                    cmd.Parameters.AddWithValue("@potluck_ID", potluckId);
+                    cmd.Parameters.AddWithValue("@userID", userId);
+                    cmd.Parameters.AddWithValue("@dishID", newDishId);
+                    cmd.Parameters.AddWithValue("@potluckID", potluckId);
 
                     cmd.ExecuteScalar();
                 }
@@ -252,7 +251,7 @@ namespace Capstone.DAO
         {
             Dish dish = new Dish();
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
-            dish.Creator = Convert.ToString(reader["user_id"]);
+            dish.Creator = Convert.ToString(reader["username"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
             dish.CourseId = Convert.ToInt32(reader["course_id"]);
