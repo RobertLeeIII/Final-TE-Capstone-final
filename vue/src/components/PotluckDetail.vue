@@ -1,29 +1,7 @@
 <template>
     <div :class="changingTheme" v-if="Potluck.courseRequest">
       <div class="container">
-        <ul class="list">
-          <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-          <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-          <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-          <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-          <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
-          <li><i :class="changingIcon"></i> Appetizers: {{ Potluck.courseRequest.apps }}</li>
-          <li><i :class="changingIcon"></i> Main Dishes: {{ Potluck.courseRequest.mains }}</li>
-          <li><i :class="changingIcon"></i> Sides: {{ Potluck.courseRequest.sides }}</li>
-          <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
-        </ul>
-        <div class="links">
-            <ul>
-               <li><router-link v-if="isHost" 
-                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li> 
-               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link> </li> 
-                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link> </li> 
-            </ul>
-                </div>
-            <section class="requested-items">
+        <section class="requested-items">
         <h3>The host has requested:</h3>
         <div class="requested-items-details">
           <div class="requested-item">
@@ -40,6 +18,26 @@
           </div>
         </div>
       </section>
+        <ul class="list">
+          <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
+          <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+          <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+          <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+          <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+
+        </ul>
+        <div class="links">
+            <ul>
+               <li><router-link v-if="isHost" 
+                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+                    class="invitation-link">Invite People</router-link> </li> 
+               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+                    class="update-link">Update This Potluck</router-link> </li> 
+                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+                    class="whos-coming-link">Who's coming?</router-link> </li> 
+            </ul>
+                </div>
+        
     </div>
     <dish-suggestion class="signup" @focusout="toggleDishSignup('')" v-if="dishSignup"></dish-suggestion>
   </div>
@@ -132,11 +130,12 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 600px;
+
 }
 
 .container li {
     margin: 10px 0;
-    display: flex;
+    display: flex-wrap;
     align-items: left;
 }
 
@@ -195,23 +194,17 @@ body {
     padding: 20px;
 }
 
-.list {
-  list-style: none;
-  padding: 0;
-  padding-right: 300px;
-}
-
 .list li {
-    
   margin-bottom: 15px;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Adjust alignment to the left */
   font-size: 18px;
   color: #333;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease; 
+  transition: box-shadow 0.3s ease;
+  width: 500px;
 }
 
 .list li i {
@@ -219,19 +212,28 @@ body {
   font-size: 22px;
 }
 
-.list li:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-.list li:last-child {
-  margin-bottom: 0; /* Remove bottom margin for the last item to avoid extra space */
-}
 .requested-items span {
   margin-right: 20px;
   cursor: pointer;
   transition: color 0.3s ease;
   display: inline-block;
   margin-bottom: 10px; /* Add space between items */
+}
+
+.requested-item {
+  flex: 1;
+  text-align: left; /* Align text to the left */
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.requested-item span {
+  display: block;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .requested-items span:last-child {
