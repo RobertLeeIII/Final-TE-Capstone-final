@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using Capstone.Exceptions;
 using Capstone.Models;
@@ -54,7 +55,7 @@ namespace Capstone.DAO
         {
             IList<User> output = new List<User>();
 
-            string sql = @"SELECT users.user_id, username, email FROM users 
+            string sql = @"SELECT users.user_id, email, username, password_hash, salt, user_role, diet_rest FROM users 
                            JOIN potluck_user as pu ON users.user_id = pu.user_id 
                            WHERE potluck_id = @potluckId;";
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -167,7 +168,7 @@ namespace Capstone.DAO
         public InviteUser GetUserByEmail(string email)
         {
             InviteUser output = new InviteUser();
-            string sql = @"SELECT user_id, email FROM users WHERE email = @email;";
+            string sql = @"SELECT user_id, email, username, password_hash, salt, user_role, diet_rest FROM users WHERE email = @email;";
 
             try
             {
@@ -234,7 +235,7 @@ namespace Capstone.DAO
                 }
                 if(output != 1)
                 {
-                    //What to do if the insert fails
+                    throw new DaoException("SQL error. Insertion not completed");//What to do if the insert fails
                 }
             }
             catch (SqlException ex)
@@ -245,7 +246,7 @@ namespace Capstone.DAO
         }
         public int SendUnregisteredInvitation(int potluckId, string email)
         {
-            string sql = @"INSERT INTO invitations (potluck_id, user_id) 
+            string sql = @"INSERT INTO invitations (potluck_id, email) 
                            VALUES (@potluckId, @email);";
             int output = -1;
             try
@@ -260,7 +261,34 @@ namespace Capstone.DAO
                 }
                 if (output != 1)
                 {
-                    //What to do if the insert fails
+                    throw new DaoException("SQL error. Insertion not completed");
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return output;
+        }
+
+        public IList<int> FindInvitationsByEmail(string email)
+        {
+            string sql = @"SELECT potluck_id, email from invitations WHERE email = @email;";
+
+            IList<int> output = new List<int>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        output.Add(Convert.ToInt32(reader["potluck_id"]));
+                    }
                 }
             }
             catch (SqlException ex)

@@ -1,20 +1,25 @@
 <template>
     <invite-to-potluck-form v-if="this.$route.query.action == 'invite'"></invite-to-potluck-form>
-    <uninvite-from-potluck v-else-if="this.$route.query.action == 'uninvite'" :potluckGuests="guests"></uninvite-from-potluck>
-
-    <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
-                      query: {action: 'uninvite'}}">Uninvite Someone?</router-link>
+    <uninvite-from-potluck v-else-if="this.$route.query.action == 'uninvite'" :guests="potluckGuests"></uninvite-from-potluck>
+    <div v-else>
+    <div v-for="guest in potluckGuests" :key="guest.username">{{ guest.username.substring(0,1).toUpperCase() + guest.username.substring(1) }}</div>
+    <!-- <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
+                      query: {action: 'uninvite'}}">Uninvite Someone?</router-link> -->
+        <router-link :to="{name: 'guest-list', params: {potluckId: this.$route.params.potluckId}, query: {action: 'uninvite'}}"><button>Uninvite People</button></router-link>
+    </div>
 </template>
 
 <script>
 import UserService from '../services/UserService.js';
+import PotluckService from '@/services/PotluckService';
 import UninviteFromPotluck from '@/components/UninviteFromPotluck.vue'
 import InviteToPotluckForm from '../components/InviteToPotluckForm.vue';
 
 export default {
     data() {
         return {
-            potluckGuests: []
+            potluckGuests: [],
+            currentPotluck: {}
 
         }
     },
@@ -28,8 +33,8 @@ export default {
         
     },
     methods: {
-        getPotluckGuests(potluckId) {
-            this.UserService.getGuestsByPotluckId(potluckId)
+        getPotluckGuests() {
+            UserService.getGuestsByPotluckId(this.$route.params.potluckId)
                 .then(response => {
                     this.potluckGuests = response.data;
                 })
@@ -43,6 +48,9 @@ export default {
                     }
                 });
         },
+        getPotluckById() {
+            PotluckService.getPotluckById(this.$route.params.potluckId).te
+        },
         handleErrorResponse(error) {
             if (error.response) {
                 if (error.response.status == 404) {
@@ -52,7 +60,8 @@ export default {
         },
     },
     created() {
-
+        this.getPotluckGuests();
+        //this.getPotluckById()
     },
 }
 </script>

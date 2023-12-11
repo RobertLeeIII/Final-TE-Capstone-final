@@ -11,6 +11,7 @@ namespace Capstone.DAO
         User GetHostByPotluckId(int potluckId);
         public int SendRegisteredInvitation(int potluckId, int userId);
         public int SendUnregisteredInvitation(int potluckId, string email);
+        public IList<int> FindInvitationsByEmail(string email);
         User GetUserById(int id);
         User GetUserByUsername(string username);
         User CreateUser(string email, string username, string password, string role, bool dietaryRestriction);
