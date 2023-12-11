@@ -13,14 +13,16 @@
           <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
         </ul>
         <div class="links">
-                <router-link v-if="isHost"
+            <ul>
+               <li><router-link v-if="isHost" 
                     :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link>
-                <router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link>
-                <router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link>
-            </div>
+                    class="invitation-link">Invite People</router-link> </li> 
+               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+                    class="update-link">Update This Potluck</router-link> </li> 
+                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+                    class="whos-coming-link">Who's coming?</router-link> </li> 
+            </ul>
+                </div>
             <section class="requested-items">
         <h3>The host has requested:</h3>
         <div class="requested-items-details">
@@ -196,6 +198,7 @@ body {
 .list {
   list-style: none;
   padding: 0;
+  padding-right: 300px;
 }
 
 .list li {
