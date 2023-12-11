@@ -1,9 +1,10 @@
 <template>
+    <div class="content">
     <div class="main">
-        <div class="box">
-            <p>Update a potluck</p>
-        </div>
-        <form v-on:submit.prevent="saveUpdatedPotluck" class="box">
+      <div class="box">
+        <p>Update a potluck</p>
+      </div>
+      <form v-on:submit.prevent="saveUpdatedPotluck" class="box">
             <label for="potluck-name">Name</label>
             <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="updatedPotluck.name" />
 
@@ -50,19 +51,19 @@
               </div>
           </div>
    -->
-            <label for="potluck-theme">Theme</label>
-            <select class="input is-rounded" id="potluck-theme" v-model="updatedPotluck.theme">
-                <option>None</option>
-                <option>🍀Spring</option>
-                <option>🌞Summer</option>
-                <option>🎃Fall</option>
-                <option>❄️Winter</option>
-            </select>
-            <button type="submit">Update This Potluck</button>
-        </form>
-    </div>
+   <label for="potluck-theme">Theme</label>
+      <select class="input is-rounded" id="potluck-theme" v-model="updatedPotluck.theme">
+        <option>None</option>
+        <option>🍀Spring</option>
+        <option>🌞Summer</option>
+        <option>🎃Fall</option>
+        <option>❄️Winter</option>
+      </select>
+      <button type="submit">Update This Potluck</button>
+    </form>
+  </div>
+  </div>
 </template>
-  
 <script>
 import PotluckService from "../services/PotluckService.js";
 
@@ -167,23 +168,25 @@ export default {
 };
 </script>
   
-<style scoped>
-.media {
+<style scoped>.media {
     display: flex;
     justify-content: center;
+  }
+  .box {
+  margin-left: 20px;
+  width: 450px;
+  
 }
-
-.box {
-    margin-left: 20px;
-    width: 450px;
-
+.main{
+background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
 }
-
-.main {
+.content{
     background-image: url(/7637317.jpg);
-    background-color: rgb(255, 193, 146);
-    min-height: 95vh;
-    /* Set minimum height of layout to full viewport height */
 
+    display: flex;
+    justify-content: left;
 }</style>
   
