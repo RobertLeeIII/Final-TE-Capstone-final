@@ -1,8 +1,11 @@
 ﻿using Capstone.Exceptions;
 using Capstone.Models;
+using PostmarkDotNet;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 
 namespace Capstone.DAO
 {
@@ -120,7 +123,7 @@ namespace Capstone.DAO
                          JOIN users AS u ON u.user_id = pu.user_id 
                          JOIN potluck_course as pc ON pc.potluck_id = potlucks.potluck_id 
                          JOIN courses ON courses.course_id = pc.course_id WHERE u.user_id = @user_id 
-                         ORDER BY potlucks.potluck_id;";
+                         ORDER BY time ASC, potlucks.potluck_id;";
 
             try
             {
@@ -169,7 +172,7 @@ namespace Capstone.DAO
             }
             return potlucks;
         }
-        public IList<Potluck> getPotluckByHostID(int hostId)
+        public IList<Potluck> GetPotluckByHostID(int hostId)
         {
             IList<Potluck> potlucks = new List<Potluck>();
             string sql = "SELECT potluck_id, host_id, potluck_name, summary, location, " +
@@ -271,18 +274,34 @@ namespace Capstone.DAO
         public Potluck UpdatePotluck(UpdatePotluckDTO updatedPotluck, int potluckId)
         {
             Potluck editedPotluck = null;
-            string sql = "UPDATE potlucks " +
+
+            string sql1 = "UPDATE potlucks " +
                 "SET potluck_name = @potluck_name, summary = @summary, location = @location, " +
                 "time = @time, theme = @theme, is_recurring = @is_recurring, repeat_interval = @repeat_interval " +
-                "WHERE potluck_id = @potluck_id;";
+                "WHERE potluck_id = @potluckId;";
 
+            string sql2 = @"UPDATE potluck_course 
+                           SET how_many = @howMany
+                           WHERE potluck_id = @potluckId AND course_id = @courseId;";
+
+            int apps = updatedPotluck.CourseRequest.apps;
+            int sides = updatedPotluck.CourseRequest.sides;
+            int mains = updatedPotluck.CourseRequest.mains;
+            int desserts = updatedPotluck.CourseRequest.desserts;
+
+            
+
+            //VALUES(@ID, 1, @apps),
+            //                       (@ID, 2, @main),
+            //                       (@ID, 3, @side),
+            //                       (@ID, 4, @dess);
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlCommand cmd = new SqlCommand(sql1, conn);
                     cmd.Parameters.AddWithValue("@potluck_name", updatedPotluck.Name);
                     cmd.Parameters.AddWithValue("@summary", updatedPotluck.Summary);
                     cmd.Parameters.AddWithValue("@location", updatedPotluck.Location);
@@ -290,12 +309,45 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@theme", updatedPotluck.Theme);
                     cmd.Parameters.AddWithValue("@is_recurring", updatedPotluck.isRecurring);
                     cmd.Parameters.AddWithValue("@repeat_interval", updatedPotluck.RepeatInterval);
+                    cmd.Parameters.AddWithValue("@potluckId", potluckId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
                     {
                         throw new DaoException("Zero rows affected, but expecting at least one.");
                     }
+
+
+                    int count = 0;
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        cmd = new SqlCommand(sql2, conn);
+                        cmd.Parameters.AddWithValue("@potluckId", potluckId);
+                        cmd.Parameters.AddWithValue("@courseId", i);
+                        
+                        if (i == 1)
+                        {
+                            cmd.Parameters.AddWithValue("@howMany", updatedPotluck.CourseRequest.apps);
+                        }
+                        else if(i == 2)
+                        {
+                            cmd.Parameters.AddWithValue("@howMany", updatedPotluck.CourseRequest.mains);
+                        }
+                        else if (i == 3)
+                        {
+                            cmd.Parameters.AddWithValue("@howMany", updatedPotluck.CourseRequest.sides);
+                        }
+                        else if (i == 4)
+                        {
+                            cmd.Parameters.AddWithValue("@howMany", updatedPotluck.CourseRequest.desserts);
+                        }
+                        count += cmd.ExecuteNonQuery();
+                    }
+                    if(count != 4)
+                    {
+                        throw new DaoException("Expected 4 rows affected, instead got " + count);
+                    }
+
                     editedPotluck = GetPotluckById(potluckId);
                 }
             }
@@ -305,10 +357,15 @@ namespace Capstone.DAO
             }
             return editedPotluck;
         }
-        public int DeletePotluck(int potluckId)
+        public int DeletePotluck(int potluckId, int userId, int courseId)
         {
             int rowsAffected = 0;
-            string sql = "DELETE FROM potlucks WHERE potluck_id = @potluck_id;";
+            string sql = @"DELETE FROM potluck_user WHERE potluck_id = @potluck_id;  
+                           DELETE FROM potluck_dish WHERE potluck_id = @potluck_id; 
+                           DELETE FROM potluck_course WHERE potluck_id = @potluck_id;  
+                           DELETE FROM potlucks WHERE potluck_id = @potluck_id;"; 
+                           // Add this one back as needed.
+                           //DELETE FROM potluck_diet WHERE potluck_id = @potluck_id AND diet_id = @diet_id;
 
             try
             {
@@ -318,6 +375,8 @@ namespace Capstone.DAO
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@course_id", courseId);
                     cmd.ExecuteNonQuery();
                 }
             }

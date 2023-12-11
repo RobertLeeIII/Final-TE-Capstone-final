@@ -1,43 +1,75 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-  <h3>Reset Password</h3>
+  <div>
+    <form class="box" @submit.prevent="handleSubmit">
+      <h3>Reset Password</h3>
+      <br />
+      <div class="field">
+        <label>Password</label>
+        <div class="control">
+          <input type="password" v-model="password" placeholder="********" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Password Confirm</label>
+        <div class="control">
+          <input type="password" v-model="password_confirm" placeholder="********" />
+        </div>
+      </div>
 
-<div class="form-group">
-  <label>Password</label>
-  <input type="password" class="form-control" v-model="password" placeholder="Password" />
-</div>
-
-<div class="form-group">
-  <label>Password Confirm</label>
-  <input type="password" class="form-control" v-model="password_confirm" placeholder="Password Confirm"/>
-</div>
-
-<button class="btn btn-primary btn-block">Submit</button>
-</form>
+      <button class="button is-primary">Submit</button>
+    </form>
+    <div class="whatever">
+      <img class="confused" src="/public\confusedstickfigure.jpg" />
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
-export default{
+
+export default {
   name: 'Reset',
-  data(){
-    return{
+  data() {
+    return {
       password: '',
       password_confirm: ''
-
-    }
+    };
   },
-  methods:{
-    async handleSubmit(){
-      const response = await axios.post('reset',{
-        password: this.password,
-        password_confirm: this.password_confirm,
-        token: this.$route.params.token
-      });
+  methods: {
+    async handleSubmit() {
+      try {
+        // Make an API request to reset the password
+        const response = await axios.post('/api/reset', {
+          password: this.password,
+          password_confirm: this.password_confirm,
+          token: this.$route.params.token
+        });
 
-      console.log(response);
-      this.$router.push('/Login');
+        console.log(response.data);
+        // Assuming your backend returns a success message
+
+        // Redirect the user to the login route
+        this.$router.push('/Login');
+      } catch (error) {
+        console.error(error.response.data);
+        // Handle errors appropriately
+      }
     }
   }
-}
+};
 </script>
+
+<style scoped>
+.box {
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 450px;
+}
+.whatever {
+  display: flex;
+  justify-content: center;
+}
+.confused {
+  height: 590px;
+}
+</style>

@@ -23,12 +23,16 @@ namespace Capstone.Controllers
             this.potluckDao = potluckDao;
         }
         // TODO: Change route when ready
-        [HttpGet("/users/{userId}")]
+        [HttpGet("/users/{userId}/potlucks")] //This should be in user Controller. THIS one should be called at /users/userId/potlucks
         public ActionResult<List<Potluck>> GetPotlucksByUserId(int userId)
         {
             try
             {
                 List<Potluck> output = new List<Potluck>(potluckDao.GetPotlucksByUserId(userId));
+                if(output[0].Name == null)
+                {
+                    output.RemoveAt(0);
+                }
            
                 return Ok(output);
             }
@@ -68,7 +72,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("/potlucks/{potluckId}")]
-        public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int userId, int potluckId)
+        public ActionResult<Potluck> UpdatePotluck(UpdatePotluckDTO editedPotluck, int potluckId)
         {
             try
             {
@@ -77,7 +81,7 @@ namespace Capstone.Controllers
                 {
                     return NotFound();
                 }
-                if (updatingPotluck.HostId != userId)
+                if (updatingPotluck.HostId != editedPotluck.HostId)
                 {
                     return StatusCode(403);
                 }
