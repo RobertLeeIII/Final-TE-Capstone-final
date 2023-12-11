@@ -63,7 +63,7 @@
                     <router-link v-bind:to="{ name: 'login' }">Login</router-link>
                   </p>
                 </a>
-                <a class="button is-warning">
+                <a class="button is-light">
                   <p>
                     <router-link v-bind:to="{ name: 'register' }">Sign up</router-link>
                   </p>
@@ -93,6 +93,9 @@
 </template>
 <style>
 .navbar {
+  background-color: rgb(36, 62, 52);
+}
+.navbar-item{
   background-color: rgb(36, 62, 52);
 }
 
