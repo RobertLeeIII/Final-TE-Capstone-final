@@ -1,29 +1,32 @@
 <template>
-    <div :class="changingTheme" v-if="Potluck.courseRequest">
-      <div class="container">
-        <ul class="list">
-          <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-          <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-          <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-          <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-          <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
-          <li><i :class="changingIcon"></i> Appetizers: {{ Potluck.courseRequest.apps }}</li>
-          <li><i :class="changingIcon"></i> Main Dishes: {{ Potluck.courseRequest.mains }}</li>
-          <li><i :class="changingIcon"></i> Sides: {{ Potluck.courseRequest.sides }}</li>
-          <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
+  <div :class="changingTheme" v-if="Potluck.courseRequest">
+    <div class="container">
+      <ul class="list">
+        <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
+        <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+        <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+        <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+        <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+        <li><i :class="changingIcon"></i> Appetizers: {{ Potluck.courseRequest.apps }}</li>
+        <li><i :class="changingIcon"></i> Main Dishes: {{ Potluck.courseRequest.mains }}</li>
+        <li><i :class="changingIcon"></i> Sides: {{ Potluck.courseRequest.sides }}</li>
+        <li><i :class="changingIcon"></i> Desserts: {{ Potluck.courseRequest.desserts }}</li>
+      </ul>
+      <div class="links">
+        <ul>
+          <li><router-link v-if="isHost"
+              :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+              class="invitation-link">Invite People</router-link> </li>
+          <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+              class="update-link">Update This Potluck</router-link> </li>
+          <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+              class="whos-coming-link">Who's coming?</router-link> </li>
+          <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
+              class="my-potlucks-list">Back to My Potlucks</router-link>
+          </li>
         </ul>
-        <div class="links">
-            <ul>
-               <li><router-link v-if="isHost" 
-                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li> 
-               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link> </li> 
-                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link> </li> 
-            </ul>
-                </div>
-            <section class="requested-items">
+      </div>
+      <section class="requested-items">
         <h3>The host has requested:</h3>
         <div class="requested-items-details">
           <div class="requested-item">
@@ -48,151 +51,155 @@
 <script>
 import DishSuggestion from '@/components/DishSuggestion.vue'
 export default {
-    data() {
-        return {
-            dishSignup: false,
-            invitedGuests: [],
-            dishes: [],
-            currentCourse: '',
-            isModalOpen: false,
+  data() {
+    return {
+      dishSignup: false,
+      invitedGuests: [],
+      dishes: [],
+      currentCourse: '',
+      isModalOpen: false,
 
-        }
+    }
+  },
+  components: {
+    DishSuggestion
+  },
+  computed: {
+    isHost() {
+      return this.Potluck.hostId == this.$store.state.user.userId;
     },
-    components: {
-        DishSuggestion
+    changingTheme() {
+      if (this.Potluck.theme.includes('Spring')) {
+        return { spring: true }
+      }
+      else if (this.Potluck.theme.includes('Summer')) {
+        return { summer: true }
+      }
+      else if (this.Potluck.theme.includes('Fall')) {
+        return { fall: true }
+      }
+      else if (this.Potluck.theme.includes('Winter')) {
+        return { winter: true }
+      }
+      return true;
     },
-    computed: {
-        isHost() {
-            return this.Potluck.hostId == this.$store.state.user.userId;
-        },
-        changingTheme() {
-            if (this.Potluck.theme.includes('Spring')) {
-                return { spring: true }
-            }
-            else if (this.Potluck.theme.includes('Summer')) {
-                return { summer: true }
-            }
-            else if (this.Potluck.theme.includes('Fall')) {
-                return { fall: true }
-            }
-            else if (this.Potluck.theme.includes('Winter')) {
-                return { winter: true }
-            }
-            return true;
-        },
-        changingIcon() {
-            if (this.Potluck.theme.includes('Spring')) {
-                return "fa-solid fa-cloud-sun-rain"
-            }
-            else if (this.Potluck.theme.includes('Summer')) {
-                return "fa-solid fa-sun"
-            }
-            else if (this.Potluck.theme.includes('Fall')) {
-                return "fa-solid fa-leaf"
-            }
-            else if (this.Potluck.theme.includes('Winter')) {
-                return "fa-regular fa-snowflake"
-            }
-            return true;
-        }
+    changingIcon() {
+      if (this.Potluck.theme.includes('Spring')) {
+        return "fa-solid fa-cloud-sun-rain"
+      }
+      else if (this.Potluck.theme.includes('Summer')) {
+        return "fa-solid fa-sun"
+      }
+      else if (this.Potluck.theme.includes('Fall')) {
+        return "fa-solid fa-leaf"
+      }
+      else if (this.Potluck.theme.includes('Winter')) {
+        return "fa-regular fa-snowflake"
+      }
+      return true;
+    }
+  },
+  props: {
+    Potluck: Object
+  },
+  methods: {
+    formatDate(dateTimeString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      const date = new Date(dateTimeString);
+      return date.toLocaleDateString('en-US', options);
     },
-    props: {
-        Potluck: Object
-    },
-    methods: {
-        formatDate(dateTimeString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-            const date = new Date(dateTimeString);
-            return date.toLocaleDateString('en-US', options);
-        },
-        toggleDishSignup(courseName) {
-            if (this.currentCourse === '') {
-                this.currentCourse = courseName;
-            }
-            else {
-                this.currentCourse = '';
-            }
-            this.dishSignup = !this.dishSignup;
-        }
-    },
+    toggleDishSignup(courseName) {
+      if (this.currentCourse === '') {
+        this.currentCourse = courseName;
+      }
+      else {
+        this.currentCourse = '';
+      }
+      this.dishSignup = !this.dishSignup;
+    }
+  },
 }
 </script>
 
 <style scoped>
 body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
 }
 
 .container {
-    list-style: none;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+  list-style: none;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 }
 
 .container li {
-    margin: 10px 0;
-    display: flex;
-    align-items: left;
+  margin: 10px 0;
+  display: flex;
+  align-items: left;
 }
 
 .container li i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .changingIcon {
-    transition: color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.spring{
-    transition: background-color 0.3s ease;
-    background-image: url('/springFoods.jpeg');
+.spring {
+  transition: background-color 0.3s ease;
+  background-image: url('/springFoods.jpeg');
 }
-.summer{
-    transition: background-color 0.3s ease;
-    background-image: url('/summer-food-collection.jpg');
+
+.summer {
+  transition: background-color 0.3s ease;
+  background-image: url('/summer-food-collection.jpg');
 }
-.fall{
-    transition: background-color 0.3s ease;
-    background-image: url('/fallfood.png');
+
+.fall {
+  transition: background-color 0.3s ease;
+  background-image: url('/fallfood.png');
 }
+
 .winter {
-    transition: background-color 0.3s ease;
-    background-image: url('/winter2.jpg');
+  transition: background-color 0.3s ease;
+  background-image: url('/winter2.jpg');
 }
 
 .links {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .invitation-link,
 .update-link,
-.whos-coming-link {
-    text-decoration: none;
-    color: #3498db;
-    margin-right: 20px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.whos-coming-link ,
+.my-potlucks-list{
+  text-decoration: none;
+  color: #3498db;
+  margin-right: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .invitation-link:hover,
 .update-link:hover,
 .whos-coming-link:hover {
-    background-color: #297fb8;
-    color: #fff;
+  background-color: #297fb8;
+  color: #fff;
 }
 
 .signup {
-    width: 75vw;
-    height: 40vh;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
+  width: 75vw;
+  height: 40vh;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .list {
@@ -202,7 +209,7 @@ body {
 }
 
 .list li {
-    
+
   margin-bottom: 15px;
   display: flex;
   align-items: center;
@@ -211,7 +218,7 @@ body {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease; 
+  transition: box-shadow 0.3s ease;
 }
 
 .list li i {
@@ -223,22 +230,28 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
+
 .list li:last-child {
-  margin-bottom: 0; /* Remove bottom margin for the last item to avoid extra space */
+  margin-bottom: 0;
+  /* Remove bottom margin for the last item to avoid extra space */
 }
+
 .requested-items span {
   margin-right: 20px;
   cursor: pointer;
   transition: color 0.3s ease;
   display: inline-block;
-  margin-bottom: 10px; /* Add space between items */
+  margin-bottom: 10px;
+  /* Add space between items */
 }
 
 .requested-items span:last-child {
-  margin-right: 0; /* Remove right margin for the last span */
+  margin-right: 0;
+  /* Remove right margin for the last span */
 }
-.host-request{
-    display: flex;
+
+.host-request {
+  display: flex;
 
 }
 
@@ -291,5 +304,4 @@ body {
 .requested-item:hover span {
   color: #3498db;
 }
-
 </style>
