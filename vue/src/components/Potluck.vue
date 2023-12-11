@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <router-link  :class="isPastOrFuture"
     :to="{
       name: 'potluck-details',
       params: { potluckId: propPotluck.potluckId },
@@ -41,6 +41,7 @@ export default {
   props: {
     propPotluck: Object,
   },
+  
   methods: {
     formatDate(dateTimeString) {
       const options = {
@@ -53,6 +54,7 @@ export default {
       const date = new Date(dateTimeString);
       return date.toLocaleDateString("en-US", options);
     },
+    
   },
   computed: {
     changingImage() {
@@ -66,6 +68,23 @@ export default {
         return "/public/winter2.jpg";
       }
       return "/imagePotluck-transformed.jpg";
+    },
+    isPastOrFuture(){
+      // const options = {
+      //   year: "numeric",
+      //   month: "short",
+      //   day: "numeric",
+      //   hour: "numeric",
+      //   minute: "numeric",
+      // };
+      const now = new Date().getTime();
+      const potluckTime = new Date(this.propPotluck.time).getTime();
+      if(potluckTime > now){
+        return "future"
+      }
+      else{
+      return "past"
+      }
     },
   },
 };
