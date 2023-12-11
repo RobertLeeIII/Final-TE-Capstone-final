@@ -23,13 +23,14 @@
       <div class="main">
         <h2>Mission Statement:</h2>
         <p>
-          At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in fostering a sense of community and connection by simplifying the process of organizing and participating in potluck events. Our goal is to provide a user-friendly
-          platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of togetherness one potluck at a time. Join us in building a 
+          At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in
+          fostering a sense of community and connection by simplifying the process of organizing and participating in
+          potluck events. Our goal is to provide a user-friendly
+          platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a
+          commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of
+          togetherness one potluck at a time. Join us in building a
           world where every meal is an opportunity for shared joy and lasting connections.
         </p>
-      </div>
-      <div class="centerFooter">
-        <p><strong>potluckPlanner:</strong> Written by TE capstone team 2</p>
       </div>
     </section>
   </div>
@@ -139,12 +140,13 @@ export default {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .header-image {
     margin-top: 20px;
   }
+
   .header-img {
     width: 100%;
   }
-}
-</style>
+}</style>
 
