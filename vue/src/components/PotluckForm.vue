@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <section class="hero">
-      <div class="hero-body">
-        <p></p>
-        <p class="title">Step 1: Create a Potluck</p>
-        <p class="subtitle"></p>
-      </div>
-    </section>
-    <form v-on:submit.prevent="saveNewPotluck" class="potluck-form">
+  <div class = 'main'>
+<div class="box">
+  <p>Step 1: Create a potluck</p>
+</div>
+    <form v-on:submit.prevent="saveNewPotluck" class="box">
       <label for="potluck-name">Name</label>
       <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="newPotluck.name" />
 
@@ -60,9 +56,9 @@
         <option>🎃Fall</option>
         <option>❄️Winter</option>
       </select>
-      <button type="submit">Create Your Potluck!</button>
+      <button class='button is-warning' type="submit">Create Your Potluck!</button>
     </form>
-    <img src="/7637317.jpg" style="width: 100%" />
+
   </div>
 </template>
 
@@ -180,8 +176,20 @@ export default {
 };
 </script>
 
-<style>
-.hero {
-  background-color: rgb(255, 193, 146);
+<style scoped>
+.media{
+    display: flex;
+    justify-content: center;
+}
+.box {
+  margin-left: 20px;
+  width: 450px;
+  
+}
+.main{
+  background-image: url(/7637317.jpg);
+  background-color:  rgb(255, 193, 146);
+  min-height: 95vh; /* Set minimum height of layout to full viewport height */
+
 }
 </style>
