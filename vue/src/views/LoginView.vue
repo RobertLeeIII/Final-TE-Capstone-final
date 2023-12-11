@@ -33,9 +33,6 @@
         </form>
       </div>
     </div>
-    <p class="centerFooter">
-      <strong>PotluckPlanner:</strong> Written by TE capstone team 2
-    </p>
   </div>
 </template>
 
