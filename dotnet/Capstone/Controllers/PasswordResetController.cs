@@ -8,12 +8,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Capstone.Security;
 using Microsoft.AspNetCore.DataProtection;
+using System.Text; // Add this for Encoding
 
 [ApiController]
 [Route("controller")]
 public class PasswordResetController : ControllerBase
 {
-    private readonly string JwtSecret = "your-secret-key";
+    private readonly string JwtSecret = "your-secret-key-with-at-least-128-bits"; // Update with a key of sufficient size
     private const string EmailSender = "plannerpotluck@gmail.com";
     private const string EmailSenderPassword = "C#C#DotNet";
 
@@ -36,7 +37,7 @@ public class PasswordResetController : ControllerBase
         return StatusCode((int)HttpStatusCode.InternalServerError, new { Error = "Error sending email" });
     }
 
-    [HttpPost("reset")]
+    [HttpPost("reset/token")]
     public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
     {
         try
@@ -70,28 +71,29 @@ public class PasswordResetController : ControllerBase
     private string GenerateJwtToken(string email)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = System.Text.Encoding.ASCII.GetBytes(JwtSecret);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("email", email) }),
             Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
 
+
     private string ValidateJwtToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = System.Text.Encoding.ASCII.GetBytes(JwtSecret);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret)); // Use Encoding.UTF8.GetBytes to convert the key to bytes
 
         tokenHandler.ValidateToken(token, new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
+            IssuerSigningKey = new SymmetricSecurityKey(key.Key),
             ValidateIssuer = false,
             ValidateAudience = false,
             ClockSkew = TimeSpan.Zero
@@ -112,7 +114,7 @@ public class PasswordResetController : ControllerBase
 
             using (var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com", // Update with your SMTP server
+                Host = "smtp.gmail.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
