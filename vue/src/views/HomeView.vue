@@ -29,7 +29,15 @@
           world where every meal is an opportunity for shared joy and lasting connections.</p>
       </div>
       <div class="centerFooter">
-        <p><strong>potluckPlanner:</strong> Written by TE capstone team 2</p>
+        <p>
+          <strong>potluckPlanner:</strong> Written by
+          <br>
+          <a href="https://www.linkedin.com/in/mattcaltomare">Matt Altomare</a> | 
+          <a href="https://www.linkedin.com/in/kelseybrownwright">Kelsey Brownwright</a> |
+          <a href="https://www.linkedin.com/in/leerobertiii/">Rob Lee</a> |
+          <a href="https://www.linkedin.com/in/ted-nelson-developer/">Ted Nelson</a> |
+          <a href="https://www.linkedin.com/in/kylewwacker/">Kyle Wacker</a>
+        </p>
       </div>
     </section>
   </div>

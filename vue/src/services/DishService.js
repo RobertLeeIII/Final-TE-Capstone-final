@@ -6,6 +6,6 @@ export default {
     },
 
     updateDish(updatedDish, dishId){
-        return axios.put(`/dishes/${dishId}/update`, updatedDish)
+        return axios.put(`/dishes/${dishId}/update`, updatedDish) //TODO: use a query here instead of a verb as a path
     }
 }
