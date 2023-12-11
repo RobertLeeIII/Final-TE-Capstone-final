@@ -2,6 +2,7 @@
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,18 @@ namespace Capstone.Controllers
                 return StatusCode(500);
             }
         }
-
+        //[HttpPut("/potlucks/{potluckId}/guestList")]
+        //public ActionResult<int> UpdateGuestList(IList<int> userId, int potluckId)
+        //{
+        //    try
+        //    {
+        //        // delete from user potluck table
+        //        // remove any dishes that the user signed up to bring
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500);
+        //    }
+        //}
     }
 }
