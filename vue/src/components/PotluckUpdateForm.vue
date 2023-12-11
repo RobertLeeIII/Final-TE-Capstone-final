@@ -1,9 +1,9 @@
 <template>
     <div class="main">
-        <div class="box">
-            <p>Update a potluck</p>
-        </div>
-        <form v-on:submit.prevent="saveUpdatedPotluck" class="box">
+      <div class="box">
+        <p>Update a potluck</p>
+      </div>
+      <form v-on:submit.prevent="saveUpdatedPotluck" class="box">
             <label for="potluck-name">Name</label>
             <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="updatedPotluck.name" />
 
@@ -50,19 +50,18 @@
               </div>
           </div>
    -->
-            <label for="potluck-theme">Theme</label>
-            <select class="input is-rounded" id="potluck-theme" v-model="updatedPotluck.theme">
-                <option>None</option>
-                <option>🍀Spring</option>
-                <option>🌞Summer</option>
-                <option>🎃Fall</option>
-                <option>❄️Winter</option>
-            </select>
-            <button type="submit">Update This Potluck</button>
-        </form>
-    </div>
+   <label for="potluck-theme">Theme</label>
+      <select class="input is-rounded" id="potluck-theme" v-model="updatedPotluck.theme">
+        <option>None</option>
+        <option>🍀Spring</option>
+        <option>🌞Summer</option>
+        <option>🎃Fall</option>
+        <option>❄️Winter</option>
+      </select>
+      <button type="submit">Update This Potluck</button>
+    </form>
+  </div>
 </template>
-  
 <script>
 import PotluckService from "../services/PotluckService.js";
 
@@ -167,23 +166,19 @@ export default {
 };
 </script>
   
-<style scoped>
-.media {
+<style scoped>.media {
     display: flex;
     justify-content: center;
-}
-
-.box {
+  }
+  
+  .box {
     margin-left: 20px;
     width: 450px;
-
-}
-
-.main {
+  }
+  
+  .main {
     background-image: url(/7637317.jpg);
     background-color: rgb(255, 193, 146);
     min-height: 95vh;
-    /* Set minimum height of layout to full viewport height */
-
-}</style>
+  }</style>
   
