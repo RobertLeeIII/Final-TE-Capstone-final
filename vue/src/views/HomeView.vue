@@ -11,10 +11,8 @@
               A meal or party to which each of the guests contributes a dish.
             </p>
             <p class="header-description">
-              <br>
               Coordinate potluck dishes, supplies and party RSVPs with online sign up sheets for gatherings with family,
               friends and large groups.
-
             </p>
           </div>
           <div class="header-image">
@@ -23,10 +21,12 @@
         </div>
       </div>
       <div class="main">
-        <h2>Mission Statement:</h2><br>
-        <p>At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in fostering a sense of community and connection by simplifying the process of organizing and participating in potluck events. Our goal is to provide a user-friendly
+        <h2>Mission Statement:</h2>
+        <p>
+          At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in fostering a sense of community and connection by simplifying the process of organizing and participating in potluck events. Our goal is to provide a user-friendly
           platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of togetherness one potluck at a time. Join us in building a 
-          world where every meal is an opportunity for shared joy and lasting connections.</p>
+          world where every meal is an opportunity for shared joy and lasting connections.
+        </p>
       </div>
       <div class="centerFooter">
         <p>
@@ -68,71 +68,63 @@ export default {
 </script>
 
 <style scoped>
+/* Updated styles for a more modern look */
 
 .layout {
   display: grid;
-  grid-template-rows: auto 1fr auto; /* Adjust as needed */
-  gap: 8px;
-  background-color: rgb(124, 169, 130); /* Salmon-colored background */
-  min-height: 95vh; /* Set minimum height of layout to full viewport height */
-
-  padding-bottom: 20px; /* Increase bottom padding */
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+  background-color: #f0f0f0;
+  min-height: 95vh;
+  padding: 20px;
 }
 
 .centerFooter {
   display: flex;
   justify-content: center;
   gap: 16px;
-  margin-top: 20px; /* Move the footer down */
-  color: white; /* Change text color */
+  margin-top: 20px;
+  color: #888;
 }
 
 .header {
   text-align: left;
   margin-bottom: 20px;
-  background-color: rgb(241, 247, 237); /* Set background color for the header */
+  background-color: #fafafa;
+  padding: 20px;
 }
 
 .header-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  border: 4px solid rgb(124, 169, 130)   ;
-  padding: 20px; /* Add padding as needed */
-}
-
-.header-text {
-  text-align: left;
-
-  margin-right: 50px;
-  margin-left: 50px;
+  border: 4px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
 }
 
 .header-title {
-  font-size: 36px;
+  font-size: 3rem;
   margin-bottom: 5px;
+  color: #333;
 }
 
 .header-phonetic {
-  font-size: 18px;
-  margin-left: 50px;
-
-  color: #888;
+  font-size: 1.5rem;
+  color: #666;
 }
 
 .header-definition {
-  font-size: 24px;
+  font-size: 2rem;
   margin-top: 10px;
   margin-bottom: 5px;
-  margin-left: 50px;
-
+  color: #333;
 }
 
 .header-description {
-  font-size: 16px;
-
-  margin-left: 50px;
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
 }
 
 .header-image {
@@ -142,14 +134,25 @@ export default {
 .header-img {
   width: 380px;
   height: auto;
-  border-radius: 4%;
+  border-radius: 8px;
 }
 
-.main{
-  color: white; /* Change text color */
-
+.main {
+  color: #333;
 }
-.nav{
-  background-color: red;
-}</style>
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-image {
+    margin-top: 20px;
+  }
+  .header-img {
+    width: 100%;
+  }
+}
+</style>
 
