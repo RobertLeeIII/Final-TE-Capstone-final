@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
     postNewDish(newDish, userId, potluckId){
-        return axios.post(`/potlucks/${potluckId}/menu`, userId, newDish);
+        return axios.post(`/potlucks/${potluckId}/menu`, userId, newDish); // TODO: Can't have two parameters in addition to the path
     },
 
     updateDish(updatedDish, dishId){
