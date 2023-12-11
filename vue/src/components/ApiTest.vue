@@ -72,11 +72,11 @@ export default {
 </script>
 
 <style>
-body {
+/* body {
   background-color: #cef0c3;
   margin: 0;
 }
-
+ */
 .button {
   background-color: #4CAF50;
   border: none;
