@@ -80,7 +80,7 @@
   <footer>
     <div class="centerFooter">
       <p>
-        <strong>potluckPlanner:</strong> Written by
+        <strong>Potluck Planner:</strong> Written by
         <br>
         <a href="https://www.linkedin.com/in/mattcaltomare">Matt Altomare</a> |
         <a href="https://www.linkedin.com/in/kelseybrownwright">Kelsey Brownwright</a> |
@@ -106,4 +106,8 @@ a.router-link-active {
 .routerlink {
   color: rgb(241, 247, 237);
   /* Set background color for the header */
-}</style>
+}
+.centerFooter {
+  padding: 10px;
+}
+</style>
