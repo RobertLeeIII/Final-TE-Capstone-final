@@ -67,12 +67,15 @@ namespace Capstone.Controllers
             }
         }
         //[HttpPut("/potlucks/{potluckId}/guestList")]
-        //public ActionResult<int> UpdateGuestList(IList<int> userId, int potluckId)
+        //public ActionResult<int> UpdateGuestList(IList<int> userIds, int potluckId)
         //{
         //    try
         //    {
-        //        // delete from user potluck table
-        //        // remove any dishes that the user signed up to bring
+        //        // loop through the list and uninvite each user
+        //        foreach (int item in userIds)
+        //        {
+        //            return Ok(userDao.UninviteUser(item, potluckId));
+        //        }
         //    }
         //    catch (Exception)
         //    {
