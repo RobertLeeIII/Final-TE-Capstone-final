@@ -22,7 +22,7 @@ export default {
     getRecipe() {
       MealDBService.getRandomRecipe()
         .then((response) => {
-          this.currentRecipe = response.data;
+          this.currentRecipe = response.data.meals[0];
         })
         .catch((error) => {
           this.handleErrorResponse(error);
