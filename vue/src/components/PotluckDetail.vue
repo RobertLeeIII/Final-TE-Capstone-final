@@ -1,7 +1,7 @@
 <template>
-    <div :class="changingTheme" v-if="Potluck.courseRequest">
-      <div class="container">
-        <section class="requested-items">
+  <div :class="changingTheme" v-if="Potluck.courseRequest">
+    <div class="container">
+      <section class="requested-items">
         <h3>The host has requested:</h3>
         <div class="requested-items-details">
           <div class="requested-item">
@@ -18,29 +18,29 @@
           </div>
         </div>
       </section>
-        <ul class="list">
-          <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-          <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-          <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-          <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-          <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+      <ul class="list">
+        <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
+        <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+        <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+        <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+        <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
 
-        </ul>
-        <div class="links">
-            <ul>
-               <li><router-link v-if="isHost" 
-                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li> 
-               <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link> </li> 
-                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link> </li> 
-                    <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
-              class="my-potlucks-list">Back to My Potlucks</router-link>
+      </ul>
+      <div class="links">
+        <ul>
+          <li><router-link v-if="isHost"
+              :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+              class="invitation-link">Invite People</router-link> </li>
+          <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+              class="update-link">Update This Potluck</router-link> </li>
+          <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+              class="whos-coming-link">Who's coming?</router-link> </li>
+          <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
+              class="my-potlucks-link">Back to My Potlucks</router-link>
           </li>
-            </ul>
-                </div>
-        
+        </ul>
+      </div>
+
     </div>
     <dish-suggestion class="signup" @focusout="toggleDishSignup('')" v-if="dishSignup"></dish-suggestion>
   </div>
@@ -127,19 +127,19 @@ body {
 }
 
 .container {
-    list-style: none;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+  list-style: none;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 
 }
 
 .container li {
-    margin: 10px 0;
-    display: flex-wrap;
-    align-items: left;
+  margin: 10px 0;
+  display: flex-wrap;
+  align-items: left;
 }
 
 .container li i {
@@ -176,8 +176,8 @@ body {
 
 .invitation-link,
 .update-link,
-.whos-coming-link ,
-.my-potlucks-list{
+.whos-coming-link,
+.my-potlucks-link {
   text-decoration: none;
   color: #3498db;
   margin-right: 20px;
@@ -188,6 +188,7 @@ body {
 
 .invitation-link:hover,
 .update-link:hover,
+.my-potlucks-link:hover,
 .whos-coming-link:hover {
   background-color: #297fb8;
   color: #fff;
@@ -204,7 +205,8 @@ body {
 .list li {
   margin-bottom: 15px;
   display: flex;
-  align-items: flex-start; /* Adjust alignment to the left */
+  align-items: flex-start;
+  /* Adjust alignment to the left */
   font-size: 18px;
   color: #333;
   padding: 15px;
@@ -230,7 +232,8 @@ body {
 
 .requested-item {
   flex: 1;
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  /* Align text to the left */
   padding: 10px;
   border-radius: 8px;
   background-color: #fff;
@@ -246,7 +249,8 @@ body {
 
 .requested-item {
   flex: 1;
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  /* Align text to the left */
   padding: 10px;
   border-radius: 8px;
   background-color: #fff;
@@ -318,5 +322,4 @@ body {
 
 .requested-item:hover span {
   color: #3498db;
-}
-</style>
+}</style>
