@@ -23,20 +23,13 @@
       <div class="main">
         <h2>Mission Statement:</h2>
         <p>
-          At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in fostering a sense of community and connection by simplifying the process of organizing and participating in potluck events. Our goal is to provide a user-friendly
-          platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of togetherness one potluck at a time. Join us in building a 
+          At Potluck Planner, our mission is to bring people together through the joy of shared meals. We believe in
+          fostering a sense of community and connection by simplifying the process of organizing and participating in
+          potluck events. Our goal is to provide a user-friendly
+          platform that empowers individuals to plan, coordinate, and enjoy memorable gatherings effortlessly. With a
+          commitment to inclusivity, collaboration, and delicious experiences, we strive to enhance the spirit of
+          togetherness one potluck at a time. Join us in building a
           world where every meal is an opportunity for shared joy and lasting connections.
-        </p>
-      </div>
-      <div class="centerFooter">
-        <p>
-          <strong>potluckPlanner:</strong> Written by
-          <br>
-          <a href="https://www.linkedin.com/in/mattcaltomare">Matt Altomare</a> | 
-          <a href="https://www.linkedin.com/in/kelseybrownwright">Kelsey Brownwright</a> |
-          <a href="https://www.linkedin.com/in/leerobertiii/">Rob Lee</a> |
-          <a href="https://www.linkedin.com/in/ted-nelson-developer/">Ted Nelson</a> |
-          <a href="https://www.linkedin.com/in/kylewwacker/">Kyle Wacker</a>
         </p>
       </div>
     </section>
@@ -147,12 +140,13 @@ export default {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .header-image {
     margin-top: 20px;
   }
+
   .header-img {
     width: 100%;
   }
-}
-</style>
+}</style>
 
