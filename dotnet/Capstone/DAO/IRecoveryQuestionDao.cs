@@ -1,6 +1,8 @@
 ﻿namespace Capstone.DAO
 {
-    public class IRecoveryQuestionDao
+    public interface IRecoveryQuestionDao
     {
+        string GetQuestionText(int questionId);
     }
 }
+

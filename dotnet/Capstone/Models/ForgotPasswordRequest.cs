@@ -1,6 +1,9 @@
-﻿namespace Capstone.Models
-{
-    public class ForgotPasswordRequest
+﻿
+    namespace Capstone.Models
     {
+        public class ForgotPasswordRequest
+        {
+            public string Email { get; set; }
+        }
     }
-}
+

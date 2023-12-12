@@ -11,4 +11,10 @@
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
     }
+    public class ResetPasswordRequest
+    {
+        public string Email { get; set; }
+        public string SecurityAnswer { get; set; }
+        public string NewPassword { get; set; }
+    }
 }
