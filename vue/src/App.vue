@@ -99,9 +99,9 @@
   background-color: rgb(36, 62, 52);
 }
 
-a.router-link-active {
-  color: rgb(241, 247, 237)
-}
+/* a.router-link-active {
+  color: rgb(8, 16, 3)
+} */
 
 .routerlink {
   color: rgb(241, 247, 237);
