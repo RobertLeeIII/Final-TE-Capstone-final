@@ -6,11 +6,12 @@
           <div class="container">
             <section class="requested-items">
               <dish-suggestion v-if="signUpForm" :course="currentCourse"></dish-suggestion>
-              <h3>The host has requested:</h3>
-              <div class="requested-items-details">
+              <div class="requested-items-details" v-if="!signUpForm">
+                <h3 style="padding: 10px;">The host has requested:</h3>
+
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
-                <div class="requested-item" @click="dishSignup(1)" id="1">
+                <div class="requested-item"  @click="dishSignup(1)" id="1">
                   <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
                 </div>
                 <!-- </router-link> -->
@@ -37,14 +38,15 @@
           <div>
             <img>
           </div>
-            <ul class="list">
+            <ul class="list" v-if="!signUpForm">
               <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
               <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
               <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
               <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
               <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
-            <div class="links">
+
+            <div class="links" v-if="!signUpForm">
               <ul>
                 <li><router-link v-if="isHost"
                     :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
@@ -56,7 +58,7 @@
                 <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
                     class="my-potlucks-link">Back to My Potlucks</router-link></li>
               </ul>
-            </div> -->
+            </div>
           </div>
         </div>
         </section>
