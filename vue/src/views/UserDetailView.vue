@@ -15,7 +15,7 @@
           </div>
         </router-link>
       </div>
-      <div class="dish-card">
+      <div class="card">
         <!--Router link goes here-->
           <div class="dish-image">
             <img src="/public/imagePotluck-transformed.jpg" alt="Dish Image">
