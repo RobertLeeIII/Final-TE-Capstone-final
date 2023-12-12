@@ -31,7 +31,7 @@
       const currentCourse = ref(0);
   
       const courseName = computed(() => {
-        return props.course === 1 ? 'Starter' : props.course === 2 ? 'Main Course' : 'Dessert';
+        return props.course === 1 ? 'appetizer' : props.course === 2 ? 'side' : props.course === 3 ? 'main dish' : 'dessert';
       });
   
       const shuffledMeals = computed(() => {
