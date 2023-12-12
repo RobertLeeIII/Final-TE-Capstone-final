@@ -5,32 +5,33 @@
         <div :class="changingTheme" v-if="Potluck.courseRequest">
           <div class="container">
             <section class="requested-items">
+              <dish-suggestion v-if="signUpForm" :course="currentCourse"></dish-suggestion>
               <h3>The host has requested:</h3>
               <div class="requested-items-details">
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }">
-                  <div class="requested-item">
-                    <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
-                  </div>
-                </router-link>
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
+                <div class="requested-item" @click="dishSignup(1)" id="1">
+                  <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }"> -->
+                <div class="requested-item" @click="dishSignup(2)" id="2">
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }"> -->
+                <div class="requested-item" @click="dishSignup(3)" id="3">
+                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
+                <div class="requested-item" @click="dishSignup(4)" id="4">
+                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                </div>
+                <!-- </router-link> -->
               </div>
               <router-link
                 :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
@@ -56,7 +57,7 @@
                     class="my-potlucks-link">Back to My Potlucks</router-link></li>
               </ul>
             </div>
-            <section class="requested-items">
+            <!-- <section class="requested-items">
               <h3>The host has requested:</h3>
               <div class="requested-items-details">
                 <div class="requested-item">
@@ -95,7 +96,7 @@
                 <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
                     class="my-potlucks-link">Back to My Potlucks</router-link></li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -107,16 +108,15 @@ import DishSuggestion from '@/components/DishSuggestion.vue'
 export default {
   data() {
     return {
-      dishSignup: false,
       invitedGuests: [],
       dishes: [],
-      currentCourse: '',
-      isModalOpen: false,
+      currentCourse: 0,
+      signUpForm: false
 
     }
   },
   components: {
-    //DishSuggestion
+    DishSuggestion
   },
   computed: {
     isHost() {
@@ -162,6 +162,11 @@ export default {
       const date = new Date(dateTimeString);
       return date.toLocaleDateString('en-US', options);
     },
+    dishSignup(ID) {
+      this.currentCourse = ID;
+      this.signUpForm = !this.signUpForm;
+
+    }
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -209,174 +214,176 @@ body {
   transition: color 0.3s ease;
   transition: color 0.3s ease;
 }
-  .spring {
-    transition: background-color 0.3s ease;
-    background-image: url('/springFoods.jpeg');
-  }
-    .summer {
-      transition: background-color 0.3s ease;
-      background-image: url('/summer-food-collection.jpg');
-    }
-      .fall {
-        transition: background-color 0.3s ease;
-        background-image: url('/fallfood.png');
-      }
+
+.spring {
+  transition: background-color 0.3s ease;
+  background-image: url('/springFoods.jpeg');
+}
+
+.summer {
+  transition: background-color 0.3s ease;
+  background-image: url('/summer-food-collection.jpg');
+}
+
+.fall {
+  transition: background-color 0.3s ease;
+  background-image: url('/fallfood.png');
+}
 
 
-      .winter {
-        transition: background-color 0.3s ease;
-        background-image: url('/winter2.jpg');
-        transition: background-color 0.3s ease;
-        background-image: url('/winter2.jpg');
-      }
+.winter {
+  transition: background-color 0.3s ease;
+  background-image: url('/winter2.jpg');
+  transition: background-color 0.3s ease;
+  background-image: url('/winter2.jpg');
+}
 
-      .links {
-        margin-top: 50px;
-        margin-top: 50px;
-      }
+.links {
+  margin-top: 50px;
+  margin-top: 50px;
+}
 
-      .invitation-link,
-      .update-link,
-      .my-potlucks-link,
-      .whos-coming-link {
-        text-decoration: none;
-        color: #3498db;
-        margin-right: 20px;
-        padding: 10px 15px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
+.invitation-link,
+.update-link,
+.my-potlucks-link,
+.whos-coming-link {
+  text-decoration: none;
+  color: #3498db;
+  margin-right: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-      .invitation-link:hover,
-      .update-link:hover,
-      .my-potlucks-link:hover,
-      .whos-coming-link:hover {
-        background-color: #297fb8;
-        color: #fff;
-      }
+.invitation-link:hover,
+.update-link:hover,
+.my-potlucks-link:hover,
+.whos-coming-link:hover {
+  background-color: #297fb8;
+  color: #fff;
+}
 
-      .signup {
-        width: 75vw;
-        height: 40vh;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        width: 75vw;
-        height: 40vh;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-      }
+.signup {
+  width: 75vw;
+  height: 40vh;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 75vw;
+  height: 40vh;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+}
 
-      .list li {
-        margin-bottom: 15px;
-        display: flex;
-        align-items: flex-start;
-        /* Adjust alignment to the left */
-        align-items: flex-start;
-        /* Adjust alignment to the left */
-        font-size: 18px;
-        color: #333;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
-        width: 500px;
-      }
+.list li {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  /* Adjust alignment to the left */
+  align-items: flex-start;
+  /* Adjust alignment to the left */
+  font-size: 18px;
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  width: 500px;
+}
 
-      .list li i {
-        margin-right: 10px;
-        font-size: 22px;
-      }
+.list li i {
+  margin-right: 10px;
+  font-size: 22px;
+}
 
-      .requested-items span {
-        margin-right: 20px;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        display: inline-block;
-        margin-bottom: 10px;
-        /* Add space between items */
-        margin-bottom: 10px;
-        /* Add space between items */
-      }
+.requested-items span {
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-bottom: 10px;
+  /* Add space between items */
+  margin-bottom: 10px;
+  /* Add space between items */
+}
 
-      .requested-item {
-        flex: 1;
-        text-align: left;
-        /* Align text to the left */
-        text-align: left;
-        /* Align text to the left */
-        padding: 10px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-      }
+.requested-item {
+  flex: 1;
+  text-align: left;
+  /* Align text to the left */
+  text-align: left;
+  /* Align text to the left */
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-      .requested-item span {
-        display: block;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
+.requested-item span {
+  display: block;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
-      .requested-items span:last-child {
-        margin-right: 0;
-        /* Remove right margin for the last span */
-        margin-right: 0;
-        /* Remove right margin for the last span */
-      }
+.requested-items span:last-child {
+  margin-right: 0;
+  /* Remove right margin for the last span */
+  margin-right: 0;
+  /* Remove right margin for the last span */
+}
 
-      .host-request {
-        display: flex;
+.host-request {
+  display: flex;
 
-      }
+}
 
-      .requested-items {
-        margin-top: 20px;
-        font-size: 18px;
-        color: #555;
-        padding: 15px;
-        border-radius: 8px;
-        background-color: #F9F9F9;
-        transition: background-color 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
+.requested-items {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #555;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-      .requested-items h3 {
-        margin-bottom: 10px;
-        font-size: 20px;
-        color: #333;
-      }
+.requested-items h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
 
-      .requested-items-details {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
+.requested-items-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-      .requested-item {
-        flex: 1;
-        text-align: center;
-        padding: 10px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-      }
+.requested-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-      .requested-item span {
-        display: block;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
+.requested-item span {
+  display: block;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
-      .requested-item:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
+.requested-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
 
-      .requested-item:hover span {
-        color: #3498db;
-      }
-</style>
+.requested-item:hover span {
+  color: #3498db;
+}</style>
