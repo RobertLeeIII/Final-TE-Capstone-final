@@ -17,7 +17,7 @@ export default {
     return axios.get(`/PasswordReset/forgot/${email}`)
   },
   recoverPassword(email, answer){
-    return axios.get(`/PasswordReset/Reset/${email, answer}`)
+    return axios.get(`/PasswordReset/reset/${email}`)
   }
   /*updateUser(userId){
     return axios.put('/reset/', userId)

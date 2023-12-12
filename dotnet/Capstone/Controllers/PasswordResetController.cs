@@ -2,6 +2,7 @@
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 
 [Route("[controller]")]
@@ -52,8 +53,25 @@ public class PasswordResetController : ControllerBase
         }
         return match == fpr.Answer;
     }
+    [HttpPut("reset/{email}")]
+    public ActionResult<bool> UpdateUserPassword(UpdateUserDTO uud)
+    {
+       if (uud.ConfirmPassword == uud.Password)
+        {
+            try
+            {
+                _userDao.UpdatePassword(uud.Email, uud.Password);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+            return Ok(true);
+    }
+
     //[HttpPost("forgot")]
-    //public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
+    //public IActionResult ForgotPassword([Freset/:emailromBody] ForgotPasswordRequest request)
     //{
     //    if (string.IsNullOrEmpty(request?.Email))
     //    {

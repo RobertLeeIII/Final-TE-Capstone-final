@@ -432,41 +432,42 @@ namespace Capstone.DAO
 
             return user;
         }
-        public void UpdateUser(User user)
+        public bool UpdatePassword(string email, string password)
         {
-            string sql = @"UPDATE users 
-                   SET email = @email, 
-                       username = @username, 
-                       password_hash = @password_hash, 
-                       salt = @salt, 
-                       user_role = @user_role, 
-                       diet_rest = @diet_rest 
-                   WHERE user_id = @user_id";
-
-            try
+            int numberOfRows = 0;
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                IPasswordHasher passwordHasher = new PasswordHasher();
+                PasswordHash hash = passwordHasher.ComputeHash(password);
+
+                string sql = "UPDATE users SET password_hash = @password_hash, salt = @salt WHERE email = @email;";
+                
+                try
                 {
-                    conn.Open();
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@user_id", user.UserId);
-                    cmd.Parameters.AddWithValue("@email", user.Email);
-                    cmd.Parameters.AddWithValue("@username", user.Username);
-                    cmd.Parameters.AddWithValue("@password_hash", user.PasswordHash);
-                    cmd.Parameters.AddWithValue("@salt", user.Salt);
-                    cmd.Parameters.AddWithValue("@user_role", user.Role);
-                    cmd.Parameters.AddWithValue("@diet_rest", user.DietaryRestriction);
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                      
+                        cmd.Parameters.AddWithValue("@password_hash", hash.Password);
+                        cmd.Parameters.AddWithValue("@salt", hash.Salt);
 
-                    cmd.ExecuteNonQuery();
+                        numberOfRows = cmd.ExecuteNonQuery();
+
+                        if (numberOfRows != 1)
+                        {
+                            throw new DaoException("You didn't update the proper amount of rows");
+                        }
+                    }
+                    return true;  
+                }
+                catch (SqlException ex)
+                {
+                   throw new DaoException("SQL exception occurred", ex);
                 }
             }
-            catch (SqlException ex)
-            {
-                throw new DaoException("SQL exception occurred", ex);
-            }
         }
-
+ 
         private User MapRowToUser(SqlDataReader reader)
         {
             User user = new User();

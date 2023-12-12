@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import authService from "@/services/AuthService.js";
 
 export default {
   name: 'Reset',
@@ -37,7 +38,7 @@ export default {
     };
   },
   methods: {
-    async handleSubmit() {
+    handleSubmit() {
       try {
         // Basic client-side validation
         if (!this.password || !this.password_confirm) {
@@ -51,11 +52,7 @@ export default {
         }
 
         // Make an API request to reset the password
-        const response = await axios.post(`/PasswordReset/reset/${this.email}`, {
-          email: this.email, // Add the email or any necessary identifier
-          newPassword: this.password,
-          newPasswordConfirm: this.password_confirm,
-        });
+        const response = authService.recoverPassword(this.email, this.answer);
 
         console.log(response.data);
         // Assuming your backend returns a success message

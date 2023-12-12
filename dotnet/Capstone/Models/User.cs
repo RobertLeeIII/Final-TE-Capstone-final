@@ -62,4 +62,11 @@ namespace Capstone.Models
         public string Role { get; set; }
         public bool DietaryRestriction { get; set; }
     }
+    public class UpdateUserDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+
+    }
 }

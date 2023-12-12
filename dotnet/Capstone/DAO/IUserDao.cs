@@ -19,6 +19,7 @@ namespace Capstone.DAO
 
         UserRecovery GetUserRecovery(int UserId);
         User GetUserByEmailAddress(string email);
-        void UpdateUser(User user);
+        public bool UpdatePassword(string email, string password);
+
     }
 }
