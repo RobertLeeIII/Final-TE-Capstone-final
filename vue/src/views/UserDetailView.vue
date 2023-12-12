@@ -17,6 +17,7 @@
       </div>
       <div class="card">
         <!--Router link goes here-->
+        <router-link :to="{ name: 'dish-list', params: { userId: this.$store.state.user.userId } }">
           <div class="dish-image">
             <img src="/public/imagePotluck-transformed.jpg" alt="Dish Image">
           </div>
@@ -27,6 +28,7 @@
               </div>
             </div>
           </div>
+        </router-link>
         <!--Router link closes here-->
       </div>
     </div>
@@ -126,32 +128,37 @@ export default {
   color: #333;
   text-align: center;
 }
+
 .dish-card {
   width: 300px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .dish-image {
   overflow: hidden;
 }
+
 .dish-image img {
   width: 100%;
   height: auto;
   display: block;
 }
+
 .dish-content {
   padding: 20px;
   background-color: #fff;
 }
+
 .dish-media {
   display: flex;
   justify-content: center;
 }
+
 .dish-media-center p {
   margin: 0;
   font-size: 18px;
   color: #333;
   text-align: center;
-}
-</style>
+}</style>

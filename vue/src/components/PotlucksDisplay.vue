@@ -3,7 +3,7 @@
 
         <div class="card-container">
             <div class="card">
-                <router-link :to="{ name: 'potluck-list', query: {action: 'create'}}">
+                <router-link :to="{ name: 'potluck-list', query: { action: 'create' } }">
                     <div class="card-image">
                         <figure class="image is-centered">
                             <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
@@ -13,7 +13,7 @@
 
                         <div class="media">
                             <div class="media-center">
-                                <p>Create a PotLuck</p>
+                                <p>Create a Potluck</p>
                             </div>
 
                         </div>
@@ -21,7 +21,8 @@
                 </router-link>
 
             </div>
-                <potluck class="potluck"  v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId"></potluck>
+            <potluck class="potluck" v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId">
+            </potluck>
             <div class="card-container" v-if="!hasPotlucks">
                 <div class="card">
                     <div class="card-image">
@@ -33,7 +34,7 @@
 
                         <div class="media">
                             <div class="media-center">
-                                <p>You have no potlucks :(</p>
+                                <p>You Have No Potlucks :(</p>
                             </div>
 
                         </div>
@@ -69,7 +70,7 @@ export default {
         hasPotlucks() {
             return this.myPotlucks.length > 0;
         },
-        
+
     },
     methods: {
         populatePotluckArrays() {
@@ -77,14 +78,14 @@ export default {
             this.futurePotlucks = this.myPotlucks.filter((item) => {
                 const today = new Date().getDate()
                 const scheduled = new Date(item.time).getDate()
-                if(scheduled > today){
+                if (scheduled > today) {
                     return item;
-                }            
+                }
             })
             this.pastPotlucks = this.myPotlucks.filter((item) => {
                 const today = new Date().getDate()
                 const scheduled = new Date(item.time).getDate()
-                if(scheduled < today){
+                if (scheduled < today) {
                     return item;
                 }
             })
@@ -93,17 +94,20 @@ export default {
     created() {
         this.populatePotluckArrays();
     }
-    
+
 
 }
 </script>
 
 <style scoped>
-.main{  
+.main {
     border-top: 4px solid rgb(124, 169, 130);
-    background-color: rgb(241, 247, 237); /* Set background color for the header */
-  min-height: 95vh; /* Set minimum height of layout to full viewport height */
+    background-color: rgb(241, 247, 237);
+    /* Set background color for the header */
+    min-height: 95vh;
+    /* Set minimum height of layout to full viewport height */
 }
+
 .centerFooter {
     display: flex;
     justify-content: center;
@@ -118,10 +122,12 @@ export default {
     gap: 20px;
     margin-top: 20px;
 }
-.media{
+
+.media {
     display: flex;
     justify-content: center;
 }
+
 .card {
     width: 300px;
 }
@@ -129,5 +135,4 @@ export default {
 .image.is-centered {
     display: flex;
     justify-content: center;
-}
-</style>
+}</style>
