@@ -58,7 +58,7 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-secondary is-light">
+                <a class="button is-light">
                   <p>
                     <router-link v-bind:to="{ name: 'login' }">Login</router-link>
                   </p>

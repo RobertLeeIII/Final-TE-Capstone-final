@@ -50,17 +50,17 @@ export default {
         }
 
         // Make an API request to reset the password
-        const response = await axios.post('/api/reset', {
-          password: this.password,
-          password_confirm: this.password_confirm,
-          token: this.$route.params.token
+        const response = await axios.post('/controller/reset-password', {
+          email: this.email, // Add the email or any necessary identifier
+          newPassword: this.password,
+          newPasswordConfirm: this.password_confirm,
         });
 
         console.log(response.data);
         // Assuming your backend returns a success message
 
         // Redirect the user to the login route
-        this.$router.push('/Login');
+        this.$router.push('/login');
       } catch (error) {
         console.error(error.response.data);
         // Handle errors appropriately

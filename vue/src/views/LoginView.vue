@@ -23,7 +23,7 @@
               <i class="fas fa-lock"></i>
             </span>
           </div>
-          <button class="button is-warning" type="submit">Sign in</button>
+          <button class="button is-info" type="submit">Sign in</button>
           <p class="forgot-password">
             <router-link to="forgot">Forgot Password?</router-link>
           </p>
