@@ -10,13 +10,14 @@ export default {
     return axios.post('/register', user)
   },
 
-  getRecoveryByEmail(email) {
-    return axios.post('/PasswordReset/forgot', {
-      params: {email},
-    })
+  getRecoveryByEmail(forgotObject) {
+    return axios.post('/PasswordReset/forgot', forgotObject)
   },
   getSecurityQuestionByEmail(email){
     return axios.get(`/PasswordReset/forgot/${email}`)
+  },
+  recoverPassword(email, answer){
+    return axios.get(`/PasswordReset/Reset/${email, answer}`)
   }
   /*updateUser(userId){
     return axios.put('/reset/', userId)

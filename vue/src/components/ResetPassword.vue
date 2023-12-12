@@ -32,7 +32,8 @@ export default {
   data() {
     return {
       password: '',
-      password_confirm: ''
+      password_confirm: '',
+      email: ''
     };
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
         }
 
         // Make an API request to reset the password
-        const response = await axios.post('/PasswordReset/reset', {
+        const response = await axios.post(`/PasswordReset/reset/${this.email}`, {
           email: this.email, // Add the email or any necessary identifier
           newPassword: this.password,
           newPasswordConfirm: this.password_confirm,

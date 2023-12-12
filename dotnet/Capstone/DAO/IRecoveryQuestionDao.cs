@@ -2,7 +2,9 @@
 {
     public interface IRecoveryQuestionDao
     {
-        public string GetQuestionText(int questionId);
+        public string GetQuestionText(string email);
+
+        public string GetAnswer(string answer);
     }
 }
 

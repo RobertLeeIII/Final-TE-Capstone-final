@@ -34,86 +34,105 @@ public class PasswordResetController : ControllerBase
 
     }
     [HttpPost("forgot")]
-    public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
+    public ActionResult<bool> PasswordRecoveryAnswer(ForgotPasswordRequest fpr)
     {
-        if (string.IsNullOrEmpty(request?.Email))
+        if ((string.IsNullOrEmpty(fpr.Email)) || (string.IsNullOrEmpty(fpr.Answer)))
         {
-            return BadRequest(new { Error = "Email is required" });
+            return BadRequest(new { Error = "Email and Answer are required" });
         }
+        string match = _recoveryQuestionDao.GetAnswer(fpr.Email);
 
-        User user = _userDao.GetUserByEmailAddress(request.Email);
-
-        if (user == null)
+        if (match == null)
         {
-            return NotFound(new { Error = "User not found" });
+            return NotFound(new { Error = "Answer not found" });
         }
-
-        // Retrieve the user's security question from the user_recovery table
-        UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
-        if (userRecovery == null)
+        if (match != fpr.Answer)
         {
-            return NotFound(new { Error = "Security question not found for the user" });
+            return BadRequest(new { Error = "Answer is incorrect" });
         }
-
-        // Retrieve the text of the security question from the recovery_questions table
-        string question = _recoveryQuestionDao.GetQuestionText(userRecovery.QuestionId);
-
-        // Return the user's security question for use in the frontend
-        return Ok(new { SecurityQuestion = question, Message = "Security question retrieved successfully" });
+        return match == fpr.Answer;
     }
+    //[HttpPost("forgot")]
+    //public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
+    //{
+    //    if (string.IsNullOrEmpty(request?.Email))
+    //    {
+    //        return BadRequest(new { Error = "Email is required" });
+    //    }
 
-    [HttpPost("reset")]
-    public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(request?.Email) || string.IsNullOrEmpty(request?.SecurityAnswer) || string.IsNullOrEmpty(request?.NewPassword))
-            {
-                return BadRequest(new { Error = "Email, SecurityAnswer, and NewPassword are required" });
-            }
+    //    User user = _userDao.GetUserByEmailAddress(request.Email);
 
-            // Find the user by email
-            User user = _userDao.GetUserByEmailAddress(request.Email);
+    //    if (user == null)
+    //    {
+    //        return NotFound(new { Error = "User not found" });
+    //    }
 
-            if (user == null)
-            {
-                return NotFound(new { Error = "User not found" });
-            }
+    //    // Retrieve the user's security question from the user_recovery table
+    //    UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
+    //    if (userRecovery == null)
+    //    {
+    //        return NotFound(new { Error = "Security question not found for the user" });
+    //    }
 
-            // Retrieve the user's security question from the user_recovery table
-            UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
-            if (userRecovery == null)
-            {
-                return NotFound(new { Error = "Security question not found for the user" });
-            }
+    //    // Retrieve the text of the security question from the recovery_questions table
+    //    string question = _recoveryQuestionDao.GetQuestionText(userRecovery.QuestionId);
 
-            // Check if the provided security answer matches the stored answer
-            if (userRecovery.Answer != request.SecurityAnswer)
-            {
-                return Unauthorized(new { Error = "Invalid security answer" });
-            }
+    //    // Return the user's security question for use in the frontend
+    //    return Ok(new { SecurityQuestion = question, Message = "Security question retrieved successfully" });
+    //}
 
-            // Hash the new password before storing it
-            string hashedPassword = HashPassword(request.NewPassword);
-            user.PasswordHash = hashedPassword;
+    //[HttpPost("reset")]
+    //public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
+    //{
+    //    try
+    //    {
+    //        if (string.IsNullOrEmpty(request?.Email) || string.IsNullOrEmpty(request?.SecurityAnswer) || string.IsNullOrEmpty(request?.NewPassword))
+    //        {
+    //            return BadRequest(new { Error = "Email, SecurityAnswer, and NewPassword are required" });
+    //        }
 
-            // Save changes to the database
-            _userDao.UpdateUser(user);
+    //        // Find the user by email
+    //        User user = _userDao.GetUserByEmailAddress(request.Email);
 
-            return Ok(new { Message = "Password reset successfully" });
-        }
-        catch (Exception)
-        {
-            // Log the exception for troubleshooting
-            return StatusCode(500, new { Error = "Error resetting password" });
-        }
-    }
+    //        if (user == null)
+    //        {
+    //            return NotFound(new { Error = "User not found" });
+    //        }
 
-    private string HashPassword(string password)
-    {
-        // Implement a secure password hashing mechanism (e.g., bcrypt) here
-        // ...
+    //        // Retrieve the user's security question from the user_recovery table
+    //        UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
+    //        if (userRecovery == null)
+    //        {
+    //            return NotFound(new { Error = "Security question not found for the user" });
+    //        }
 
-        return password; // Replace with actual hashed password
-    }
+    //        // Check if the provided security answer matches the stored answer
+    //        if (userRecovery.Answer != request.SecurityAnswer)
+    //        {
+    //            return Unauthorized(new { Error = "Invalid security answer" });
+    //        }
+
+    //        // Hash the new password before storing it
+    //        string hashedPassword = HashPassword(request.NewPassword);
+    //        user.PasswordHash = hashedPassword;
+
+    //        // Save changes to the database
+    //        _userDao.UpdateUser(user);
+
+    //        return Ok(new { Message = "Password reset successfully" });
+    //    }
+    //    catch (Exception)
+    //    {
+    //        // Log the exception for troubleshooting
+    //        return StatusCode(500, new { Error = "Error resetting password" });
+    //    }
+    //}
+
+    //private string HashPassword(string password)
+    //{
+    //    // Implement a secure password hashing mechanism (e.g., bcrypt) here
+    //    // ...
+
+    //    return password; // Replace with actual hashed password
+    //}
 }

@@ -66,6 +66,8 @@ namespace Capstone
             services.AddTransient<IUserDao>(m => new UserSqlDao(connectionString));
             services.AddTransient<IPotluckDao>(p => new PotluckSqlDao(connectionString));
             services.AddTransient<IDishDao>(d => new DishSqlDao(connectionString));
+            services.AddTransient<IUserDao>(u => new UserSqlDao(connectionString));
+            services.AddTransient<IRecoveryQuestionDao>(r => new RecoveryQuestionDao(connectionString));
 
             // Swagger set up
             services.AddSwaggerGen(s => {

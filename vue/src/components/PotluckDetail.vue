@@ -72,16 +72,10 @@ export default {
     return {
       invitedGuests: [],
       dishes: [],
-<<<<<<< HEAD
-      currentCourse: "",
-      isModalOpen: false,
-    };
-=======
       currentCourse: 0,
       signUpForm: false
 
     }
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   },
   components: {
     DishSuggestion
@@ -150,13 +144,8 @@ export default {
 <style scoped>
 body {
   margin: 0;
-<<<<<<< HEAD
-  font-family: "Roboto", sans-serif;
-  background-color: #f4f4f4;
-=======
   font-family: 'Roboto', sans-serif;
   background-color: #F4F4F4;
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 }
 
 .container {
@@ -182,104 +171,6 @@ body {
 .changingIcon {
   transition: color 0.3s ease;
 }
-<<<<<<< HEAD
-.spring {
-  transition: background-color 0.3s ease;
-  background-image: url("/springFoods.jpeg");
-}
-.summer {
-  transition: background-color 0.3s ease;
-  background-image: url("/summer-food-collection.jpg");
-}
-.fall {
-  transition: background-color 0.3s ease;
-  background-image: url("/fallfood.png");
-}
-
-.winter {
-  transition: background-color 0.3s ease;
-  background-image: url("/winter2.jpg");
-  transition: background-color 0.3s ease;
-  background-image: url("/winter2.jpg");
-}
-
-.links {
-  margin-top: 50px;
-  margin-top: 50px;
-}
-
-.invitation-link,
-.update-link,
-.my-potlucks-link,
-.whos-coming-link {
-  text-decoration: none;
-  color: #3498db;
-  margin-right: 20px;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.invitation-link:hover,
-.update-link:hover,
-.my-potlucks-link:hover,
-.whos-coming-link:hover {
-  background-color: #297fb8;
-  color: #fff;
-}
-
-.signup {
-  width: 75vw;
-  height: 40vh;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  width: 75vw;
-  height: 40vh;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.list li {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: flex-start;
-  /* Adjust alignment to the left */
-  align-items: flex-start;
-  /* Adjust alignment to the left */
-  font-size: 18px;
-  color: #333;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  width: 500px;
-}
-
-.list li i {
-  margin-right: 10px;
-  font-size: 22px;
-}
-
-.requested-items span {
-  margin-right: 20px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  display: inline-block;
-  margin-bottom: 10px;
-  /* Add space between items */
-  margin-bottom: 10px;
-  /* Add space between items */
-}
-
-.requested-item {
-  flex: 1;
-  text-align: left;
-  /* Align text to the left */
-  text-align: left;
-  /* Align text to the left */
-=======
 
 .spring {
   transition: background-color 0.3s ease;
@@ -379,22 +270,12 @@ body {
 
 .requested-item {
   text-align: left;
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   padding: 10px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-<<<<<<< HEAD
-=======
-
-.requested-item span {
-  display: block;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 
 .requested-item span {
   display: block;
@@ -402,7 +283,6 @@ body {
   transition: color 0.3s ease;
 }
 
-<<<<<<< HEAD
 .requested-items span:last-child {
   margin-right: 0;
   /* Remove right margin for the last span */
@@ -412,11 +292,6 @@ body {
 
 .host-request {
   display: flex;
-=======
-.host-request {
-  display: flex;
-
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 }
 
 .requested-items {

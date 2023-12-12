@@ -29,8 +29,8 @@
 
       <div v-if="securityQuestion !== null">
         <div class="field">
-          <label>Security Question</label>
-          <p>{{ securityQuestion }}</p>
+          <label>Security Question: </label>
+          {{ securityQuestion }}
         </div>
 
         <div class="field">
@@ -83,21 +83,20 @@ export default {
 
         this.loading = true;
 
-        // Make an API request to verify the user based on email and security answer
-        const response = await authService.recoverPassword({
+        const response = await authService.getRecoveryByEmail({
           email: this.email,
-          securityAnswer: this.securityAnswer,
+          answer: this.securityAnswer,
         });
-
-        // Assuming your backend returns a success message
-        // Redirect the user to the reset route with a token or handle accordingly
-        this.$router.push(`/PasswordReset/reset/${this.email}`);
+        if(response.data)
+        {
+          this.$router.push(`/PasswordReset/reset/${this.email}`);
+        }
       } catch (error) {
-        console.error(error.response.data);
-        // Display an error message to the user or handle errors appropriately
+        console.error(error);
+     
         this.validationError = "Invalid email or security answer.";
       } finally {
-        this.loading = false; // Reset loading state
+        this.loading = false; 
       }
     },
 
@@ -107,9 +106,9 @@ export default {
         const securityQuestionResponse = await authService.getSecurityQuestionByEmail(
           this.email
         );
-
+        console.log(securityQuestionResponse)
         // Retrieve Security Question from Database/Backend
-        this.securityQuestion = securityQuestionResponse.data.securityQuestion;
+        this.securityQuestion = securityQuestionResponse.data;
       } catch (error) {
         console.error(error);
         // Handle error appropriately, e.g., show an error message to the user
