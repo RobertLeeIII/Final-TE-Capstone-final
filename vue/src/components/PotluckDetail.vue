@@ -5,32 +5,33 @@
         <div :class="changingTheme" v-if="Potluck.courseRequest">
           <div class="container">
             <section class="requested-items">
+              <dish-suggestion v-if="signUpForm" :course="currentCourse"></dish-suggestion>
               <h3>The host has requested:</h3>
               <div class="requested-items-details">
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }">
-                  <div class="requested-item">
-                    <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }">
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
-                  </div>
-                </router-link>
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
+                <div class="requested-item" @click="dishSignup(1)" id="1">
+                  <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }"> -->
+                <div class="requested-item" @click="dishSignup(2)" id="2">
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }"> -->
+                <div class="requested-item" @click="dishSignup(3)" id="3">
+                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
+                <div class="requested-item" @click="dishSignup(4)" id="4">
+                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                </div>
+                <!-- </router-link> -->
               </div>
             </section>
           <div>
@@ -55,7 +56,7 @@
                 <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
                     class="my-potlucks-link">Back to My Potlucks</router-link></li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
         </section>
@@ -67,15 +68,15 @@ import DishSuggestion from '@/components/DishSuggestion.vue'
 export default {
   data() {
     return {
-      dishSignup: false,
       invitedGuests: [],
       dishes: [],
-      currentCourse: '',
-      isModalOpen: false,
+      currentCourse: 0,
+      signUpForm: false
+
     }
   },
   components: {
-    //DishSuggestion
+    DishSuggestion
   },
   computed: {
     isHost() {
@@ -121,6 +122,11 @@ export default {
       const date = new Date(dateTimeString);
       return date.toLocaleDateString('en-US', options);
     },
+    dishSignup(ID) {
+      this.currentCourse = ID;
+      this.signUpForm = !this.signUpForm;
+
+    }
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -185,6 +191,7 @@ body {
 }
 
 .links {
+  margin-top: 50px;
   margin-top: 50px;
 }
 
@@ -274,10 +281,12 @@ body {
   transition: color 0.3s ease;
 }
 
-.requested-items span:last-child {
-  margin-right: 0;
-  /* Remove right margin for the last span */
-}
+      .requested-items span:last-child {
+        margin-right: 0;
+        /* Remove right margin for the last span */
+        margin-right: 0;
+        /* Remove right margin for the last span */
+      }
 
 .host-request {
   display: flex;
