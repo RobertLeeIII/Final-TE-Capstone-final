@@ -96,6 +96,9 @@ export default {
       }
       else if (this.Potluck.theme.includes('Winter')) {
         return { winter: true }
+      } 
+      else if (this.Potluck.theme.includes('None')) {
+        return { noneTheme: true }
       }
       return true;
     },
@@ -193,7 +196,9 @@ body {
   transition: background-color 0.3s ease;
   background-image: url('/winter2.jpg');
 }
-
+.noneTheme{
+  background-color: rgba(98, 175, 95, 0.411);
+}
 .links {
   margin-top: 50px;
   margin-top: 50px;
