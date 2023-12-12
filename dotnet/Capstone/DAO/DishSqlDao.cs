@@ -43,9 +43,10 @@ namespace Capstone.DAO
         public Dish GetDishById(int dishId)
         {
             Dish dish = null;
-            string sql = "SELECT dish_id, dish_name, recipe " +
-                "FROM dishes " +
-                "WHERE dish_id = @dish_id;";
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id FROM dishes 
+                           FULL JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
+                           FULL JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
+                           WHERE dishes.dish_id = @dish_id;";
 
             try
             {
@@ -69,15 +70,18 @@ namespace Capstone.DAO
             }
             return dish;
         }
-
+        // Ted please check this and leave notes on what I need to correct,
+        // so I can then apply those changes and then tackle GetDishesByPotluckId with better understanding
         public IList<Dish> GetDishesByUserId(int userId)
         {
             IList<Dish> dishes = new List<Dish>();
-            string sql = "SELECT dishes.dish_id, dish_name, recipe, u.user_id " +
-                "FROM dishes " +
-                "JOIN user_dish AS ud ON ud.dish_id = dishes.dish_id " +
-                "JOIN users AS u ON u.user_id = ud.user_id " +
-                "WHERE u.user_id = @user_id;";
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id FROM dishes
+                           JOIN users AS u ON u.user_id = dishes.creator
+                           JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
+                           JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
+                           JOIN ingredient_dish AS id ON id.dish_id = dishes.dish_id
+                           WHERE u.user_id = @user_id
+                           ORDER BY dishes.dish_id ASC;";
 
             try
             {
@@ -89,11 +93,28 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int currentId = -1;
+                    Dish dish = new Dish();
                     while (reader.Read())
                     {
-                        Dish dish = MapRowToDish(reader);
-                        dishes.Add(dish);
+                        while (currentId == -1)
+                        {
+                            currentId = Convert.ToInt32(reader["dish_id"]);
+                        }
+
+                        if (currentId == Convert.ToInt32(reader["dish_id"]))
+                        {
+                            dish = MapRowToDish(reader);
+                        }
+                        else
+                        {
+                            dishes.Add(dish);
+                            currentId = Convert.ToInt32(reader["dish_id"]);
+                            dish = new Dish();
+                            dish = MapRowToDish(reader);
+                        }
                     }
+                    dishes.Add(dish);
                 }
             }
             catch (SqlException ex)
@@ -139,9 +160,9 @@ namespace Capstone.DAO
         {
             Dish addedDish = null;
             // First insert in SQL2 is effectively the creator of the dish
-            string sql1 = @"INSERT INTO dishes (dish_name, recipe, course_id) 
+            string sql1 = @"INSERT INTO dishes (creator, dish_name, recipe, course_id) 
                             OUTPUT INSERTED.dish_id 
-                            VALUES (@dish_name, @recipe, @course_id);";
+                            VALUES (@creator, @dish_name, @recipe, @course_id);";
 
             // Second one is which potluck the dish is going to
             string sql2 = @"INSERT INTO user_dish (user_id, dish_id) 
@@ -150,10 +171,8 @@ namespace Capstone.DAO
                             INSERT INTO potluck_dish (potluck_id, dish_id) 
                             VALUES (@potluckID, @dishID);";
             // Third one for dish diet and Allergens
-            string sql3 = @"SELECT diet_id, diet_name from diets where diet_name = @diet;
-
-                            INSERT INTO dish_diet (dish_id, diet_id)
-                            VALUES (@dishId, @diet);";
+            string sql3 = @"INSERT INTO dish_diet (dish_id, diet_name)
+                            VALUES (@dishId, @diet_name);";
 
 
             int newDishId = 0;
@@ -162,17 +181,19 @@ namespace Capstone.DAO
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+                    conn.Open();
                     SqlCommand cmd = new SqlCommand(sql1, conn);
-                    cmd.Parameters.AddWithValue("@dish_name", addedDish.Name);
-                    cmd.Parameters.AddWithValue("@recipe", addedDish.Recipe);
-                    cmd.Parameters.AddWithValue("@course_id", addedDish.CourseId);
+                    cmd.Parameters.AddWithValue("@creator", newDish.Creator);
+                    cmd.Parameters.AddWithValue("@dish_name", newDish.Name);
+                    cmd.Parameters.AddWithValue("@recipe", newDish.Recipe);
+                    cmd.Parameters.AddWithValue("@course_id", newDish.CourseId);
 
                     newDishId = Convert.ToInt32(cmd.ExecuteScalar());
 
                     cmd = new SqlCommand(sql2, conn);
-                    cmd.Parameters.AddWithValue("@user_ID", addedDish.Creator);
-                    cmd.Parameters.AddWithValue("@dish_ID", newDishId);
-                    cmd.Parameters.AddWithValue("@potluck_ID", potluckId);
+                    cmd.Parameters.AddWithValue("@userID", userId);
+                    cmd.Parameters.AddWithValue("@dishID", newDishId);
+                    cmd.Parameters.AddWithValue("@potluckID", potluckId);
 
                     cmd.ExecuteScalar();
                 }
@@ -252,7 +273,7 @@ namespace Capstone.DAO
         {
             Dish dish = new Dish();
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
-            dish.Creator = Convert.ToString(reader["user_id"]);
+            dish.Creator = Convert.ToString(reader["creator"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
             dish.CourseId = Convert.ToInt32(reader["course_id"]);
