@@ -114,7 +114,7 @@ namespace Capstone.Controllers
 
         }
 
-        [HttpPut("/dishes/{dishId}/update")]
+        [HttpPut("/dishes/{dishId}")]
         public ActionResult<Dish> UpdateDish(UpdateDishDTO editedDish, int dishId)
         {
             try
