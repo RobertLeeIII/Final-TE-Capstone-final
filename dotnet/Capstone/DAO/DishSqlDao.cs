@@ -3,6 +3,7 @@ using Capstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Capstone.DAO
 {
@@ -27,9 +28,10 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    Dish dish = new Dish();
                     while (reader.Read())
                     {
-                        Dish dish = MapRowToDish(reader);
+                        dish = MapRowToDish(reader, dish);
                         dishes.Add(dish);
                     }
                 }
@@ -42,8 +44,11 @@ namespace Capstone.DAO
         }
         public Dish GetDishById(int dishId)
         {
-            Dish dish = null;
-            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id FROM dishes 
+            Dish dish = new Dish();
+            dish.Allergens = new List<string>();
+            dish.Diets = new List<string>();
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
+                           FROM dishes 
                            FULL JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
                            FULL JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
                            WHERE dishes.dish_id = @dish_id;";
@@ -58,9 +63,9 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@dish_id", dishId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        dish = MapRowToDish(reader);
+                        dish = MapRowToDish(reader, dish);
                     }
                 }
             }
@@ -70,18 +75,33 @@ namespace Capstone.DAO
             }
             return dish;
         }
-        // Ted please check this and leave notes on what I need to correct,
-        // so I can then apply those changes and then tackle GetDishesByPotluckId with better understanding
         public IList<Dish> GetDishesByUserId(int userId)
         {
             IList<Dish> dishes = new List<Dish>();
-            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id FROM dishes
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
+                           FROM dishes
                            JOIN users AS u ON u.user_id = dishes.creator
                            JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
                            JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
-                           JOIN ingredient_dish AS id ON id.dish_id = dishes.dish_id
-                           WHERE u.user_id = @user_id
+                           WHERE creator = (SELECT TOP 1 username from users WHERE user_id = @user_id)
                            ORDER BY dishes.dish_id ASC;";
+
+
+            string sql5 = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name  
+                            FROM dishes 
+                            JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id 
+                            JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id 
+                            JOIN potlucks AS p ON p.potluck_id = pd.potluck_id 
+                            WHERE dishes.dish_id = @dish_id 
+                            ORDER BY dishes.dish_id;";
+
+            string sql6 = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, diet_name 
+                            FROM dishes 
+                            JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id 
+                            JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id 
+                            JOIN potlucks AS p ON p.potluck_id = pd.potluck_id 
+                            WHERE dishes.dish_id = @dish_id 
+                            ORDER BY dishes.dish_id;";
 
             try
             {
@@ -104,14 +124,14 @@ namespace Capstone.DAO
 
                         if (currentId == Convert.ToInt32(reader["dish_id"]))
                         {
-                            dish = MapRowToDish(reader);
+                            dish = MapRowToDish(reader, dish);
                         }
                         else
                         {
                             dishes.Add(dish);
                             currentId = Convert.ToInt32(reader["dish_id"]);
                             dish = new Dish();
-                            dish = MapRowToDish(reader);
+                            dish = MapRowToDish(reader, dish);
                         }
                     }
                     dishes.Add(dish);
@@ -126,12 +146,14 @@ namespace Capstone.DAO
         public IList<Dish> GetDishesByPotluckId(int potluckId)
         {
             IList<Dish> dishes = new List<Dish>();
-            // TODO: do we need to include p.potluck_id in the SELECT statement?
-            string sql = "SELECT dishes.dish_id, dish_name, recipe " +
-                "FROM dishes " +
-                "JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id " +
-                "JOIN potlucks AS p ON p.potluck_id = pd.potluck_id " +
-                "WHERE p.potluck_id = @potluck_id;";
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
+                           FROM dishes
+                           JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
+                           JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
+                           JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id
+                           JOIN potlucks AS p ON p.potluck_id = pd.potluck_id
+                           WHERE p.potluck_id = @potluck_id
+                           ORDER BY dishes.dish_id; ";
 
             try
             {
@@ -143,11 +165,29 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int currentId = -1;
+                    Dish dish = new Dish();
                     while (reader.Read())
                     {
-                        Dish dish = MapRowToDish(reader);
-                        dishes.Add(dish);
+
+                        while (currentId == -1)
+                        {
+                            currentId = Convert.ToInt32(reader["potluck_id"]);
+                        }
+
+                        if (currentId == Convert.ToInt32(reader["potluck_id"]))
+                        {
+                            dish = MapRowToDish(reader, dish);
+                        }
+                        else
+                        {
+                            dishes.Add(dish);
+                            currentId = Convert.ToInt32(reader["potluck_id"]);
+                            dish = new Dish();
+                            dish = MapRowToDish(reader, dish);
+                        }
                     }
+                    dishes.Add(dish);
                 }
             }
             catch (SqlException ex)
@@ -174,6 +214,8 @@ namespace Capstone.DAO
             string sql3 = @"INSERT INTO dish_diet (dish_id, diet_name)
                             VALUES (@dishId, @diet_name);";
 
+            string sql4 = @"INSERT INTO dish_allergies (dish_id, allergen_name)
+                            VALUES (@dish_id, @allergen_name);";
 
             int newDishId = 0;
 
@@ -195,7 +237,28 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@dishID", newDishId);
                     cmd.Parameters.AddWithValue("@potluckID", potluckId);
 
-                    cmd.ExecuteScalar();
+                    int counter = 0;
+                    counter = cmd.ExecuteNonQuery();
+                    counter = 0;
+
+                    for (int i = 0; i < newDish.Diets.Count; i++)
+                    {
+                        cmd = new SqlCommand(sql3, conn);
+                        cmd.Parameters.AddWithValue("@dishID", newDishId);
+                        cmd.Parameters.AddWithValue("@diet_name", newDish.Diets[i]);
+                        cmd.ExecuteNonQuery();
+                        counter++;
+                    }
+                    counter = 0;
+                    for (int i = 0; i < newDish.Allergens.Count; i++)
+                    {
+                        cmd = new SqlCommand(sql4, conn);
+                        cmd.Parameters.AddWithValue("@dish_id", newDishId);
+                        cmd.Parameters.AddWithValue("@allergen_name", newDish.Allergens[i]);
+                        cmd.ExecuteNonQuery();
+                        counter++;
+                    }
+
                 }
                 addedDish = GetDishById(newDishId);
             }
@@ -203,6 +266,8 @@ namespace Capstone.DAO
             {
                 throw new DaoException("A SQL error occured.", ex);
             }
+            addedDish.Allergens = addedDish.Allergens.Distinct().ToList();
+            addedDish.Diets = addedDish.Diets.Distinct().ToList();
             return addedDish;
         }
         public Dish UpdateDish(UpdateDishDTO updatedDish, int dishId)
@@ -212,7 +277,7 @@ namespace Capstone.DAO
             string sql = @"UPDATE dishes 
                            SET dish_name = @dish_name, recipe = @recipe 
                            WHERE dish_id = @dish_id;";
-            
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -243,10 +308,10 @@ namespace Capstone.DAO
             string sql = @"DELETE FROM user_dish WHERE user_id = @user_id AND dish_id = @dish_id; 
                            DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id = @dish_id; 
                            DELETE FROM dishes WHERE dish_id = @dish_id;";
-                           // Add these back as needed
-                           //DELETE FROM dish_diet WHERE dish_id = @dish_id AND diet_id = @diet_id; 
-                           //DELETE FROM dish_rating WHERE dish_id = @dish_id AND rater = @user_id;
-                           //DELETE FROM ingredient_dish WHERE ingredient_id = @ingredient_id AND dish_id = @dish_id; 
+            // Add these back as needed
+            //DELETE FROM dish_diet WHERE dish_id = @dish_id AND diet_id = @diet_id; 
+            //DELETE FROM dish_rating WHERE dish_id = @dish_id AND rater = @user_id;
+            //DELETE FROM ingredient_dish WHERE ingredient_id = @ingredient_id AND dish_id = @dish_id; 
 
             try
             {
@@ -269,14 +334,18 @@ namespace Capstone.DAO
         }
 
         //TODO: FIX MAPROWTODISH so it handles the allergens and diets lists
-        private Dish MapRowToDish(SqlDataReader reader)
+        private Dish MapRowToDish(SqlDataReader reader, Dish input)
         {
             Dish dish = new Dish();
+            dish.Allergens = input.Allergens;
+            dish.Diets = input.Diets;
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
             dish.Creator = Convert.ToString(reader["creator"]);
             dish.Name = Convert.ToString(reader["dish_name"]);
             dish.Recipe = Convert.ToString(reader["recipe"]);
             dish.CourseId = Convert.ToInt32(reader["course_id"]);
+            dish.Allergens.Add(Convert.ToString(reader["allergen_name"]));
+            dish.Diets.Add(Convert.ToString(reader["diet_name"]));
 
             return dish;
         }
