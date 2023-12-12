@@ -115,7 +115,7 @@ export default {
         recipe: '',
         diets: [],
         allergens: [],
-        courseId: 1 //IS THIS OK?
+        courseId: this.$route.query.course
       },
       
        showSpecialDiets: false,
@@ -139,10 +139,21 @@ export default {
     submitRecipe() {
 
       DishService.postNewDish(this.newDish, this.$route.params.potluckId)
-      .then()
-      .catch()
+      .then(response => {
+        this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.potluckId } } );
+      })
+      .catch(error => {
+        this.handleErrorResponse(error);
+      })
       console.log('Recipe submitted:', this.newDish);
-    }
+    },
+    handleErrorResponse(error) {
+      if (error.response) {
+        if (error.response.status == 404) {
+          console.log("404 PROBLEM");
+        }
+      }
+    },
   }
 }
 </script>

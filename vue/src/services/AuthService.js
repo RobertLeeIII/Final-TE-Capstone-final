@@ -9,6 +9,10 @@ export default {
   register(user) {
     return axios.post('/register', user)
   },
+
+  getRecoveryByEmail(email) {
+    return axios.get(`/forgot/${email}`)
+  }
   /*updateUser(userId){
     return axios.put('/reset/', userId)
   }*/
