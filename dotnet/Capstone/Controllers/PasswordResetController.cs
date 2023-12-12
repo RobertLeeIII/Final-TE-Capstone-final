@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-[Route("controller")]
+[Route("[controller]")]
 [ApiController]
-[Authorize]
 public class PasswordResetController : ControllerBase
 {
     private readonly IUserDao _userDao;
@@ -26,7 +25,7 @@ public class PasswordResetController : ControllerBase
             return BadRequest(new { Error = "Email is required" });
         }
 
-        var user = _userDao.GetUserByEmailAddress(request.Email);
+        User user = _userDao.GetUserByEmailAddress(request.Email);
 
         if (user == null)
         {
@@ -34,14 +33,14 @@ public class PasswordResetController : ControllerBase
         }
 
         // Retrieve the user's security question from the user_recovery table
-        var userRecovery = _userDao.GetUserRecovery(user.UserId);
+        UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
         if (userRecovery == null)
         {
             return NotFound(new { Error = "Security question not found for the user" });
         }
 
         // Retrieve the text of the security question from the recovery_questions table
-        var question = _recoveryQuestionDao.GetQuestionText(userRecovery.QuestionId);
+        string question = _recoveryQuestionDao.GetQuestionText(userRecovery.QuestionId);
 
         // Return the user's security question for use in the frontend
         return Ok(new { SecurityQuestion = question, Message = "Security question retrieved successfully" });
@@ -58,7 +57,7 @@ public class PasswordResetController : ControllerBase
             }
 
             // Find the user by email
-            var user = _userDao.GetUserByEmailAddress(request.Email);
+            User user = _userDao.GetUserByEmailAddress(request.Email);
 
             if (user == null)
             {
@@ -66,7 +65,7 @@ public class PasswordResetController : ControllerBase
             }
 
             // Retrieve the user's security question from the user_recovery table
-            var userRecovery = _userDao.GetUserRecovery(user.UserId);
+            UserRecovery userRecovery = _userDao.GetUserRecovery(user.UserId);
             if (userRecovery == null)
             {
                 return NotFound(new { Error = "Security question not found for the user" });

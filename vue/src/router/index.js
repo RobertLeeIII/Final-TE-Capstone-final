@@ -116,12 +116,12 @@ const routes = [
     }
   },
   {
-    path: "/forgot",
+    path: "/PasswordReset/forgot",
     name: "forgot",
     component: ForgotEmailView
   },
   {
-    path: "/reset/:email",
+    path: "/PasswordReset/reset/",
     name: "reset",
     component: ResetPasswordView,
     meta: {

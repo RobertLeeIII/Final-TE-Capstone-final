@@ -1,22 +1,30 @@
 <template>
   <div>
     <form class="box" @submit.prevent="handleSubmit">
-      <h3>Forgot Password?</h3>
+      <h3>Password Recovery</h3>
       <br />
       <div class="field">
-        <label>Email</label>
+        <label for="email">Email</label>
         <div class="control">
           <input
             type="email"
+            id="email"
             class="form-control"
             v-model="email"
             placeholder="Email"
+            autocomplete="email"
             required
           />
         </div>
         <p class="help is-danger" v-if="validationError">
           {{ validationError }}
         </p>
+      </div>
+
+      <div v-if="!securityQuestion">
+        <button class="button is-primary" @click="retrieveSecurityQuestion">
+          Get Security Question
+        </button>
       </div>
 
       <div v-if="securityQuestion !== null">
@@ -26,13 +34,15 @@
         </div>
 
         <div class="field">
-          <label>Security Answer</label>
+          <label for="securityAnswer">Security Answer</label>
           <div class="control">
             <input
               type="text"
+              id="securityAnswer"
               class="form-control"
               v-model="securityAnswer"
               placeholder="Security Answer"
+              autocomplete="off"
               required
             />
           </div>
@@ -48,16 +58,15 @@
 </template>
 
 <script>
-// Import axios if needed
-import axios from "axios";
+import authService from "@/services/AuthService.js";
 
 export default {
-  name: "Forgot",
+  name: "PasswordRecovery",
   data() {
     return {
       email: "",
       securityAnswer: "",
-      securityQuestion: null, // Initialize security question to null
+      securityQuestion: null,
       loading: false,
       validationError: null,
     };
@@ -65,25 +74,24 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        // Basic validation
         if (!this.email || !this.securityAnswer) {
           this.validationError = "Please enter both email and security answer.";
           return;
         } else {
-          this.validationError = null; // Clear validation error if present
+          this.validationError = null;
         }
 
         this.loading = true;
 
         // Make an API request to verify the user based on email and security answer
-        const response = await axios.post("/reset", {
+        const response = await authService.recoverPassword({
           email: this.email,
           securityAnswer: this.securityAnswer,
         });
 
         // Assuming your backend returns a success message
         // Redirect the user to the reset route with a token or handle accordingly
-        this.$router.push(`/reset/${this.email}`);
+        this.$router.push(`/PasswordReset/reset/${this.email}`);
       } catch (error) {
         console.error(error.response.data);
         // Display an error message to the user or handle errors appropriately
@@ -96,24 +104,17 @@ export default {
     async retrieveSecurityQuestion() {
       try {
         // Make an API request to retrieve the security question based on the user's email
-        const securityQuestionResponse = await axios.post(
-          "/forgot",
-          {
-            email: this.email,
-          }
+        const securityQuestionResponse = await authService.getSecurityQuestionByEmail(
+          this.email
         );
 
         // Retrieve Security Question from Database/Backend
         this.securityQuestion = securityQuestionResponse.data.securityQuestion;
       } catch (error) {
-        console.error(error.response.data);
+        console.error(error);
         // Handle error appropriately, e.g., show an error message to the user
       }
     },
-  },
-  mounted() {
-    // Call a method here to retrieve the security question initially
-    this.retrieveSecurityQuestion();
   },
 };
 </script>

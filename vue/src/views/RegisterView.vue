@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-input-group">
                   <label for="security-question"></label>
-                  <div class="select is-rounded is-fullwidth">
+                  <div class="select is-rounded is-full width">
                     <select id="security-question" v-model="user.securityQuestion">
                       <option value="" selected hidden>Select a Security Question</option>
                       <option>What is your mother's maiden name?</option>

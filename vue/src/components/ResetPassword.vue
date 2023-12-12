@@ -50,7 +50,7 @@ export default {
         }
 
         // Make an API request to reset the password
-        const response = await axios.post('/controller/reset-password', {
+        const response = await axios.post('/PasswordReset/reset', {
           email: this.email, // Add the email or any necessary identifier
           newPassword: this.password,
           newPasswordConfirm: this.password_confirm,

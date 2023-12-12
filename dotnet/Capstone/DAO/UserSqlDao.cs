@@ -337,6 +337,7 @@ namespace Capstone.DAO
                          "VALUES (@email, @username, @password_hash, @salt, @user_role, @diet_rest)";
 
             int newUserId = 0;
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -366,7 +367,6 @@ namespace Capstone.DAO
         public UserRecovery GetUserRecovery(int userId)
         {
             UserRecovery recover = null;
-            int id = 0;
 
             string sql = @"SELECT user_id, question_id, answer from user_recovery where user_id = @user_id";
 
@@ -393,8 +393,6 @@ namespace Capstone.DAO
                         }
                     }
                 }
-                
-
             }
             catch (SqlException ex)
             {

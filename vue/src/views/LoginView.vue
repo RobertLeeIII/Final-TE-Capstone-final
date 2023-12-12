@@ -25,7 +25,7 @@
           </div>
           <button class="button is-info" type="submit">Sign in</button>
           <p class="forgot-password">
-            <router-link to="forgot">Forgot Password?</router-link>
+            <router-link to="/PasswordReset/forgot">Forgot Password?</router-link>
           </p>
           <p class="create-account">
             <router-link to="register">Need an account? Sign up.</router-link>

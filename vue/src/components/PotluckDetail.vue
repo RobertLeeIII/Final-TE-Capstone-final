@@ -5,117 +5,63 @@
         <div :class="changingTheme" v-if="Potluck.courseRequest">
           <div class="container">
             <section class="requested-items">
-              <h3>The host has requested:</h3>
-              <div class="requested-items-details">
-                <router-link
-                  :to="{
-                    name: 'dish-signup',
-                    params: { potluckId: this.$route.params.potluckId },
-                    query: { action: 'signup', course: 1 },
-                  }"
-                >
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{
-                    name: 'dish-signup',
-                    params: { potluckId: this.$route.params.potluckId },
-                    query: { action: 'signup', course: 2 },
-                  }"
-                >
-                  <div class="requested-item">
-                    <span class="host-request"
-                      >{{ Potluck.courseRequest.sides }} Sides</span
-                    >
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{
-                    name: 'dish-signup',
-                    params: { potluckId: this.$route.params.potluckId },
-                    query: { action: 'signup', course: 3 },
-                  }"
-                >
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-                  </div>
-                </router-link>
-                <router-link
-                  :to="{
-                    name: 'dish-signup',
-                    params: { potluckId: this.$route.params.potluckId },
-                    query: { action: 'signup', course: 4 },
-                  }"
-                >
-                  <div class="requested-item">
-                    <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
-                  </div>
-                </router-link>
+              <dish-suggestion v-if="signUpForm" :course="currentCourse"></dish-suggestion>
+              <div class="requested-items-details" v-if="!signUpForm">
+                <h3 style="padding: 10px;">The host has requested:</h3>
+
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
+                <div class="requested-item"  @click="dishSignup(1)" id="1">
+                  <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }"> -->
+                <div class="requested-item" @click="dishSignup(2)" id="2">
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }"> -->
+                <div class="requested-item" @click="dishSignup(3)" id="3">
+                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                </div>
+                <!-- </router-link> -->
+                <!-- <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
+                <div class="requested-item" @click="dishSignup(4)" id="4">
+                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                </div>
+                <!-- </router-link> -->
               </div>
-              <router-link
-                :to="{
-                  name: 'dish-signup',
-                  params: { potluckId: this.$route.params.potluckId },
-                }"
-                ><button>Bring a Dish!</button></router-link
-              >
             </section>
-            <ul class="list">
-              <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-              <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-              <li>
-                <i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}
-              </li>
-              <li>
-                <i :class="changingIcon"></i> Theme:
-                {{ Potluck.theme.substring(2) }}
-              </li>
-              <li>
-                <i :class="changingIcon"></i> About: {{ Potluck.summary }}
-              </li>
+          <div>
+            <img>
+          </div>
+            <ul class="list" v-if="!signUpForm">
+              <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
+              <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
+              <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
-            <div class="links">
+
+            <div class="links" v-if="!signUpForm">
               <ul>
-                <li>
-                  <router-link
-                    v-if="isHost"
-                    :to="{
-                      name: 'guest-list',
-                      params: { potluckId: Potluck.potluckId },
-                      query: { action: 'invite' },
-                    }"
-                    class="invitation-link"
-                    >Invite People</router-link
-                  >
-                </li>
-                <li>
-                  <router-link
-                    v-if="isHost"
-                    :to="{
-                      name: 'potluck-update',
-                      params: { potluckId: Potluck.potluckId },
-                    }"
-                    class="update-link"
-                    >Update This Potluck</router-link
-                  >
-                </li>
-                <li>
-                  <router-link
-                    :to="{
-                      name: 'guest-list',
-                      params: { potluckId: Potluck.potluckId },
-                    }"
-                    class="whos-coming-link"
-                    >Who's coming?</router-link
-                  >
-                </li>
+                <li><router-link v-if="isHost"
+                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+                    class="invitation-link">Invite People</router-link> </li>
+                <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+                    class="update-link">Update This Potluck</router-link> </li>
+                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+                    class="whos-coming-link">Who's coming?</router-link> </li>
+                <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
+                    class="my-potlucks-link">Back to My Potlucks</router-link></li>
               </ul>
             </div>
           </div>
         </div>
-      </section>
+        </section>
     </div>
   </div>
 </template>
@@ -124,15 +70,21 @@ import DishSuggestion from "@/components/DishSuggestion.vue";
 export default {
   data() {
     return {
-      dishSignup: false,
       invitedGuests: [],
       dishes: [],
+<<<<<<< HEAD
       currentCourse: "",
       isModalOpen: false,
     };
+=======
+      currentCourse: 0,
+      signUpForm: false
+
+    }
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   },
   components: {
-    //DishSuggestion
+    DishSuggestion
   },
   computed: {
     isHost() {
@@ -178,6 +130,11 @@ export default {
       const date = new Date(dateTimeString);
       return date.toLocaleDateString("en-US", options);
     },
+    dishSignup(ID) {
+      this.currentCourse = ID;
+      this.signUpForm = !this.signUpForm;
+
+    }
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -193,12 +150,18 @@ export default {
 <style scoped>
 body {
   margin: 0;
+<<<<<<< HEAD
   font-family: "Roboto", sans-serif;
   background-color: #f4f4f4;
+=======
+  font-family: 'Roboto', sans-serif;
+  background-color: #F4F4F4;
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 }
 
 .container {
-  list-style: none;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -210,20 +173,16 @@ body {
   margin: 10px 0;
   display: flex-wrap;
   align-items: left;
-  margin: 10px 0;
-  display: flex-wrap;
-  align-items: left;
 }
 
 .container li i {
-  margin-right: 10px;
   margin-right: 10px;
 }
 
 .changingIcon {
   transition: color 0.3s ease;
-  transition: color 0.3s ease;
 }
+<<<<<<< HEAD
 .spring {
   transition: background-color 0.3s ease;
   background-image: url("/springFoods.jpeg");
@@ -320,12 +279,122 @@ body {
   /* Align text to the left */
   text-align: left;
   /* Align text to the left */
+=======
+
+.spring {
+  transition: background-color 0.3s ease;
+  background-image: url('/springFoods.jpeg');
+}
+
+.summer {
+  transition: background-color 0.3s ease;
+  background-image: url('/summer-food-collection.jpg');
+}
+
+.fall {
+  transition: background-color 0.3s ease;
+  background-image: url('/fallfood.png');
+}
+
+.winter {
+  transition: background-color 0.3s ease;
+  background-image: url('/winter2.jpg');
+}
+
+.links {
+  margin-top: 50px;
+  margin-top: 50px;
+}
+
+.invitation-link,
+.update-link,
+.my-potlucks-link,
+.whos-coming-link {
+  text-decoration: none;
+  color: #3498DB;
+  margin-right: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.invitation-link:hover,
+.update-link:hover,
+.my-potlucks-link:hover,
+.whos-coming-link:hover {
+  background-color: #297FB8;
+  color: #fff;
+}
+
+.signup {
+  width: 75vw;
+  height: 40vh;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  width: 500px;
+}
+
+.list li i {
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.requested-items {
+  margin-bottom: 20px;
+  /* Add some space below this section */
+}
+
+.requested-items span {
+
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  margin-left: 800px;
+  /* Add some space below the image */
+  margin-bottom: -200px;
+}
+
+.right-image {
+  width: 300px;
+  height: auto;
+}
+
+.requested-item {
+  text-align: left;
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   padding: 10px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+<<<<<<< HEAD
+=======
+
+.requested-item span {
+  display: block;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 
 .requested-item span {
   display: block;
@@ -333,6 +402,7 @@ body {
   transition: color 0.3s ease;
 }
 
+<<<<<<< HEAD
 .requested-items span:last-child {
   margin-right: 0;
   /* Remove right margin for the last span */
@@ -342,6 +412,11 @@ body {
 
 .host-request {
   display: flex;
+=======
+.host-request {
+  display: flex;
+
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
 }
 
 .requested-items {
@@ -350,7 +425,11 @@ body {
   color: #555;
   padding: 15px;
   border-radius: 8px;
+<<<<<<< HEAD
   background-color: #f9f9f9;
+=======
+  background-color: #F9F9F9;
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   transition: background-color 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -390,6 +469,11 @@ body {
 }
 
 .requested-item:hover span {
+<<<<<<< HEAD
   color: #3498db;
 }
 </style>
+=======
+  color: #3498DB;
+}</style>
+>>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
