@@ -1,5 +1,7 @@
 ﻿using Capstone.Exceptions;
 using Capstone.Models;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -66,6 +68,14 @@ namespace Capstone.DAO
                     while (reader.Read())
                     {
                         dish = MapRowToDish(reader, dish);
+                        if (string.IsNullOrEmpty(dish.Diets[0]))
+                        {
+                            dish.Diets = new List<string>();
+                        }
+                        if (string.IsNullOrEmpty(dish.Allergens[0]))
+                        {
+                            dish.Allergens = new List<string>();
+                        }
                     }
                 }
             }
@@ -73,6 +83,8 @@ namespace Capstone.DAO
             {
                 throw new DaoException("A SQL error occured.", ex);
             }
+            dish.Allergens = dish.Allergens.Distinct().ToList();
+            dish.Diets = dish.Diets.Distinct().ToList();
             return dish;
         }
         public IList<Dish> GetDishesByUserId(int userId)
@@ -140,6 +152,11 @@ namespace Capstone.DAO
             catch (SqlException ex)
             {
                 throw new DaoException("A SQL error occured.", ex);
+            }
+            foreach(Dish dish in dishes)
+            {
+                dish.Allergens = dish.Allergens.Distinct().ToList();
+                dish.Diets = dish.Diets.Distinct().ToList();
             }
             return dishes;
         }
