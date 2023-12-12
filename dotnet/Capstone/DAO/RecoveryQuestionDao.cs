@@ -20,9 +20,9 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public string GetQuestionText(int questionId)
+        public string GetQuestionText(string email)
         {
-            string sql = "Select recovery_questions.question_id, question_text from recovery_questions JOIN user_recovery on user_recovery.question_id = recovery_questions.question_id JOIN users on users.user_id = user_recovery.user_id WHERE email = @email;";
+            string sql = "Select question_text from recovery_questions JOIN user_recovery on user_recovery.question_id = recovery_questions.question_id JOIN users on users.user_id = user_recovery.user_id WHERE email = @email;";
             string questionText = null;
 
             try

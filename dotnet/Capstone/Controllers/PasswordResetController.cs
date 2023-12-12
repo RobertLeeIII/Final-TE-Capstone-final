@@ -16,7 +16,23 @@ public class PasswordResetController : ControllerBase
         _userDao = userDao;
         _recoveryQuestionDao = recoveryQuestionDao;
     }
+    [HttpGet("forgot/{email}")]
+    public ActionResult<string> PasswordRecoveryQuestion(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest(new { Error = "Email is required" });
+        }
+        string question = _recoveryQuestionDao.GetQuestionText(email);
 
+        if (question == null)
+        {
+            return NotFound(new { Error = "Question not found" });
+        }
+
+        return question;
+
+    }
     [HttpPost("forgot")]
     public IActionResult ForgotPassword([FromBody] ForgotPasswordRequest request)
     {

@@ -425,11 +425,7 @@ body {
   color: #555;
   padding: 15px;
   border-radius: 8px;
-<<<<<<< HEAD
-  background-color: #f9f9f9;
-=======
   background-color: #F9F9F9;
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
   transition: background-color 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -469,11 +465,5 @@ body {
 }
 
 .requested-item:hover span {
-<<<<<<< HEAD
-  color: #3498db;
-}
-</style>
-=======
   color: #3498DB;
 }</style>
->>>>>>> c7afd064d3ecf6dbcb41be09483b62f074abae11
