@@ -17,9 +17,6 @@
       </div>
     </div>
   </div>
-  <div class="centerFooter">
-    <p><strong>PotluckPlanner:</strong> Written by TE capstone team 2</p>
-  </div>
   <p><br></p>
 </template>
 

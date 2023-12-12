@@ -5,7 +5,7 @@
     <div v-for="guest in potluckGuests" :key="guest.username" :class="guest.userId == currentPotluck.hostId ? 'isHost':''" >{{ guest.username.substring(0,1).toUpperCase() + guest.username.substring(1) }}</div>
     <!-- <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
                       query: {action: 'uninvite'}}">Uninvite Someone?</router-link> -->
-        <router-link :to="{name: 'guest-list', params: {potluckId: this.$route.params.potluckId}, query: {action: 'uninvite'}}" ><button>Uninvite People</button></router-link>
+        <router-link v-if="isHost" :to="{name: 'guest-list', params: {potluckId: this.$route.params.potluckId}, query: {action: 'uninvite'}}" ><button>Uninvite People</button></router-link>
     </div>
 </template>
 
@@ -32,7 +32,9 @@ export default {
         
     },
     computed: {
-        
+        isHost() {
+            return this.currentPotluck.hostId == this.$store.state.user.userId;
+        }
     },
     methods: {
         getPotluckGuests() {

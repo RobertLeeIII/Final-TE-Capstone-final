@@ -2,6 +2,7 @@
 using Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,21 @@ namespace Capstone.Controllers
                 return StatusCode(500);
             }
         }
-
+        //[HttpPut("/potlucks/{potluckId}/guestList")]
+        //public ActionResult<int> UpdateGuestList(IList<int> userIds, int potluckId)
+        //{
+        //    try
+        //    {
+        //        // loop through the list and uninvite each user
+        //        foreach (int item in userIds)
+        //        {
+        //            return Ok(userDao.UninviteUser(item, potluckId));
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500);
+        //    }
+        //}
     }
 }

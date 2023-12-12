@@ -31,14 +31,18 @@ namespace Capstone.Models
     }
     public class NewDishDTO
     {
+        public int UserId { get; set; }
         public string Creator { get; set; }
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
+        public List<string> Diets { get; set; }
+        public List<string> Allergens { get; set; }
     }
     public class UpdateDishDTO
     {
-        public string Creator { get; set; }
+        public int UserId { get; set; }
+        public string Creator { get; set; } // This is the username
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int NewReview { get; set; }

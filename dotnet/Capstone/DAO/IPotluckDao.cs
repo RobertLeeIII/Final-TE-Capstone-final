@@ -15,7 +15,6 @@ namespace Capstone.DAO
         public int DeletePotluck(int potluckId, int userId, int courseId);
         // TODO: Two separate SQL statments needed.
         // DELETE FROM potluck_user WHERE potluck_user.user_id = @user_id AND potluck_user.potluck_id = @potluck_id
-        public int UninviteUser(int potluckId, int userId);
         public Potluck GetPotluckDetailsById(int potluckId);
 
     }
