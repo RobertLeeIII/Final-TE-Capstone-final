@@ -145,14 +145,14 @@ export default {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #F4F4F4;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .container {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
@@ -162,10 +162,12 @@ body {
   margin: 10px 0;
   display: flex-wrap;
   align-items: left;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .container li i {
   margin-right: 10px;
+
 }
 
 .changingIcon {

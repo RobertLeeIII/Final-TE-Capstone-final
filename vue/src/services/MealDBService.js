@@ -9,8 +9,8 @@ export default{
     data(){
         return {
             courseSearch: {
-                apps: [],
-                main: ['beef' ],
+                apps: [''],
+                main: [''],
                 side: [''],
                 dessert: []
             }
@@ -22,7 +22,7 @@ export default{
     getRecipeByCourseId(ID){
         let search = '';
         if(ID == 1){
-            search = this.courseSearch.main[0]
+            search = 'pasta'
         }else if (ID == 2){
             search = 'seafood'
         }else if (ID == 3){
