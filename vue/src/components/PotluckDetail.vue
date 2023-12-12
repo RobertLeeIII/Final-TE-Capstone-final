@@ -32,53 +32,13 @@
                   </div>
                 </router-link>
               </div>
-              <router-link
-                :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
-                  Dish!</button></router-link>
             </section>
+          <div>
+            <img>
+          </div>
             <ul class="list">
-              <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-              <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
-              <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-              <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
-            </ul>
-            <div class="links">
-              <ul>
-                <li><router-link v-if="isHost"
-                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li>
-                <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-                    class="update-link">Update This Potluck</router-link> </li>
-                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-                    class="whos-coming-link">Who's coming?</router-link> </li>
-                <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
-                    class="my-potlucks-link">Back to My Potlucks</router-link></li>
-              </ul>
-            </div>
-            <section class="requested-items">
-              <h3>The host has requested:</h3>
-              <div class="requested-items-details">
-                <div class="requested-item">
-                  <span @click="toggleDishSignup('apps')">{{ Potluck.courseRequest.apps }} Appetizers</span>
-                </div>
-                <div class="requested-item">
-                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
-                </div>
-                <div class="requested-item">
-                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-                </div>
-                <div class="requested-item">
-                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
-                </div>
-              </div>
-              <router-link
-                :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
-                  Dish!</button></router-link>
-            </section>
-            <ul class="list">
-              <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
-              <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+              <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
+              <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
               <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
               <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
               <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
@@ -98,7 +58,7 @@
             </div>
           </div>
         </div>
-      </section>
+        </section>
     </div>
   </div>
 </template>
@@ -112,7 +72,6 @@ export default {
       dishes: [],
       currentCourse: '',
       isModalOpen: false,
-
     }
   },
   components: {
@@ -178,23 +137,20 @@ export default {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f4f4f4;
+  background-color: #F4F4F4;
 }
 
 .container {
-  list-style: none;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-
 }
 
 .container li {
-  margin: 10px 0;
-  display: flex-wrap;
-  align-items: left;
   margin: 10px 0;
   display: flex-wrap;
   align-items: left;
@@ -202,181 +158,177 @@ body {
 
 .container li i {
   margin-right: 10px;
-  margin-right: 10px;
 }
 
 .changingIcon {
   transition: color 0.3s ease;
+}
+
+.spring {
+  transition: background-color 0.3s ease;
+  background-image: url('/springFoods.jpeg');
+}
+
+.summer {
+  transition: background-color 0.3s ease;
+  background-image: url('/summer-food-collection.jpg');
+}
+
+.fall {
+  transition: background-color 0.3s ease;
+  background-image: url('/fallfood.png');
+}
+
+.winter {
+  transition: background-color 0.3s ease;
+  background-image: url('/winter2.jpg');
+}
+
+.links {
+  margin-top: 50px;
+}
+
+.invitation-link,
+.update-link,
+.my-potlucks-link,
+.whos-coming-link {
+  text-decoration: none;
+  color: #3498DB;
+  margin-right: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.invitation-link:hover,
+.update-link:hover,
+.my-potlucks-link:hover,
+.whos-coming-link:hover {
+  background-color: #297FB8;
+  color: #fff;
+}
+
+.signup {
+  width: 75vw;
+  height: 40vh;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  width: 500px;
+}
+
+.list li i {
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.requested-items {
+  margin-bottom: 20px;
+  /* Add some space below this section */
+}
+
+.requested-items span {
+
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  margin-left: 800px;
+  /* Add some space below the image */
+  margin-bottom: -200px;
+}
+
+.right-image {
+  width: 300px;
+  height: auto;
+}
+
+.requested-item {
+  text-align: left;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.requested-item span {
+  display: block;
+  cursor: pointer;
   transition: color 0.3s ease;
 }
-  .spring {
-    transition: background-color 0.3s ease;
-    background-image: url('/springFoods.jpeg');
-  }
-    .summer {
-      transition: background-color 0.3s ease;
-      background-image: url('/summer-food-collection.jpg');
-    }
-      .fall {
-        transition: background-color 0.3s ease;
-        background-image: url('/fallfood.png');
-      }
 
+.requested-items span:last-child {
+  margin-right: 0;
+  /* Remove right margin for the last span */
+}
 
-      .winter {
-        transition: background-color 0.3s ease;
-        background-image: url('/winter2.jpg');
-        transition: background-color 0.3s ease;
-        background-image: url('/winter2.jpg');
-      }
+.host-request {
+  display: flex;
 
-      .links {
-        margin-top: 50px;
-        margin-top: 50px;
-      }
+}
 
-      .invitation-link,
-      .update-link,
-      .my-potlucks-link,
-      .whos-coming-link {
-        text-decoration: none;
-        color: #3498db;
-        margin-right: 20px;
-        padding: 10px 15px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
+.requested-items {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #555;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-      .invitation-link:hover,
-      .update-link:hover,
-      .my-potlucks-link:hover,
-      .whos-coming-link:hover {
-        background-color: #297fb8;
-        color: #fff;
-      }
+.requested-items h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
 
-      .signup {
-        width: 75vw;
-        height: 40vh;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        width: 75vw;
-        height: 40vh;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-      }
+.requested-items-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-      .list li {
-        margin-bottom: 15px;
-        display: flex;
-        align-items: flex-start;
-        /* Adjust alignment to the left */
-        align-items: flex-start;
-        /* Adjust alignment to the left */
-        font-size: 18px;
-        color: #333;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
-        width: 500px;
-      }
+.requested-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
 
-      .list li i {
-        margin-right: 10px;
-        font-size: 22px;
-      }
+.requested-item span {
+  display: block;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
 
-      .requested-items span {
-        margin-right: 20px;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        display: inline-block;
-        margin-bottom: 10px;
-        /* Add space between items */
-        margin-bottom: 10px;
-        /* Add space between items */
-      }
+.requested-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
 
-      .requested-item {
-        flex: 1;
-        text-align: left;
-        /* Align text to the left */
-        text-align: left;
-        /* Align text to the left */
-        padding: 10px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-      }
-
-      .requested-item span {
-        display: block;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-
-      .requested-items span:last-child {
-        margin-right: 0;
-        /* Remove right margin for the last span */
-        margin-right: 0;
-        /* Remove right margin for the last span */
-      }
-
-      .host-request {
-        display: flex;
-
-      }
-
-      .requested-items {
-        margin-top: 20px;
-        font-size: 18px;
-        color: #555;
-        padding: 15px;
-        border-radius: 8px;
-        background-color: #F9F9F9;
-        transition: background-color 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .requested-items h3 {
-        margin-bottom: 10px;
-        font-size: 20px;
-        color: #333;
-      }
-
-      .requested-items-details {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .requested-item {
-        flex: 1;
-        text-align: center;
-        padding: 10px;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-      }
-
-      .requested-item span {
-        display: block;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-
-      .requested-item:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
-
-      .requested-item:hover span {
-        color: #3498db;
-      }
-</style>
+.requested-item:hover span {
+  color: #3498DB;
+}</style>
