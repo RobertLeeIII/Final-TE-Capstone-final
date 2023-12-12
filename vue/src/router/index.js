@@ -135,7 +135,7 @@ const routes = [
   },
   {
     path: "/potlucks/:potluckId/menu",
-    name: "dish-test",
+    name: "dish-signup",
     component: DishSignupView,
   }
 

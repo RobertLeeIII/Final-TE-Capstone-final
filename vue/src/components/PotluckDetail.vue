@@ -2,49 +2,103 @@
   <div :class="changingTheme" v-if="Potluck.courseRequest">
     <div class="container">
       <section class="requested-items">
-        <h3>The host has requested:</h3>
-        <div class="requested-items-details">
-          <div class="requested-item">
-            <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
-          </div>
-          <div class="requested-item">
-            <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
-          </div>
-          <div class="requested-item">
-            <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
-          </div>
-          <div class="requested-item">
-            <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+        <div :class="changingTheme" v-if="Potluck.courseRequest">
+          <div class="container">
+            <section class="requested-items">
+              <h3>The host has requested:</h3>
+              <div class="requested-items-details">
+                <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }">
+                  <div class="requested-item">
+                    <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
+                  </div>
+                </router-link>
+                <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }">
+                  <div class="requested-item">
+                    <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                  </div>
+                </router-link>
+                <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }">
+                  <div class="requested-item">
+                    <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                  </div>
+                </router-link>
+                <router-link
+                  :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }">
+                  <div class="requested-item">
+                    <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                  </div>
+                </router-link>
+              </div>
+              <router-link
+                :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
+                  Dish!</button></router-link>
+            </section>
+            <ul class="list">
+              <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
+              <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+              <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+            </ul>
+            <div class="links">
+              <ul>
+                <li><router-link v-if="isHost"
+                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+                    class="invitation-link">Invite People</router-link> </li>
+                <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+                    class="update-link">Update This Potluck</router-link> </li>
+                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+                    class="whos-coming-link">Who's coming?</router-link> </li>
+                <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
+                    class="my-potlucks-link">Back to My Potlucks</router-link></li>
+              </ul>
+            </div>
+            <section class="requested-items">
+              <h3>The host has requested:</h3>
+              <div class="requested-items-details">
+                <div class="requested-item">
+                  <span @click="toggleDishSignup('apps')">{{ Potluck.courseRequest.apps }} Appetizers</span>
+                </div>
+                <div class="requested-item">
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                </div>
+                <div class="requested-item">
+                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                </div>
+                <div class="requested-item">
+                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                </div>
+              </div>
+              <router-link
+                :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
+                  Dish!</button></router-link>
+            </section>
+            <ul class="list">
+              <li><i :class="changingIcon"></i> {{ Potluck.name }}</li>
+              <li><i :class="changingIcon"></i> {{ Potluck.location }}</li>
+              <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+            </ul>
+            <div class="links">
+              <ul>
+                <li><router-link v-if="isHost"
+                    :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
+                    class="invitation-link">Invite People</router-link> </li>
+                <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
+                    class="update-link">Update This Potluck</router-link> </li>
+                <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
+                    class="whos-coming-link">Who's coming?</router-link> </li>
+                <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
+                    class="my-potlucks-link">Back to My Potlucks</router-link></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <router-link :to="{ name: 'dish-test', params: { potluckId: this.$route.params.potluckId } }"><button>Bring a
-            Dish!</button></router-link>
       </section>
-      
-      <ul class="list">
-        <div class="image-container">
-      <img src="/public\confusedstickfigure.jpg" alt="Image Description" class="right-image">
-    </div>
-        <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
-        <li><i :class="changingIcon"></i> Location: {{ Potluck.location }}</li>
-        <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-        <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
-        <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
-      </ul>
-
-      <div class="links">
-        <ul>
-          <li><router-link v-if="isHost"
-              :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-              class="invitation-link">Invite People</router-link> </li>
-          <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
-              class="update-link">Update This Potluck</router-link> </li>
-          <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
-              class="whos-coming-link">Who's coming?</router-link> </li>
-          <li> <router-link :to="{ name: 'potluck-list', params: { userId: this.$store.state.user.userId } }"
-              class="my-potlucks-link">Back to My Potlucks</router-link></li>
-        </ul>
-      </div>
     </div>
   </div>
 </template>
@@ -257,11 +311,13 @@ body {
 
 .requested-items span:last-child {
   margin-right: 0;
+  /* Remove right margin for the last span */
 }
 
-.host-request {
-  display: flex;
-}
+      .host-request {
+        display: flex;
+
+      }
 
 .requested-items {
   margin-top: 20px;
@@ -312,12 +368,3 @@ body {
   color: #3498DB;
 }
 </style>
-
-
-
-
-
-
-
-
-
