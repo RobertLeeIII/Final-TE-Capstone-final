@@ -18,16 +18,12 @@
                     </div>
                     <div class="media-content">
                         <p class="title is-4">{{ propDish.name }}</p>
-                        <p class="subtitle is-6">{{ $store.state.user.username }}</p>
+                        <p class="subtitle is-6">{{ propDish.creator }}</p>
                     </div>
                 </div>
                 <div class="content">
-                    <p>{{ propPotluck.summary }}</p>
-                    <a :href="`#${propPotluck.location}`">#{{ propDish.location }}</a>
+                    <p>{{ propDish.recipe }}</p>
                     <br />
-                    <time :datetime="propDish.time">{{
-                        formatDate(propDish.time)
-                    }}</time>
                 </div>
             </div>
         </div>

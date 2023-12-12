@@ -3,7 +3,7 @@
 
         <div class="card-container">
             <div class="card">
-                <router-link :to="{ name: 'dish-list', params: { userId: this.$store.state.user.userId } }">
+                <router-link :to="{ name: 'dish-list', params: { userId: this.$store.state.user.userId }, query: { action: 'create' } }">
                     <div class="card-image">
                         <figure class="image is-centered">
                             <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
@@ -20,13 +20,13 @@
                     </div>
                 </router-link>
             </div>
-            <potluck class="dish" v-for="dish in dishes" :propDish="dish" :key="dish.dishId">
-            </potluck>
-            <div class="card-container" v-if="!hasPotlucks">
+            <dish class="dish" v-for="dish in myDishes" :propDish="dish" :key="dish.dishId">
+            </dish>
+            <div class="card-container" v-if="!hasDishes">
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-centered">
-                            <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
+                            <img src="/public/imagePotluck-transformed.jpg" alt="Dish Image">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -50,10 +50,27 @@ import Dish from '@/components/Dish.vue';
 export default {
     data() {
         return {
-
+            dishes: [],
+            hasDishes: true
         }
     },
-    props: ['dishes']
+    components: {
+        Dish
+    },
+    props: {
+        myDishes: Array
+    },
+    computed: {
+
+    },
+    methods: {
+        fillDishesArray() {
+            this.dishes = this.myDishes; //JSON.parse(JSON.stringify(this.myDishes));
+        }
+    },
+    created() {
+        this.fillDishesArray();
+    }
 }
 </script>
 

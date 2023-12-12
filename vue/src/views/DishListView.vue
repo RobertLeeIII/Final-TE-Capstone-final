@@ -1,13 +1,15 @@
 <template>
     <div class="container">
-        <dish-display :dishes="dishes"></dish-display>
+        <dish-form v-if="this.$route.query.action === 'create'"></dish-form>
+        <dish-display v-else :myDishes="dishes"></dish-display>
+        
     </div>
 </template>
 
 <script>
 import DishDisplay from '@/components/DishDisplay.vue';
 import DishService from '@/services/DishService.js';
-import CreateDishForm from '../components/CreateDishForm.vue';
+import DishForm from '../components/DishForm.vue';
 
 export default {
     data() {
@@ -16,7 +18,8 @@ export default {
         }
     },
     components: {
-        DishDisplay
+        DishDisplay,
+        DishForm
     },
     methods: {
         getUserDishes() {
