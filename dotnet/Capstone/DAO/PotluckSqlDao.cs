@@ -154,13 +154,11 @@ namespace Capstone.DAO
                         }
                         else
                         {
-
                             potlucks.Add(potluck);
                             currentId = Convert.ToInt32(reader["potluck_id"]);
                             potluck = new Potluck();
                             potluck = MapRowToPotluck(reader, potluck);
                             //potluck = MapRowToPotluckCourses(reader, potluck);
-
                         }
                     }
                     potlucks.Add(potluck);

@@ -70,15 +70,18 @@ namespace Capstone.DAO
             }
             return dish;
         }
-
+        // Ted please check this and leave notes on what I need to correct,
+        // so I can then apply those changes and then tackle GetDishesByPotluckId with better understanding
         public IList<Dish> GetDishesByUserId(int userId)
         {
             IList<Dish> dishes = new List<Dish>();
-            string sql = "SELECT dishes.dish_id, dish_name, recipe, u.user_id " +
-                "FROM dishes " +
-                "JOIN user_dish AS ud ON ud.dish_id = dishes.dish_id " +
-                "JOIN users AS u ON u.user_id = ud.user_id " +
-                "WHERE u.user_id = @user_id;";
+            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id FROM dishes
+                           JOIN users AS u ON u.user_id = dishes.creator
+                           JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
+                           JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
+                           JOIN ingredient_dish AS id ON id.dish_id = dishes.dish_id
+                           WHERE u.user_id = @user_id
+                           ORDER BY dishes.dish_id ASC;";
 
             try
             {
@@ -90,11 +93,28 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
+                    int currentId = -1;
+                    Dish dish = new Dish();
                     while (reader.Read())
                     {
-                        Dish dish = MapRowToDish(reader);
-                        dishes.Add(dish);
+                        while (currentId == -1)
+                        {
+                            currentId = Convert.ToInt32(reader["dish_id"]);
+                        }
+
+                        if (currentId == Convert.ToInt32(reader["dish_id"]))
+                        {
+                            dish = MapRowToDish(reader);
+                        }
+                        else
+                        {
+                            dishes.Add(dish);
+                            currentId = Convert.ToInt32(reader["dish_id"]);
+                            dish = new Dish();
+                            dish = MapRowToDish(reader);
+                        }
                     }
+                    dishes.Add(dish);
                 }
             }
             catch (SqlException ex)

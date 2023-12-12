@@ -6,6 +6,7 @@ namespace Capstone.DAO
     public interface IDishDao
     {
         public IList<Dish> GetDishes();
+        //These three gets below 
         public Dish GetDishById(int dishId);
         public IList<Dish> GetDishesByUserId(int userId);
         public IList<Dish> GetDishesByPotluckId(int potluckId);
