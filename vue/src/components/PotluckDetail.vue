@@ -49,12 +49,12 @@
               <img>
             </div>
             <ul class="list" v-if="!signUpForm">
-              <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
-              <li><i :class="changingIcon"></i> Location: {{ Potluck.location }}</li>
-              <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme :
+              <li><i :style="changingIconColor" :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
+              <li><i :style="changingIconColor" :class="changingIcon"></i> Location: {{ Potluck.location }}</li>
+              <li><i :style="changingIconColor" :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
+              <li><i :style="changingIconColor" :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme :
                 Potluck.theme.substring(2) }}</li>
-              <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
+              <li><i :style="changingIconColor" :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
 
             <div class="links" v-if="!signUpForm">
@@ -120,13 +120,25 @@ export default {
     },
     changingIcon() {
       if (this.Potluck.theme.includes("Spring")) {
-        return "fa-solid fa-cloud-sun-rain";
+        return "fas fa-seedling";
       } else if (this.Potluck.theme.includes("Summer")) {
         return "fa-solid fa-sun";
       } else if (this.Potluck.theme.includes("Fall")) {
         return "fa-solid fa-leaf";
       } else if (this.Potluck.theme.includes("Winter")) {
         return "fa-regular fa-snowflake";
+      }
+      return true;
+    },
+    changingIconColor() {
+      if(this.Potluck.theme.includes("Spring")) {
+        return "color: rgb(117, 253, 117);";
+      } else if(this.Potluck.theme.includes("Summer")) {
+        return "color: rgb(250, 250, 114);";
+      } else if(this.Potluck.theme.includes("Fall")) {
+        return "color: rgb(230, 149, 0);";
+      } else if(this.Potluck.theme.includes("Winter")) {
+        return "color: rgb(158, 230, 254);";
       }
       return true;
     },

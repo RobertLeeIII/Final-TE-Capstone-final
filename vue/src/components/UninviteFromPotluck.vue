@@ -1,16 +1,17 @@
 <template>
-    <div>Uninvite People Here!</div>
+    <br>
+    <div class="title">Uninvite People Here!</div>
     <div v-for="guest in guests" :key="guest.userId">
         <div v-if="!checkIsHost(guest.userId)">
             <input v-model="selectedGuests" :id="guest.userId" :value="guest.userId" type="checkbox"> {{
                 guest.username.substring(0, 1).toUpperCase() + guest.username.substring(1) }}
         </div>
     </div>
-    <button v-on:click.prevent="removeGuest">Delete Selected Users</button>
+    <button class="button is-danger" v-on:click.prevent="removeGuest">Delete Selected Users</button>
     <router-link v-if="this.$store.state.user.userId == this.$route.params.userId" style="color: blue;"
-        :to="{ name: 'guest-list' }">Invite more people!</router-link>
+    :to="{ name: 'guest-list' }">Invite more people!</router-link>
 </template>
-
+    
 <script>
 import UserService from '../services/UserService.js';
 
