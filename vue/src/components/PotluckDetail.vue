@@ -14,26 +14,27 @@
 
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
-                <div class="requested-item"  @click="dishSignup(1)" id="1">
-                  <span>{{ Potluck.courseRequest.apps }} Appetizers</span>
+                <div class="requested-item" @click="dishSignup(1)" id="1">
+                  <span>{{ Potluck.courseRequest.apps }} Appetizers<br>{{ remainingApps }} Remaining</span>
                 </div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }"> -->
                 <div class="requested-item" @click="dishSignup(2)" id="2">
-                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides</span>
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides<br>{{ remainingSides }} Remaining</span>
                 </div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }"> -->
                 <div class="requested-item" @click="dishSignup(3)" id="3">
-                  <span>{{ Potluck.courseRequest.mains }} Main Dishes</span>
+                  <span>{{ Potluck.courseRequest.mains }} Main Dishes<br>{{ remainingMains }} Remaining</span>
+                  <span></span>
                 </div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
                 <div class="requested-item" @click="dishSignup(4)" id="4">
-                  <span>{{ Potluck.courseRequest.desserts }} Desserts</span>
+                  <span>{{ Potluck.courseRequest.desserts }} Desserts<br>{{ remainingDesserts }} Remaining</span>
                 </div>
                 <!-- </router-link> -->
               </div>
@@ -122,6 +123,18 @@ export default {
       }
       return true;
     },
+    remainingApps() {
+     return  this.Potluck.courseRequest.apps - this.numberOfCourses(1)
+    },
+    remainingSides() {
+     return  this.Potluck.courseRequest.sides - this.numberOfCourses(2)
+    },
+    remainingMains() {
+     return  this.Potluck.courseRequest.mains - this.numberOfCourses(3)
+    },
+    remainingDesserts() {
+     return  this.Potluck.courseRequest.desserts - this.numberOfCourses(4)
+    }
   },
   props: {
     Potluck: Object,
@@ -137,6 +150,13 @@ export default {
       };
       const date = new Date(dateTimeString);
       return date.toLocaleDateString("en-US", options);
+    },
+    numberOfCourses(courseId) {
+      //In a filter -- for each dish in dishes return true if dishes.course = courseName
+      const filteredArray = this.dishes.filter((dish) => {
+        return dish.courseId === courseId
+      });
+      return filteredArray.length;
     },
     dishSignup(ID) {
       this.currentCourse = ID;
