@@ -6,6 +6,8 @@
       <div v-if="currentRecipe" class="recipe-container">
         <h2 class="recipe-title">{{ currentRecipe.strMeal }}</h2>
         <img :src="currentRecipe.strMealThumb" :alt="currentRecipe.strMeal" class="recipe-image" />
+        <suggestion-info :currentRecipe="meal"></suggestion-info>
+
         <p class="recipe-instructions">{{ currentRecipe.strInstructions }}</p>
       </div>
       <br>
@@ -22,6 +24,7 @@
 
 <script>
 import MealDBService from "../services/MealDBService.js";
+import SuggestionInfo from "./SuggestionInfo.vue";
 
 export default {
   data() {
@@ -29,6 +32,9 @@ export default {
       currentRecipe: {},
       showIngredients: false,
     };
+  },
+  components: {
+    SuggestionInfo  
   },
   methods: {
     getRecipe() {
