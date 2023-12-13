@@ -99,7 +99,7 @@
                   />
                 </div>
                 <br />
-                <button class="button is-warning" type="submit">
+                <button class="button is-info" type="submit">
                   Register
                 </button>
               </form>
