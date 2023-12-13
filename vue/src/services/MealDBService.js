@@ -31,5 +31,8 @@ export default{
             search = 'dessert'
         }
         return http.get(`filter.php?c=${search}`)
+    },
+    getRecipeById(ID) {
+        return http.get(`lookup.php?i=${ID}`)
     }
 }

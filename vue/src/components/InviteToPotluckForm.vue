@@ -64,10 +64,13 @@ export default {
       UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
         .then(response => {
           this.emailList = response.data;
-          this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
         })
         .catch(error => {
           // Handle errors if necessary
+        })
+        .finally(() => {
+          this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
+
         });
     },
   },

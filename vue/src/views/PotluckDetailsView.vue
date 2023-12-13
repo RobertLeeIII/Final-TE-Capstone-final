@@ -3,9 +3,8 @@
 </template>
 
 <script>
-import PotluckService from '@/services/PotluckService.js';
-import PotluckDetail from '@/components/PotluckDetail.vue';
-
+import PotluckService from '@/services/PotluckService.js'
+import PotluckDetail from '@/components/PotluckDetail.vue'
 export default {
     data() {
         return {
