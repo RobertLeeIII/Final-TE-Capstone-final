@@ -23,9 +23,9 @@
               <i class="fas fa-lock"></i>
             </span>
           </div>
-          <button class="button is-warning" type="submit">Sign in</button>
+          <button class="button is-info" type="submit">Sign in</button>
           <p class="forgot-password">
-            <router-link to="forgot">Forgot Password?</router-link>
+            <router-link to="/PasswordReset/forgot">Forgot Password?</router-link>
           </p>
           <p class="create-account">
             <router-link to="register">Need an account? Sign up.</router-link>

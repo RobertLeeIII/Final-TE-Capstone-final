@@ -185,7 +185,6 @@ background-color: #fff;
 }
 .content{
     background-image: url(/7637317.jpg);
-
     display: flex;
     justify-content: left;
 }</style>
