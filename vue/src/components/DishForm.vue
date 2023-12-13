@@ -45,4 +45,73 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.main {
+  background-image: url('/public\7637317.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  max-width: 600px;
+  min-height: 80vh;
+  margin: auto;
+}
+
+.card-body {
+  padding: 20px;
+}.recipe-form {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.toggle-section {
+  margin-top: 20px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.checkbox-group {
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: block;
+  margin-bottom: 6px;
+}
+</style>

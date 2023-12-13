@@ -79,6 +79,7 @@ export default {
 
 .navbar-brand img {
   height: 2.5rem;
+  padding-left: 22px;
 }
 
 .navbar-toggle {
