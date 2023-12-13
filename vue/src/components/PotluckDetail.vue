@@ -171,15 +171,15 @@ export default {
         console.log(error)
       })
     },
-    // getDishesForPotluck() {
-    //   DishService.getDishesByPotluck(this.Potluck.potluckId)
-    //   .then(response => {
-    //     this.dishes = response.data;
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    //}
+    getDishesForPotluck() {
+      DishService.getDishesByPotluck(this.$route.params.potluckId)
+      .then(response => {
+        this.dishes = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -193,7 +193,7 @@ export default {
   created() {
     this.currentPotluck = this.Potluck;
     this.getAttendingUsers();
-    //this.getDishesForPotluck();
+    this.getDishesForPotluck();
   }
 };
 </script>
