@@ -5,7 +5,10 @@
         <div :class="changingTheme" v-if="Potluck.courseRequest">
           <div class="container">
             <section class="requested-items">
-              <dish-suggestion v-if="signUpForm" :course="currentCourse"></dish-suggestion>
+              <button style="width: 70px; position: absolute; z-index: 5;" @click="dishSignup(0)" v-show="signUpForm">Go Back</button>
+              <dish-suggestion v-if="signUpForm" :course="currentCourse">      
+                
+              </dish-suggestion>
               <div class="requested-items-details" v-if="!signUpForm">
                 <h3 style="padding: 10px;">The host has requested:</h3>
 
@@ -69,6 +72,7 @@
 import DishSuggestion from '@/components/DishSuggestion.vue'
 import UserService from '@/services/UserService.js'
 import DishService from '@/services/DishService.js'
+import { vShow } from 'vue';
 export default {
   data() {
     return {
