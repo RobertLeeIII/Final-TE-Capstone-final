@@ -5,48 +5,55 @@
         <div :class="changingTheme" v-if="Potluck.courseRequest">
           <div class="container">
             <section class="requested-items">
-              <button style="width: 70px; position: absolute; z-index: 5;" @click="dishSignup(0)" v-show="signUpForm">Go Back</button>
-              <dish-suggestion v-if="signUpForm" :course="currentCourse">      
-                
+              <button style="width: 70px; position: absolute; z-index: 5;" @click="dishSignup(0)" v-show="signUpForm">Go
+                Back</button>
+              <dish-suggestion v-if="signUpForm" :course="currentCourse">
+
               </dish-suggestion>
               <div class="requested-items-details" v-if="!signUpForm">
                 <h3 style="padding: 10px;">The host has requested:</h3>
 
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 1 } }"> -->
-                <div class="requested-item" @click="dishSignup(1)" id="1">
+                <div v-if="remainingApps" class="requested-item" @click="dishSignup(1)" id="1">
                   <span>{{ Potluck.courseRequest.apps }} Appetizers<br>{{ remainingApps }} Remaining</span>
                 </div>
+                <div v-else class="requested-item full">All Appetizers<br>Accounted For</div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 2 } }"> -->
-                <div class="requested-item" @click="dishSignup(2)" id="2">
-                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides<br>{{ remainingSides }} Remaining</span>
+                <div v-if="remainingSides" class="requested-item" @click="dishSignup(2)" id="2">
+                  <span class="host-request">{{ Potluck.courseRequest.sides }} Sides<br>{{ remainingSides }}
+                    Remaining</span>
                 </div>
+                <div v-else class="requested-item full">All Sides<br>Accounted For</div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 3 } }"> -->
-                <div class="requested-item" @click="dishSignup(3)" id="3">
+                <div v-if="remainingMains" class="requested-item" @click="dishSignup(3)" id="3">
                   <span>{{ Potluck.courseRequest.mains }} Main Dishes<br>{{ remainingMains }} Remaining</span>
                   <span></span>
                 </div>
+                <div v-else class="requested-item">All Mains<br>Accounted For</div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
-                <div class="requested-item" @click="dishSignup(4)" id="4">
+                <div v-if="remainingDesserts" class="requested-item" @click="dishSignup(4)" id="4">
                   <span>{{ Potluck.courseRequest.desserts }} Desserts<br>{{ remainingDesserts }} Remaining</span>
                 </div>
+                <div v-else class="requested-item">All Desserts<br>Accounted For</div>
                 <!-- </router-link> -->
               </div>
             </section>
-          <div>
-            <img>
-          </div>
+            <div>
+              <img>
+            </div>
             <ul class="list" v-if="!signUpForm">
               <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
-              <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
+              <li><i :class="changingIcon"></i> Location: {{ Potluck.location }}</li>
               <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme : Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme :
+                Potluck.theme.substring(2) }}</li>
               <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
 
@@ -65,7 +72,7 @@
             </div>
           </div>
         </div>
-        </section>
+      </section>
     </div>
   </div>
 </template>
@@ -105,7 +112,7 @@ export default {
       }
       else if (this.Potluck.theme.includes('Winter')) {
         return { winter: true }
-      } 
+      }
       else if (this.Potluck.theme.includes('None')) {
         return { noneTheme: true }
       }
@@ -124,16 +131,16 @@ export default {
       return true;
     },
     remainingApps() {
-     return  this.Potluck.courseRequest.apps - this.numberOfCourses(1)
+      return this.Potluck.courseRequest.apps - this.numberOfCourses(1)
     },
     remainingSides() {
-     return  this.Potluck.courseRequest.sides - this.numberOfCourses(2)
+      return this.Potluck.courseRequest.sides - this.numberOfCourses(2)
     },
     remainingMains() {
-     return  this.Potluck.courseRequest.mains - this.numberOfCourses(3)
+      return this.Potluck.courseRequest.mains - this.numberOfCourses(3)
     },
     remainingDesserts() {
-     return  this.Potluck.courseRequest.desserts - this.numberOfCourses(4)
+      return this.Potluck.courseRequest.desserts - this.numberOfCourses(4)
     }
   },
   props: {
@@ -164,21 +171,21 @@ export default {
     },
     getAttendingUsers() {
       UserService.getGuestsByPotluckId(this.$route.params.potluckId)
-      .then(response => {
-        this.invitedGuests = response.data;
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(response => {
+          this.invitedGuests = response.data;
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     getDishesForPotluck() {
       DishService.getDishesByPotluck(this.$route.params.potluckId)
-      .then(response => {
-        this.dishes = response.data;
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(response => {
+          this.dishes = response.data;
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
@@ -249,9 +256,11 @@ body {
   transition: background-color 0.3s ease;
   background-image: url('/winter2.jpg');
 }
-.noneTheme{
+
+.noneTheme {
   background-color: rgba(98, 175, 95, 0.411);
 }
+
 .links {
   margin-top: 50px;
   margin-top: 50px;
@@ -397,6 +406,15 @@ body {
 .requested-item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
+}
+
+.full:hover {
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  transform: translateY(0px);
+}
+
+.full {
+  color: rgba(0, 0, 0, 0.3);
 }
 
 .requested-item:hover span {
