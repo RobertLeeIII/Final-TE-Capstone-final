@@ -64,8 +64,6 @@ export default {
 </script>
 
 <style>
-/* Your existing styles can go here */
-
 .navbar {
   background-color: rgb(36, 62, 52);
   color: rgb(241, 247, 237);
