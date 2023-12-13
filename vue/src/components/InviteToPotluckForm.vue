@@ -1,36 +1,38 @@
 <template>
   <div class="card-container">
     <section class="invite-section card">
-    <div class="hero">
-      <div class="hero-body">
-        <h1 class="title">Step 2: Invite Friends</h1>
-      </div>
-    </div>
-    <div class="form-container">
-      <form @submit.prevent="sendInvites" class="email-form">
-        <div v-for="(email, index) in emailList" :key="index" class="email-field">
-          <label>Email {{ index + 1 }}</label>
-          <input
-            type="email"
-            v-on:keyup="autoAddField(index)"
-            v-model="emailList[index]"
-            autofocus
-            class="email-input"
-          />
+      <div class="hero">
+        <div class="hero-body">
+          <h1 class="title">Step 2: Invite Friends</h1>
         </div>
-      </form>
-      
-    </div>
-    <div class="button-container">
-      <button type="button" @click="addEmailField" class="add-email-button">Add Email</button>
-      <button type="submit" :disabled="formHasEmails" @click="sendInvites" class="send-invites-button">
-        Send Invites
-      </button>
-      <button type="button"  @click="backToPotluck" class="invite-nobody-button">
-        Back to Potluck
-      </button>
+      </div>
+      <div class="form-container">
+        <form @submit.prevent="sendInvites" class="email-form">
+          <div v-for="(email, index) in emailList" :key="index" class="email-field">
+            <label>Email {{ index + 1 }}</label>
+            <input type="email" v-on:keyup="autoAddField(index)" v-model="emailList[index]" autofocus
+              class="email-input" />
+          </div>
+        </form>
+      </div>
+      <div class="button-container">
+        <button type="button" @click="addEmailField" class="add-email-button">Add Email</button>
+        <button type="submit" :disabled="formHasEmails" @click="sendInvites" class="send-invites-button">
+          Send Invites
+        </button>
+        <button type="button" @click="backToPotluck" class="invite-nobody-button">
+          Back to Potluck
+        </button>
       </div>
     </section>
+
+  
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <p>Invitations sent to {{ emailList.join(', ') }}</p>
+        <button @click="returnToPotluck">Return to Potluck</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,19 +43,20 @@ export default {
   data() {
     return {
       emailList: [''],
+      showModal: false,
     };
   },
   computed: {
     formHasEmails() {
-      return this.emailList.length <= 1; // Adjust the condition as necessary
+      return this.emailList.length <= 1; 
     },
   },
   methods: {
-    backToPotluck(){
+    backToPotluck() {
       this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
     },
     addEmailField() {
-      this.emailList.push(''); // Add a new email to the list
+      this.emailList.push(''); 
     },
     autoAddField(index) {
       const inputValue = event.target.value.trim();
@@ -67,6 +70,20 @@ export default {
     },
     sendInvites() {
       this.emailList.pop();
+
+      UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
+        .then(response => {
+          this.emailList = response.data;
+          this.showModal = true; // Show the modal after invitations are sent
+        })
+        .catch(error => {
+          // Handle errors if necessary
+        });
+    },
+    returnToPotluck() {
+      this.showModal = false; // Hide the modal
+      this.emailList.pop();
+
       UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
         .then(response => {
           this.emailList = response.data;
@@ -76,7 +93,6 @@ export default {
         })
         .finally(() => {
           this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
-
         });
     },
   },
@@ -103,8 +119,8 @@ export default {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   margin: 20px;
   box-sizing: border-box;
-  max-height: 900px; 
-  overflow-y: auto; 
+  max-height: 900px;
+  overflow-y: auto;
 }
 
 .hero {
@@ -123,7 +139,6 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-
 }
 
 .email-input {
@@ -156,7 +171,8 @@ export default {
 }
 
 .add-email-button,
-.send-invites-button, .invite-nobody-button{
+.send-invites-button,
+.invite-nobody-button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -173,5 +189,24 @@ export default {
   background-color: #ccc;
   cursor: not-allowed;
   color: #666;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
 }
 </style>
