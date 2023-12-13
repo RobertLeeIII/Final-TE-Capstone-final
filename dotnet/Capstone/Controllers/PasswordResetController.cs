@@ -51,12 +51,13 @@ public class PasswordResetController : ControllerBase
         {
             return BadRequest(new { Error = "Answer is incorrect" });
         }
-        return match == fpr.Answer;
+       
+        return Ok(match == fpr.Answer);
     }
     [HttpPut("reset/{email}")]
     public ActionResult<bool> UpdateUserPassword(UpdateUserDTO uud)
     {
-       if (uud.ConfirmPassword == uud.Password)
+       if(uud.ConfirmPassword == uud.Password)
         {
             try
             {

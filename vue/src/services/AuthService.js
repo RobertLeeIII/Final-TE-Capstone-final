@@ -13,14 +13,10 @@ export default {
   getRecoveryByEmail(forgotObject) {
     return axios.post('/PasswordReset/forgot', forgotObject)
   },
-  getSecurityQuestionByEmail(email){
+  getSecurityQuestionByEmail(email) {
     return axios.get(`/PasswordReset/forgot/${email}`)
   },
-  recoverPassword(email, answer){
-    return axios.get(`/PasswordReset/reset/${email}`)
+  recoverPassword(updateUserData) {
+    return axios.put(`/PasswordReset/reset/${updateUserData.Email}`, updateUserData);
   }
-  /*updateUser(userId){
-    return axios.put('/reset/', userId)
-  }*/
-  //This is for the password reset
 }

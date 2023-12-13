@@ -6,13 +6,23 @@
       <div class="field">
         <label>Password</label>
         <div class="control">
-          <input type="password" v-model="password" placeholder="********" required />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="********"
+            required
+          />
         </div>
       </div>
       <div class="field">
         <label>Password Confirm</label>
         <div class="control">
-          <input type="password" v-model="password_confirm" placeholder="********" required />
+          <input
+            type="password"
+            v-model="password_confirm"
+            placeholder="********"
+            required
+          />
         </div>
       </div>
 
@@ -25,46 +35,50 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import authService from "@/services/AuthService.js";
 
 export default {
-  name: 'Reset',
+  name: "Reset",
   data() {
     return {
-      password: '',
-      password_confirm: '',
-      email: ''
+      password: "",
+      password_confirm: "",
+      email: this.$route.params.email,
     };
   },
   methods: {
     handleSubmit() {
       try {
-        // Basic client-side validation
         if (!this.password || !this.password_confirm) {
-          console.error('Please enter both password and confirmation.');
+          console.error("Please enter both password and confirmation.");
+          return;
+        }
+        if (this.password !== this.password_confirm) {
+          console.error("Password and confirmation do not match.");
           return;
         }
 
-        if (this.password !== this.password_confirm) {
-          console.error('Password and confirmation do not match.');
-          return;
-        }
+        const updateUserData = {
+          Email: this.email,
+          Password: this.password,
+          ConfirmPassword: this.password_confirm,
+        };
 
         // Make an API request to reset the password
-        const response = authService.recoverPassword(this.email, this.answer);
-
-        console.log(response.data);
+        authService.recoverPassword(updateUserData)
+        .then(response => {console.log(response.data);})
         // Assuming your backend returns a success message
-
-        // Redirect the user to the login route
-        this.$router.push('/login');
+        // This takes the user to the login page, how cool?
+        this.$router.push("/login");
       } catch (error) {
         console.error(error.response.data);
-        // Handle errors appropriately
+        this.validationError = "Invalid email or security answer.";
+      } finally {
+        this.loading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

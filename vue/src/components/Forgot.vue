@@ -89,7 +89,7 @@ export default {
         });
         if(response.data)
         {
-          this.$router.push(`/PasswordReset/reset/${this.email}`);
+          this.$router.push({name: 'reset', params: {email: this.email}});
         }
       } catch (error) {
         console.error(error);
