@@ -1,37 +1,32 @@
 <template>
   <div class="card-container">
     <section class="invite-section card">
-    <div class="hero">
-      <div class="hero-body">
-        <h1 class="title">Step 2: Invite Friends</h1>
-      </div>
-    </div>
-    <div class="form-container">
-      <form @submit.prevent="sendInvites" class="email-form">
-        <div v-for="(email, index) in emailList" :key="index" class="email-field">
-          <label>Email {{ index + 1 }}</label>
-          <input
-            type="email"
-            v-on:keyup="autoAddField(index)"
-            v-model="emailList[index]"
-            autofocus
-            class="email-input"
-          />
+      <div class="hero">
+        <div class="hero-body">
+          <h1 class="title">Step 2: Invite Friends</h1>
         </div>
-      </form>
-      <div class="email-list">
-        <p v-if="emailList.length === 0" class="no-emails-text">No emails added yet</p>
-        <p v-else class="emails-text">Emails:</p>
-        <ul class="email-ul">
-          <li v-for="email in emailList" :key="email" class="email-li">{{ email }}</li>
-        </ul>
       </div>
-    </div>
-    <div class="button-container">
-      <button type="button" @click="addEmailField" class="add-email-button">Add Email</button>
-      <button type="submit" :disabled="formHasEmails" @click="sendInvites" class="send-invites-button">
-        Send Invites
-      </button>
+      <div class="form-container">
+        <form @submit.prevent="sendInvites" class="email-form">
+          <div v-for="(email, index) in emailList" :key="index" class="email-field">
+            <label>Email {{ index + 1 }}</label>
+            <input type="email" v-on:keyup="autoAddField(index)" v-model="emailList[index]" autofocus
+              class="email-input" />
+          </div>
+        </form>
+        <div class="email-list">
+          <p v-if="emailList.length === 0" class="no-emails-text">No emails added yet</p>
+          <p v-else class="emails-text">Emails:</p>
+          <ul class="email-ul">
+            <li v-for="email in emailList" :key="email" class="email-li">{{ email }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="button-container">
+        <button type="button" @click="addEmailField" class="add-email-button">Add Email</button>
+        <button type="submit" :disabled="formHasEmails" @click="sendInvites" class="send-invites-button">
+          Send Invites
+        </button>
       </div>
     </section>
   </div>
@@ -70,10 +65,13 @@ export default {
       UserService.inviteGuestsByEmails(this.$route.params.potluckId, this.emailList)
         .then(response => {
           this.emailList = response.data;
-          this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
         })
         .catch(error => {
           // Handle errors if necessary
+        })
+        .finally(() => {
+          this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
+
         });
     },
   },
