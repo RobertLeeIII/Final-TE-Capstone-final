@@ -3,7 +3,7 @@
 <router-link :to="
         {name: 'dish-signup',
         params: { potluckId: $route.params.potluckId },
-        query: { action: 'signup', course: currentCourse, suggest: currentMeal.idMeal }}"><button>Bring this Dish!</button></router-link>
+        query: { action: 'signup', course: courseNumber, suggest: currentMeal.idMeal }}"><button>Bring this Dish!</button></router-link>
 </template>
 
 <script>
@@ -12,12 +12,13 @@ import MealDBService from '@/services/MealDBService.js'
 export default {
     data() {
         return {
-            currentMeal: {}
+            currentMeal: {},
+            courseNumber: 0
         }
     },
     props: {
         currentMealId: Number,
-        currentCourse: Number
+        course: Number
     },
     created() {
         MealDBService.getRecipeById(this.currentMealId)
@@ -26,7 +27,8 @@ export default {
         })
         .catch(error => {
             console.log(error.data)
-        })
+        });
+        this.courseNumber = this.course;
     }
 }
 </script>
