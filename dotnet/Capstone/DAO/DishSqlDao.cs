@@ -92,7 +92,7 @@ namespace Capstone.DAO
             IList<Dish> dishes = new List<Dish>();
             string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
                            FROM dishes
-                           JOIN users AS u ON u.user_id = dishes.creator
+                           JOIN users AS u ON u.username = dishes.creator
                            JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
                            JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
                            WHERE creator = (SELECT TOP 1 username from users WHERE user_id = @user_id)
@@ -127,6 +127,8 @@ namespace Capstone.DAO
 
                     int currentId = -1;
                     Dish dish = new Dish();
+                    dish.Allergens = new List<string>();
+                    dish.Diets = new List<string>();
                     while (reader.Read())
                     {
                         while (currentId == -1)
@@ -143,6 +145,8 @@ namespace Capstone.DAO
                             dishes.Add(dish);
                             currentId = Convert.ToInt32(reader["dish_id"]);
                             dish = new Dish();
+                            dish.Allergens = new List<string>();
+                            dish.Diets = new List<string>();
                             dish = MapRowToDish(reader, dish);
                         }
                     }

@@ -42,7 +42,7 @@
               <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
               <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
               <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme : Potluck.theme.substring(2) }}</li>
               <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
 
@@ -67,13 +67,17 @@
 </template>
 <script>
 import DishSuggestion from '@/components/DishSuggestion.vue'
+import UserService from '@/services/UserService.js'
+import DishService from '@/services/DishService.js'
 export default {
   data() {
     return {
       invitedGuests: [],
       dishes: [],
       currentCourse: 0,
-      signUpForm: false
+      signUpForm: false,
+      currentPotluck: {}
+
 
     }
   },
@@ -96,39 +100,62 @@ export default {
       }
       else if (this.Potluck.theme.includes('Winter')) {
         return { winter: true }
+      } 
+      else if (this.Potluck.theme.includes('None')) {
+        return { noneTheme: true }
       }
       return true;
     },
     changingIcon() {
-      if (this.Potluck.theme.includes('Spring')) {
-        return "fa-solid fa-cloud-sun-rain"
-      }
-      else if (this.Potluck.theme.includes('Summer')) {
-        return "fa-solid fa-sun"
-      }
-      else if (this.Potluck.theme.includes('Fall')) {
-        return "fa-solid fa-leaf"
-      }
-      else if (this.Potluck.theme.includes('Winter')) {
-        return "fa-regular fa-snowflake"
+      if (this.Potluck.theme.includes("Spring")) {
+        return "fa-solid fa-cloud-sun-rain";
+      } else if (this.Potluck.theme.includes("Summer")) {
+        return "fa-solid fa-sun";
+      } else if (this.Potluck.theme.includes("Fall")) {
+        return "fa-solid fa-leaf";
+      } else if (this.Potluck.theme.includes("Winter")) {
+        return "fa-regular fa-snowflake";
       }
       return true;
-    }
+    },
   },
   props: {
-    Potluck: Object
+    Potluck: Object,
   },
   methods: {
     formatDate(dateTimeString) {
-      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
       const date = new Date(dateTimeString);
-      return date.toLocaleDateString('en-US', options);
+      return date.toLocaleDateString("en-US", options);
     },
     dishSignup(ID) {
       this.currentCourse = ID;
       this.signUpForm = !this.signUpForm;
-
-    }
+    },
+    getAttendingUsers() {
+      UserService.getGuestsByPotluckId(this.$route.params.potluckId)
+      .then(response => {
+        this.invitedGuests = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    // getDishesForPotluck() {
+    //   DishService.getDishesByPotluck(this.Potluck.potluckId)
+    //   .then(response => {
+    //     this.dishes = response.data;
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    //}
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -139,7 +166,12 @@ export default {
     //     this.dishSignup = !this.dishSignup;
     // }
   },
-}
+  created() {
+    this.currentPotluck = this.Potluck;
+    this.getAttendingUsers();
+    //this.getDishesForPotluck();
+  }
+};
 </script>
 <style scoped>
 body {
@@ -193,7 +225,9 @@ body {
   transition: background-color 0.3s ease;
   background-image: url('/winter2.jpg');
 }
-
+.noneTheme{
+  background-color: rgba(98, 175, 95, 0.411);
+}
 .links {
   margin-top: 50px;
   margin-top: 50px;
@@ -285,16 +319,15 @@ body {
   transition: color 0.3s ease;
 }
 
-      .requested-items span:last-child {
-        margin-right: 0;
-        /* Remove right margin for the last span */
-        margin-right: 0;
-        /* Remove right margin for the last span */
-      }
+.requested-items span:last-child {
+  margin-right: 0;
+  /* Remove right margin for the last span */
+  margin-right: 0;
+  /* Remove right margin for the last span */
+}
 
 .host-request {
   display: flex;
-
 }
 
 .requested-items {

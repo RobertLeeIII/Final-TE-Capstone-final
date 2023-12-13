@@ -12,11 +12,13 @@ import PotluckDetailsView from '../views/PotluckDetailsView.vue';
 import CreatePotluckView from '../views/CreatePotluckView.vue';
 import PotluckUpdateView from '../views/PotluckUpdateView.vue';
 import ForgotEmailView from '../views/ForgotEmailView.vue';
-import ResetPasswordView from '../views/ResetView.vue'
-import GuestListView from '../views/GuestListView.vue'
-import InviteToPotluckForm from '../views/InviteToPotluckView.vue'
+import ResetPasswordView from '../views/ResetView.vue';
+import GuestListView from '../views/GuestListView.vue';
+import InviteToPotluckForm from '../views/InviteToPotluckView.vue';
 import ApiTestView from '../views/ApiTestView.vue';
-import DishSignupView from '@/views/DishSignupView.vue'
+import DishSignupView from '@/views/DishSignupView.vue';
+import DishListView from '@/views/DishListView.vue';
+import DishDetailsView from '@/views/DishDetailsView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -32,7 +34,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: false //CHANGE THIS BACK AFTER EVERYTHNG WORKS!
+      requiresAuth: false //TODO: CHANGE THIS BACK AFTER EVERYTHNG WORKS!
     }
   },
   {
@@ -116,12 +118,12 @@ const routes = [
     }
   },
   {
-    path: "/forgot",
+    path: "/PasswordReset/forgot",
     name: "forgot",
     component: ForgotEmailView
   },
   {
-    path: "/reset/token",
+    path: "/PasswordReset/reset/:email",
     name: "reset",
     component: ResetPasswordView,
     meta: {
@@ -137,7 +139,23 @@ const routes = [
     path: "/potlucks/:potluckId/menu",
     name: "dish-signup",
     component: DishSignupView,
-  }
+  },
+  {
+    path: "/users/:userId/dishes",
+    name: "dish-list",
+    component: DishListView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/dishes/:dishId",
+    name: "dish-details",
+    component: DishDetailsView,
+    meta: {
+      requiresAuth: false
+    }
+  },
 
 ];
 
