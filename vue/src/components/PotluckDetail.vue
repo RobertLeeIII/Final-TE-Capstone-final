@@ -107,29 +107,32 @@ export default {
       return true;
     },
     changingIcon() {
-      if (this.Potluck.theme.includes('Spring')) {
-        return "fa-solid fa-cloud-sun-rain"
-      }
-      else if (this.Potluck.theme.includes('Summer')) {
-        return "fa-solid fa-sun"
-      }
-      else if (this.Potluck.theme.includes('Fall')) {
-        return "fa-solid fa-leaf"
-      }
-      else if (this.Potluck.theme.includes('Winter')) {
-        return "fa-regular fa-snowflake"
+      if (this.Potluck.theme.includes("Spring")) {
+        return "fa-solid fa-cloud-sun-rain";
+      } else if (this.Potluck.theme.includes("Summer")) {
+        return "fa-solid fa-sun";
+      } else if (this.Potluck.theme.includes("Fall")) {
+        return "fa-solid fa-leaf";
+      } else if (this.Potluck.theme.includes("Winter")) {
+        return "fa-regular fa-snowflake";
       }
       return true;
-    }
+    },
   },
   props: {
-    Potluck: Object
+    Potluck: Object,
   },
   methods: {
     formatDate(dateTimeString) {
-      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
       const date = new Date(dateTimeString);
-      return date.toLocaleDateString('en-US', options);
+      return date.toLocaleDateString("en-US", options);
     },
     dishSignup(ID) {
       this.currentCourse = ID;
@@ -168,7 +171,7 @@ export default {
     this.getAttendingUsers();
     //this.getDishesForPotluck();
   }
-}
+};
 </script>
 <style scoped>
 body {
@@ -316,16 +319,15 @@ body {
   transition: color 0.3s ease;
 }
 
-      .requested-items span:last-child {
-        margin-right: 0;
-        /* Remove right margin for the last span */
-        margin-right: 0;
-        /* Remove right margin for the last span */
-      }
+.requested-items span:last-child {
+  margin-right: 0;
+  /* Remove right margin for the last span */
+  margin-right: 0;
+  /* Remove right margin for the last span */
+}
 
 .host-request {
   display: flex;
-
 }
 
 .requested-items {

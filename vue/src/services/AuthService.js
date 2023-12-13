@@ -9,8 +9,14 @@ export default {
   register(user) {
     return axios.post('/register', user)
   },
-  /*updateUser(userId){
-    return axios.put('/reset/', userId)
-  }*/
-  //This is for the password reset
+
+  getRecoveryByEmail(forgotObject) {
+    return axios.post('/PasswordReset/forgot', forgotObject)
+  },
+  getSecurityQuestionByEmail(email) {
+    return axios.get(`/PasswordReset/forgot/${email}`)
+  },
+  recoverPassword(updateUserData) {
+    return axios.put(`/PasswordReset/reset/${updateUserData.Email}`, updateUserData);
+  }
 }

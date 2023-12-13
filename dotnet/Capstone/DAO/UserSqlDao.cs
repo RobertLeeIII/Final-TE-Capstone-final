@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Capstone.Exceptions;
 using Capstone.Models;
 using Capstone.Security;
@@ -336,6 +337,7 @@ namespace Capstone.DAO
                          "VALUES (@email, @username, @password_hash, @salt, @user_role, @diet_rest)";
 
             int newUserId = 0;
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -362,7 +364,111 @@ namespace Capstone.DAO
 
             return newUser;
         }
+        public UserRecovery GetUserRecovery(int userId)
+        {
+            UserRecovery recover = null;
 
+            string sql = @"SELECT user_id, question_id, answer from user_recovery where user_id = @user_id";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+          
+
+                   using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            recover = new UserRecovery()
+                            {
+                                UserId = Convert.ToInt32(reader["user_id"]),
+                                QuestionId = Convert.ToInt32(reader["question_id"]),
+                                Answer = Convert.ToString(reader["answer"])
+                            };
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw new DaoException("SQL exception occurred", ex);
+            }
+            return recover;
+        }
+        public User GetUserByEmailAddress(string email)
+        {
+            User user = null;
+
+            string sql = "SELECT user_id, email, username, password_hash, salt, user_role, diet_rest FROM users WHERE email = @email";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@email", email);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            user = MapRowToUser(reader);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+
+            return user;
+        }
+        public bool UpdatePassword(string email, string password)
+        {
+            int numberOfRows = 0;
+            {
+                IPasswordHasher passwordHasher = new PasswordHasher();
+                PasswordHash hash = passwordHasher.ComputeHash(password);
+
+                string sql = "UPDATE users SET password_hash = @password_hash, salt = @salt WHERE email = @email;";
+                
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                      
+                        cmd.Parameters.AddWithValue("@password_hash", hash.Password);
+                        cmd.Parameters.AddWithValue("@salt", hash.Salt);
+                        cmd.Parameters.AddWithValue("@email", email);
+
+                        numberOfRows = cmd.ExecuteNonQuery();
+
+                        if (numberOfRows != 1)
+                        {
+                            throw new DaoException("You didn't update the proper amount of rows");
+                        }
+                    }
+                    return true;  
+                }
+                catch (SqlException ex)
+                {
+                   throw new DaoException("SQL exception occurred", ex);
+                }
+            }
+        }
+ 
         private User MapRowToUser(SqlDataReader reader)
         {
             User user = new User();

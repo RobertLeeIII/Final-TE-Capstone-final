@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import PotluckService from "@/services/PotluckService.js";
+import PotluckService from "../services/PotluckService.js";
 
 export default {
   data() {

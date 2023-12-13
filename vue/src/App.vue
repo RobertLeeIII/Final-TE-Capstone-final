@@ -27,7 +27,7 @@
     </header>
 
     <router-view />
-  </div>
+
 
   <footer>
     <div class="centerFooter">
@@ -41,6 +41,7 @@
       </p>
     </div>
   </footer>
+</div>
 </template>
 
 <script>
