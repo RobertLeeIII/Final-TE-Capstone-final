@@ -76,6 +76,9 @@ export default {
         if (error.response.status === 404) {
           console.log('404 PROBLEM');
         }
+        else if(error.response.status === 401) {
+          this.$router.push({name: 'login'})
+        }
       }
     }
   }

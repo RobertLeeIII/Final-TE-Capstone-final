@@ -42,7 +42,7 @@
               <li><i :class="changingIcon"></i> Potluck Name: {{ Potluck.name }}</li>
               <li><i :class="changingIcon"></i> Location:  {{ Potluck.location }}</li>
               <li><i :class="changingIcon"></i> {{ formatDate(Potluck.time) }}</li>
-              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme.substring(2) }}</li>
+              <li><i :class="changingIcon"></i> Theme: {{ Potluck.theme == 'None' ? Potluck.theme : Potluck.theme.substring(2) }}</li>
               <li><i :class="changingIcon"></i> About: {{ Potluck.summary }}</li>
             </ul>
 
@@ -66,14 +66,18 @@
   </div>
 </template>
 <script>
-import DishSuggestion from "@/components/DishSuggestion.vue";
+import DishSuggestion from '@/components/DishSuggestion.vue'
+import UserService from '@/services/UserService.js'
+import DishService from '@/services/DishService.js'
 export default {
   data() {
     return {
       invitedGuests: [],
       dishes: [],
       currentCourse: 0,
-      signUpForm: false
+      signUpForm: false,
+      currentPotluck: {}
+
 
     }
   },
@@ -85,14 +89,20 @@ export default {
       return this.Potluck.hostId == this.$store.state.user.userId;
     },
     changingTheme() {
-      if (this.Potluck.theme.includes("Spring")) {
-        return { spring: true };
-      } else if (this.Potluck.theme.includes("Summer")) {
-        return { summer: true };
-      } else if (this.Potluck.theme.includes("Fall")) {
-        return { fall: true };
-      } else if (this.Potluck.theme.includes("Winter")) {
-        return { winter: true };
+      if (this.Potluck.theme.includes('Spring')) {
+        return { spring: true }
+      }
+      else if (this.Potluck.theme.includes('Summer')) {
+        return { summer: true }
+      }
+      else if (this.Potluck.theme.includes('Fall')) {
+        return { fall: true }
+      }
+      else if (this.Potluck.theme.includes('Winter')) {
+        return { winter: true }
+      } 
+      else if (this.Potluck.theme.includes('None')) {
+        return { noneTheme: true }
       }
       return true;
     },
@@ -127,8 +137,25 @@ export default {
     dishSignup(ID) {
       this.currentCourse = ID;
       this.signUpForm = !this.signUpForm;
-
-    }
+    },
+    getAttendingUsers() {
+      UserService.getGuestsByPotluckId(this.$route.params.potluckId)
+      .then(response => {
+        this.invitedGuests = response.data;
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    // getDishesForPotluck() {
+    //   DishService.getDishesByPotluck(this.Potluck.potluckId)
+    //   .then(response => {
+    //     this.dishes = response.data;
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    //}
     // toggleDishSignup(courseName) {
     //     if (this.currentCourse === '') {
     //         this.currentCourse = courseName;
@@ -139,20 +166,25 @@ export default {
     //     this.dishSignup = !this.dishSignup;
     // }
   },
+  created() {
+    this.currentPotluck = this.Potluck;
+    this.getAttendingUsers();
+    //this.getDishesForPotluck();
+  }
 };
 </script>
 <style scoped>
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #F4F4F4;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .container {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
@@ -162,10 +194,12 @@ body {
   margin: 10px 0;
   display: flex-wrap;
   align-items: left;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .container li i {
   margin-right: 10px;
+
 }
 
 .changingIcon {
@@ -191,7 +225,9 @@ body {
   transition: background-color 0.3s ease;
   background-image: url('/winter2.jpg');
 }
-
+.noneTheme{
+  background-color: rgba(98, 175, 95, 0.411);
+}
 .links {
   margin-top: 50px;
   margin-top: 50px;

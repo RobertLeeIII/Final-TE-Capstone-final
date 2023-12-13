@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlTypes;
+using System.Text.Json.Serialization;
 
 namespace Capstone.Models
 {
@@ -7,7 +8,9 @@ namespace Capstone.Models
         public int UserId { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
+        [JsonIgnore]
         public string PasswordHash { get; set; }
+        [JsonIgnore]
         public string Salt { get; set; }
         public string Role { get; set; }
         public bool DietaryRestriction { get; set; }
