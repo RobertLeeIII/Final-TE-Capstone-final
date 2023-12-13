@@ -210,7 +210,6 @@ namespace Capstone.DAO
                             dish.Allergens = new List<string>();
                             dish.Diets = new List<string>();
                             dish = MapRowToDish(reader, dish);
-                            dishes.Add(dish);
                         }
                     }
                     dishes.Add(dish);
@@ -225,6 +224,7 @@ namespace Capstone.DAO
                 dish.Allergens = dish.Allergens.Distinct().ToList();
                 dish.Diets = dish.Diets.Distinct().ToList();
             }
+            dishes = dishes.Distinct().ToList();
             return dishes;
         }
         public Dish CreateNewDish(NewDishDTO newDish, int userId, int potluckId)
