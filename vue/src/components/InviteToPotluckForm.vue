@@ -26,6 +26,9 @@
       <button type="submit" :disabled="formHasEmails" @click="sendInvites" class="send-invites-button">
         Send Invites
       </button>
+      <button type="button"  @click="backToPotluck" class="invite-nobody-button">
+        Back to Potluck
+      </button>
       </div>
     </section>
   </div>
@@ -46,6 +49,9 @@ export default {
     },
   },
   methods: {
+    backToPotluck(){
+      this.$router.push({ name: 'potluck-details', params: { potluckId: this.$route.params.potluckId } });
+    },
     addEmailField() {
       this.emailList.push(''); // Add a new email to the list
     },
@@ -150,7 +156,7 @@ export default {
 }
 
 .add-email-button,
-.send-invites-button {
+.send-invites-button, .invite-nobody-button{
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
