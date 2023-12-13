@@ -167,12 +167,12 @@ namespace Capstone.DAO
         public IList<Dish> GetDishesByPotluckId(int potluckId)
         {
             IList<Dish> dishes = new List<Dish>();
-            string sql = @"SELECT dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
+            string sql = @"SELECT p.potluck_id, dishes.dish_id, creator, dish_name, recipe, rating, course_id, allergen_name, diet_name
                            FROM dishes
-                           JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
-                           JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
-                           JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id
-                           JOIN potlucks AS p ON p.potluck_id = pd.potluck_id
+                           FULL JOIN dish_allergies AS da ON da.dish_id = dishes.dish_id
+                           FULL JOIN dish_diet AS dd ON dd.dish_id = dishes.dish_id
+                           FULL JOIN potluck_dish AS pd ON pd.dish_id = dishes.dish_id
+                           FULL JOIN potlucks AS p ON p.potluck_id = pd.potluck_id
                            WHERE p.potluck_id = @potluck_id
                            ORDER BY dishes.dish_id; ";
 
@@ -188,24 +188,29 @@ namespace Capstone.DAO
 
                     int currentId = -1;
                     Dish dish = new Dish();
+                    dish.Allergens = new List<string>();
+                    dish.Diets = new List<string>();
                     while (reader.Read())
                     {
 
                         while (currentId == -1)
                         {
-                            currentId = Convert.ToInt32(reader["potluck_id"]);
+                            currentId = Convert.ToInt32(reader["dish_id"]);
                         }
 
-                        if (currentId == Convert.ToInt32(reader["potluck_id"]))
+                        if (currentId == Convert.ToInt32(reader["dish_id"]))
                         {
                             dish = MapRowToDish(reader, dish);
                         }
                         else
                         {
                             dishes.Add(dish);
-                            currentId = Convert.ToInt32(reader["potluck_id"]);
+                            currentId = Convert.ToInt32(reader["dish_id"]);
                             dish = new Dish();
+                            dish.Allergens = new List<string>();
+                            dish.Diets = new List<string>();
                             dish = MapRowToDish(reader, dish);
+                            dishes.Add(dish);
                         }
                     }
                     dishes.Add(dish);
@@ -214,6 +219,11 @@ namespace Capstone.DAO
             catch (SqlException ex)
             {
                 throw new DaoException("A SQL error occured.", ex);
+            }
+            foreach (Dish dish in dishes)
+            {
+                dish.Allergens = dish.Allergens.Distinct().ToList();
+                dish.Diets = dish.Diets.Distinct().ToList();
             }
             return dishes;
         }
@@ -358,6 +368,8 @@ namespace Capstone.DAO
         private Dish MapRowToDish(SqlDataReader reader, Dish input)
         {
             Dish dish = new Dish();
+            dish.Allergens = input.Allergens;
+            dish.Diets = input.Diets;
             dish.Allergens = input.Allergens;
             dish.Diets = input.Diets;
             dish.DishId = Convert.ToInt32(reader["dish_id"]);
