@@ -123,6 +123,13 @@ export default {
     margin-top: 20px;
 }
 
+.potluck{
+    max-width: 300px;
+    height: 500px;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
 .media {
     display: flex;
     justify-content: center;
@@ -130,6 +137,8 @@ export default {
 
 .card {
     width: 300px;
+    height: 500px;
+    overflow: auto;
 }
 
 .image.is-centered {
