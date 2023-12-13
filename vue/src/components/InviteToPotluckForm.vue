@@ -19,13 +19,7 @@
           />
         </div>
       </form>
-      <div class="email-list">
-        <p v-if="emailList.length === 0" class="no-emails-text">No emails added yet</p>
-        <p v-else class="emails-text">Emails:</p>
-        <ul class="email-ul">
-          <li v-for="email in emailList" :key="email" class="email-li">{{ email }}</li>
-        </ul>
-      </div>
+      
     </div>
     <div class="button-container">
       <button type="button" @click="addEmailField" class="add-email-button">Add Email</button>
@@ -100,6 +94,8 @@ export default {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   margin: 20px;
   box-sizing: border-box;
+  max-height: 900px; 
+  overflow-y: auto; 
 }
 
 .hero {
@@ -118,13 +114,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
 
-.email-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
 }
 
 .email-input {
