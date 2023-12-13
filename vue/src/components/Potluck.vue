@@ -82,5 +82,6 @@ export default {
 .card {
   width: 300px;
   height: 500px;
+
 }
 </style>
