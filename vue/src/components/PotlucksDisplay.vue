@@ -5,6 +5,7 @@
             <div class="card">
                 <router-link :to="{ name: 'potluck-list', query: { action: 'create' } }">
                     <div class="card-image">
+                        <p></p>
                         <figure class="image is-centered">
                             <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
                         </figure>
@@ -121,6 +122,8 @@ export default {
     flex-wrap: wrap;
     gap: 20px;
     margin-top: 20px;
+    justify-content: center;
+    padding-bottom: 20px;
 }
 
 .potluck{
@@ -144,4 +147,5 @@ export default {
 .image.is-centered {
     display: flex;
     justify-content: center;
-}</style>
+}
+</style>
