@@ -106,6 +106,7 @@ export default {
 
 .card-body {
   padding: 20px;
+  background-color: red;
 }.recipe-form {
   max-width: 600px;
   margin: auto;
