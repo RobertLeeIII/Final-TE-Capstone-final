@@ -15,7 +15,7 @@ namespace Capstone.DAO
         User GetUserById(int id);
         User GetUserByUsername(string username);
         public int UninviteUser(int potluckId, int userId);
-        User CreateUser(string email, string username, string password, string role, bool dietaryRestriction);
+        User CreateUser(string email, string username, string password, string role, bool dietaryRestriction, string securityQuestion, string securityAnswer);
 
         UserRecovery GetUserRecovery(int UserId);
         User GetUserByEmailAddress(string email);
