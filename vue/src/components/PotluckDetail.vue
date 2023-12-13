@@ -61,7 +61,7 @@
               <ul>
                 <li><router-link v-if="isHost"
                     :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId }, query: { action: 'invite' } }"
-                    class="invitation-link">Invite People</router-link> </li>
+                    class="invitation-link">Invite Friends</router-link> </li>
                 <li><router-link v-if="isHost" :to="{ name: 'potluck-update', params: { potluckId: Potluck.potluckId } }"
                     class="update-link">Update This Potluck</router-link> </li>
                 <li><router-link :to="{ name: 'guest-list', params: { potluckId: Potluck.potluckId } }"
