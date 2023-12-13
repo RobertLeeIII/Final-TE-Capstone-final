@@ -127,4 +127,7 @@ export default {
 .button {
   margin-left: 0.5rem;
 }
+.centerFooter {
+  padding: 10px;
+}
 </style>
