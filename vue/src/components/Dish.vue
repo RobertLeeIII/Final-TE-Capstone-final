@@ -5,8 +5,8 @@
     }">
         <div class="card">
             <div class="card-image">
-                <figure class="image is-4by3">
-                    <img :src="changingImage" alt="Dish Image" />
+                <figure class="image">
+                    <img :src="'/public/spoonDish.jpg'" alt="Dish Image" />
                 </figure>
             </div>
             <div class="card-content">
