@@ -6,7 +6,7 @@
           <div class="header-text">
             <h1 class="header-title">Pot·luck</h1>
             <h2 class="header-phonetic">
-              <form v-on:submit.prevent="register">
+              <form class='registration-form' v-on:submit.prevent="register">
                 <h1>Register User</h1>
                 <div role="alert" v-if="registrationErrors">
                   {{ registrationErrorMsg }}
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-input-group">
                   <label for="security-question"></label>
-                  <div class="select is-rounded is-full width">
+                  <div class="select is-rounded">
                     <select
                       id="security-question"
                       v-model="user.securityQuestion"
@@ -166,4 +166,7 @@ export default {
 </script>
 
 <style>
+.registration-form{
+  max-width: 500px;
+}
 </style>

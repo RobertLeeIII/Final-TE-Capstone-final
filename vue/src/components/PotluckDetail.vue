@@ -276,6 +276,7 @@ body {
 .links {
   margin-top: 50px;
   margin-top: 50px;
+  max-width: 250px;
 }
 
 .invitation-link,

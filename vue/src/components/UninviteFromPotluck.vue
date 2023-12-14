@@ -35,11 +35,15 @@ export default {
         removeGuest() {
             UserService.uninviteGuests(this.$route.params.potluckId, this.selectedGuests)
             .then(response => {
-                this.selectedGuests = response.data;
+                this.selectedGuests = [];
+
             })
             .catch(error => {
                 this.handleErrorResponse(error);
             })
+            .finally(
+                this.$router.push({name: 'potluck-details', params: {potluckId: this.$route.params.potluckId}})
+            )
         },
         handleErrorResponse(error) {
             if (error.response) {
