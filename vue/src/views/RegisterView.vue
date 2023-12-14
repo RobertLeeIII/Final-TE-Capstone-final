@@ -7,7 +7,7 @@
             <h1 class="header-title">Pot·luck</h1>
             <h2 class="header-phonetic">
               <form class='registration-form' v-on:submit.prevent="register">
-                <h1>Register User</h1>
+                <h1>Register</h1>
                 <div role="alert" v-if="registrationErrors">
                   {{ registrationErrorMsg }}
                 </div>
@@ -90,7 +90,7 @@
                   />
                 </div>
                 <div class="form-input-group">
-                  <label for="dietRes">Dietary Restrictions?</label>
+                  <label for="dietRes">Dietary Restrictions? </label>
                   <input
                     class="checkbox"
                     type="checkbox"
@@ -168,5 +168,47 @@ export default {
 <style>
 .registration-form{
   max-width: 500px;
+}
+.header {
+  text-align: left;
+  padding: 20px;
+  background-color: rgb(241, 247, 237);
+  border: 4px solid rgb(124, 169, 130);
+  margin-bottom: 20px;
+}
+.header-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.header-phonetic {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #666;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input-group {
+  margin-bottom: 0.5rem; /* Adjusted margin */
+  display: flex;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 250px; /* Adjusted width */
+} 
+.button {
+  width: 120px; /* Adjusted width */
+  margin-top: 0.5rem; /* Adjusted margin */
+  align-self: flex-start; /* Align to the start (left) */
 }
 </style>
