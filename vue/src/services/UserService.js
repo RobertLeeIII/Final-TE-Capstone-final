@@ -11,4 +11,7 @@ export default {
     uninviteGuests(potluckId, selectedGuests) {
         return axios.put(`/potlucks/${potluckId}/guestList`, selectedGuests)
     },
+    getHostUsernameByPotluckId(potluckId) {
+        return axios.get(`/potlucks/${potluckId}/hostplease`)
+    }
 }
