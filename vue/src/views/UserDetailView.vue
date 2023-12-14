@@ -104,12 +104,15 @@ export default {
 
 .card-image {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .card-image img {
-  width: 100%;
-  height: auto;
+  width: 80%;
+  height: 80%;
   display: block;
+  margin-top: 10%;
 }
 
 .card-content {
@@ -138,12 +141,15 @@ export default {
 
 .dish-image {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .dish-image img {
-  width: 100%;
-  height: auto;
+  width: 80%;
+  height: 80%;
   display: block;
+  margin-top: 10%;
 }
 
 .dish-content {

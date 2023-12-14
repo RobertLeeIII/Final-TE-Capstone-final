@@ -24,7 +24,7 @@ export default{
         if(ID == 1){
             search = 'pasta'
         }else if (ID == 2){
-            search = 'seafood'
+            search = 'side'
         }else if (ID == 3){
             search = 'miscellaneous'
         }else if (ID == 4){

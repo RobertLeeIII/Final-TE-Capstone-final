@@ -138,8 +138,8 @@ namespace Capstone.DAO
             IList<User> potLuckUsers = new List<User>();
 
             string sql = "SELECT * FROM users " +
-                "potluck.user AS pu ON pu.user_id = users.user.id " +
-                "JOIN potlucks on potlucks.id = pu.potluck_id WHERE potlucks.potluck_id = @potluck_id;";
+                "JOIN potluck.user AS pu ON pu.user_id = users.user.id " +
+                "JOIN potlucks on potlucks.potluck_id = pu.potluck_id WHERE potlucks.potluck_id = @potluck_id;";
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -298,14 +298,16 @@ namespace Capstone.DAO
             }
             return output;
         }
-        public int UninviteUser(int potluckId, int userId)
+        public int UninviteUser(int userId, int potluckId)
         {
             int rowsAffected = 0;
-            string sql1 = "DELETE FROM potluck_user " +
-                "WHERE potluck_user.user_id = @user_id " +
-                "AND potluck_user.potluck_id = @potluck_id;";
+            string sql1 = @"DELETE FROM potluck_user 
+                           WHERE user_id = @user_id 
+                           AND potluck_id = @potluck_id;";
             // TODO: figure out second SQL statement that lets us remove a dish that the removed user was bringing
-            string sql2 = "DELETE FROM potluck_dish WHERE potluck_id = @potluck_id AND dish_id IN (SELECT dish_id from dishes WHERE dish_id IN (select user_id FROM user_dish WHERE user_id = @user_id));";
+            string sql2 = @"DELETE FROM potluck_dish 
+                           WHERE potluck_id = @potluck_id AND dish_id IN 
+                           (select dish_id FROM user_dish WHERE user_id = @user_id);";
 
             try
             {
@@ -314,6 +316,11 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql1, conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    cmd.Parameters.AddWithValue("@potluck_id", potluckId);
+                    cmd.ExecuteNonQuery();
+
+                    cmd = new SqlCommand(sql2, conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
                     cmd.Parameters.AddWithValue("@potluck_id", potluckId);
                     cmd.ExecuteNonQuery();

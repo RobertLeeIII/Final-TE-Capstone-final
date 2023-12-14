@@ -7,7 +7,8 @@
   >
     <div class="card">
       <div class="card-image">
-        <figure class="image is-4by3">
+        <p></p>
+        <figure class="image is-3by2">
           <img :src="changingImage" alt="Potluck Image" />
         </figure>
       </div>
@@ -15,12 +16,12 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-48x48">
-              <img src="/public/logo.png" alt="Logo" />
+              <img src="/public/potluck-planner-logo.png" alt="Logo" />
             </figure>
           </div>
           <div class="media-content">
             <p class="title is-4">{{ propPotluck.name }}</p>
-            <p class="subtitle is-6">{{ $store.state.user.username }}</p>
+            <p class="subtitle is-6">{{ hostIdentify() }}</p>
           </div>
         </div>
         <div class="content">
@@ -37,7 +38,13 @@
 </template>
 
 <script>
+import UserService from '../services/UserService';
 export default {
+  data() {
+    return {
+      currentPotluck: {}
+    }
+  },
   props: {
     propPotluck: Object,
   },
@@ -53,6 +60,20 @@ export default {
       const date = new Date(dateTimeString);
       return date.toLocaleDateString("en-US", options);
     },
+    getHost() {
+      UserService.getHostUsernameByPotluckId(this.propPotluck.potluckId)
+      .then(response => {
+        this.currentPotluck.host = response.data;
+      })
+    },
+    hostIdentify() {
+      if(this.propPotluck.hostId === this.$store.state.user.userId){
+        return 'You are Hosting';
+      }
+      else{
+        return `Hosted By ${this.currentPotluck.host.substring(0,1).toUpperCase() + this.currentPotluck.host.substring(1) }`
+      }
+    }
   },
   computed: {
     changingImage() {
@@ -67,12 +88,16 @@ export default {
       }
       return "/imagePotluck-transformed.jpg";
     },
+    
   },
+  created() {
+    this.currentPotluck = this.propPotluck;
+    this.getHost();
+  }
 };
 </script>
 
 <style>
-/* Your existing style definitions */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -83,5 +108,10 @@ export default {
   width: 300px;
   height: 500px;
   overflow: auto;
+  border: 2px solid rgb(124, 169, 130, 0.3); 
+}
+.content{
+  background-color: rgb(239, 239, 239);
+  padding: 20px;
 }
 </style>
