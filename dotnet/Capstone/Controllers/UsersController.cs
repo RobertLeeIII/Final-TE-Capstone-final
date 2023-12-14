@@ -40,6 +40,22 @@ namespace Capstone.Controllers
             }
         }
 
+        [HttpGet("/potlucks/{potluckId}/hostplease")]
+        public ActionResult<string> GetHostBecauseWeDontHaveIt(int potluckId)
+        {
+            string output = "";
+            try
+            {
+                User host = userDao.GetHostByPotluckId(potluckId);
+                output = host.Username;
+                return Ok(output);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost("/potlucks/{potluckId}/guestList")]
         public ActionResult<IList<string>> SendInvitations(IList<string> invitations, int potluckId)
         {
@@ -66,21 +82,25 @@ namespace Capstone.Controllers
                 return StatusCode(500);
             }
         }
-        //[HttpPut("/potlucks/{potluckId}/guestList")]
-        //public ActionResult<int> UpdateGuestList(IList<int> userIds, int potluckId)
-        //{
-        //    try
-        //    {
-        //        // loop through the list and uninvite each user
-        //        foreach (int item in userIds)
-        //        {
-        //            return Ok(userDao.UninviteUser(item, potluckId));
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500);
-        //    }
-        //}
+
+        [HttpPut("/potlucks/{potluckId}/guestList")]
+        public ActionResult<int> UpdateGuestList(IList<int> userIds, int potluckId)
+        {
+            try
+            {
+                // loop through the list and uninvite each user
+                foreach (int item in userIds)
+                {
+                    userDao.UninviteUser(item, potluckId);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+
+            return NoContent();
+
+        }
     }
 }
