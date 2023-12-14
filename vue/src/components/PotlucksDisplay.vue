@@ -56,8 +56,8 @@ export default {
     data() {
         return {
             potlucks: [],
-            futurePotlucks: [],
-            pastPotlucks: []
+            // futurePotlucks: [],
+            // pastPotlucks: []
         }
     },
     components: {
@@ -70,29 +70,44 @@ export default {
         hasPotlucks() {
             return this.myPotlucks.length > 0;
         },
+        futurePotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date().getDate()
+                const scheduled = new Date(item.time).getDate()
+                return scheduled < today
+            })
+        },
+        pastPotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date().getDate()
+                const scheduled = new Date(item.time).getDate()
+                return scheduled > today
+                
+            })
+        }
 
     },
     methods: {
         populatePotluckArrays() {
             this.potlucks = JSON.parse(JSON.stringify(this.myPotlucks));
-            this.futurePotlucks = this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
-                if (scheduled > today) {
-                    return item;
-                }
-            })
-            this.pastPotlucks = this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
-                if (scheduled < today) {
-                    return item;
-                }
-            })
-        }
+            // this.futurePotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     if (scheduled > today) {
+            //         return item;
+            //     }
+            // })
+            // this.pastPotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     return scheduled < today
+            //     })
+            
+            }
     },
     created() {
         this.populatePotluckArrays();
+
     }
 
 
