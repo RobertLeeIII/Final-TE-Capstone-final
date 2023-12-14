@@ -14,13 +14,13 @@
           <div class="form-input-group control has-icons-left">
             <input class="input is-rounded" type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
             <span class="icon is-left">
-              <i class="fas fa-envelope"></i>
+              
             </span>
           </div>
           <div class="form-input-group control has-icons-left">
             <input class="input is-rounded" type="password" id="password" placeholder="Password" v-model="user.password" required />
             <span class="icon is-left">
-              <i class="fas fa-lock"></i>
+              <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
             </span>
           </div>
           <button class="button is-info" type="submit">Sign in</button>
@@ -89,17 +89,20 @@ export default {
 
 .header-phonetic {
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
   color: #666;
 }
 .login-form {
   display: flex;
+  margin-bottom: 0.5rem;
   flex-direction: column;
 }
 
 .form-input-group {
-  margin-bottom: 0.5rem; /* Adjusted margin */
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem; /* Adjusted margin */
   display: flex;
+  width: 300px;
   align-items: center;
 }
 
@@ -109,6 +112,7 @@ export default {
 }
 
 .input {
+  height: 45px;
   width: 250px; /* Adjusted width */
 } 
 .button {

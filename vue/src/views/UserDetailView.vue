@@ -23,7 +23,7 @@
           </div>
           <div class="dish-content">
             <div class="dish-media">
-              <div class="dish-media-center">
+              <div class="media-center">
                 <p>View My Dishes</p>
               </div>
             </div>
@@ -127,9 +127,10 @@ export default {
 
 .media-center p {
   margin: 0;
-  font-size: 18px;
   color: #333;
   text-align: center;
+  font-weight: 500;
+  font-size: larger;
 }
 
 .dish-card {

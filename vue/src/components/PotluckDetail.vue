@@ -34,14 +34,14 @@
                   <span>{{ Potluck.courseRequest.mains }} Main Dishes<br>{{ remainingMains }} Remaining</span>
                   <span></span>
                 </div>
-                <div v-else class="requested-item">All Mains<br>Accounted For</div>
+                <div v-else class="requested-item full">All Mains<br>Accounted For</div>
                 <!-- </router-link> -->
                 <!-- <router-link
                   :to="{ name: 'dish-signup', params: { potluckId: this.$route.params.potluckId }, query: { action: 'signup', course: 4 } }"> -->
                 <div v-if="remainingDesserts" class="requested-item" @click="dishSignup(4)" id="4">
                   <span>{{ Potluck.courseRequest.desserts }} Desserts<br>{{ remainingDesserts }} Remaining</span>
                 </div>
-                <div v-else class="requested-item">All Desserts<br>Accounted For</div>
+                <div v-else class="requested-item full">All Desserts<br>Accounted For</div>
                 <!-- </router-link> -->
               </div>
             </section>

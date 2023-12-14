@@ -33,7 +33,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope" style="padding-left: 8px; padding-top: 10px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
@@ -46,7 +46,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
@@ -59,7 +59,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group">
@@ -165,9 +165,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .registration-form{
   max-width: 500px;
+
 }
 .header {
   text-align: left;
@@ -189,12 +190,15 @@ export default {
 }
 .login-form {
   display: flex;
+  margin-bottom: 0.5rem;
   flex-direction: column;
 }
 
 .form-input-group {
-  margin-bottom: 0.5rem; /* Adjusted margin */
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem; /* Adjusted margin */
   display: flex;
+  width: 300px;
   align-items: center;
 }
 
@@ -204,11 +208,17 @@ export default {
 }
 
 .input {
-  width: 250px; /* Adjusted width */
+  height: 45px;
+  width: 350px; /* Adjusted width */
 } 
 .button {
-  width: 120px; /* Adjusted width */
-  margin-top: 0.5rem; /* Adjusted margin */
+  width: 105px; /* Adjusted width */
+  margin-top: -0.5rem; /* Adjusted margin */
+  margin-bottom: 1.5rem;
   align-self: flex-start; /* Align to the start (left) */
+}
+.checkbox {
+  margin-left: 5px;
+  margin-top: 4px;
 }
 </style>
