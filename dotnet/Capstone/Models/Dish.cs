@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Capstone.Models
 {
@@ -7,7 +8,9 @@ namespace Capstone.Models
     {
         public int DishId { get; set; }
         //This points to the userId
+        [Required]
         public string Creator { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
@@ -34,7 +37,9 @@ namespace Capstone.Models
     public class NewDishDTO
     {
         public int UserId { get; set; }
+        [Required]
         public string Creator { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int CourseId { get; set; }
@@ -44,7 +49,9 @@ namespace Capstone.Models
     public class UpdateDishDTO
     {
         public int UserId { get; set; }
+        [Required]
         public string Creator { get; set; } // This is the username
+        [Required]
         public string Name { get; set; }
         public string Recipe { get; set; }
         public int NewReview { get; set; }
