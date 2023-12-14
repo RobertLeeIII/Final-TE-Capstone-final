@@ -62,6 +62,7 @@ export default {
   max-width: 600px;
   min-height: 80vh;
   margin: auto;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .card-body {

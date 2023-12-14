@@ -107,8 +107,11 @@ export default {
 .card {
   width: 300px;
   height: 500px;
-  overflow: auto;
+  overflow-y: scroll; /* Add the ability to scroll */
   border: 2px solid rgb(124, 169, 130, 0.3); 
+}
+.card::-webkit-scrollbar {
+    display: none;
 }
 .content{
   background-color: rgb(239, 239, 239);
