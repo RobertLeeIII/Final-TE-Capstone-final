@@ -1,33 +1,80 @@
 <template>
-  <div class = 'main'>
-<div class="box">
-  <p>Step 1: Create a potluck</p>
-</div>
-    <form v-on:submit.prevent="saveNewPotluck" class="box">
-      <label for="potluck-name">Name</label>
-      <input class="input is-rounded" type="text" name="Name" id="potluck-name" v-model="newPotluck.name" />
+  <div class="main">
+    <div class="container">
+      <div class="box">
+        <p>Step 1: Create a potluck</p>
+      </div>
+      <form v-on:submit.prevent="saveNewPotluck" class="box">
+        <label for="potluck-name">Name</label>
+        <input
+          class="input is-rounded"
+          type="text"
+          name="Name"
+          id="potluck-name"
+          v-model="newPotluck.name"
+        />
 
-      <label for="summary">Summary</label>
-      <input class="input is-rounded" type="text" name="Summary" id="summary" v-model="newPotluck.summary" />
+        <label for="summary">Summary</label>
+        <input
+          class="input is-rounded"
+          type="text"
+          name="Summary"
+          id="summary"
+          v-model="newPotluck.summary"
+        />
 
-      <label for="location">Location</label>
-      <input class="input is-rounded" type="text" name="location" id="location" v-model="newPotluck.location" />
+        <label for="location">Location</label>
+        <input
+          class="input is-rounded"
+          type="text"
+          name="location"
+          id="location"
+          v-model="newPotluck.location"
+        />
 
-      <label for="time">Date</label>
-      <input class="input is-rounded" type="datetime-local" name="time" id="time" v-model="newPotluck.time" />
+        <label for="time">Date</label>
+        <input
+          class="input is-rounded"
+          type="datetime-local"
+          name="time"
+          id="time"
+          v-model="newPotluck.time"
+        />
 
-      <label for="apps">Appetizers</label>
-      <input class="input is-rounded" type="number" name="apps" id="apps" v-model="newPotluck.courseRequest.apps">
-      <label for="sides">Sides</label>
-      <input class="input is-rounded" type="number" name="sides" id="sides" v-model="newPotluck.courseRequest.sides">
-      <label for="mains">Mains</label>
-      <input class="input is-rounded" type="number" name="mains" id="mains" v-model="newPotluck.courseRequest.mains">
-      <label for="desserts">Desserts</label>
-      <input class="input is-rounded" type="number" name="desserts" id="desserts"
-        v-model="newPotluck.courseRequest.desserts">
+        <label for="apps">Appetizers</label>
+        <input
+          class="input is-rounded"
+          type="number"
+          name="apps"
+          id="apps"
+          v-model="newPotluck.courseRequest.apps"
+        />
+        <label for="sides">Sides</label>
+        <input
+          class="input is-rounded"
+          type="number"
+          name="sides"
+          id="sides"
+          v-model="newPotluck.courseRequest.sides"
+        />
+        <label for="mains">Mains</label>
+        <input
+          class="input is-rounded"
+          type="number"
+          name="mains"
+          id="mains"
+          v-model="newPotluck.courseRequest.mains"
+        />
+        <label for="desserts">Desserts</label>
+        <input
+          class="input is-rounded"
+          type="number"
+          name="desserts"
+          id="desserts"
+          v-model="newPotluck.courseRequest.desserts"
+        />
 
-
-      <!-- <label for="courses">Courses</label> 
+        <!-- <label for="courses">Courses</label> 
         <div>
             <label for="courses">Courses</label>
             <div>
@@ -48,17 +95,23 @@
             </div>
         </div>
  -->
-      <label for="potluck-theme">Theme</label>
-      <select class="input is-rounded" id="potluck-theme" v-model="newPotluck.theme">
-        <option>None</option>
-        <option>🍀Spring</option>
-        <option>🌞Summer</option>
-        <option>🎃Fall</option>
-        <option>❄️Winter</option>
-      </select>
-      <button class='button is-warning' type="submit">Create Your Potluck!</button>
-    </form>
-
+        <label for="potluck-theme">Theme</label>
+        <select
+          class="input is-rounded"
+          id="potluck-theme"
+          v-model="newPotluck.theme"
+        >
+          <option>None</option>
+          <option>🍀Spring</option>
+          <option>🌞Summer</option>
+          <option>🎃Fall</option>
+          <option>❄️Winter</option>
+        </select>
+        <button class="button is-info" type="submit">
+          Create Your Potluck!
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -70,66 +123,71 @@ export default {
     return {
       newPotluck: {
         hostId: this.$store.state.user.userId,
-        name: '',
-        summary: '',
-        location: '',
-        time: '',
+        name: "",
+        summary: "",
+        location: "",
+        time: "",
         courseRequest: {
           apps: 0,
           sides: 0,
           mains: 0,
           desserts: 0,
         },
-        theme: 'None',
-        status: 'active'
+        theme: "None",
+        status: "active",
       },
       showButton: false,
-    }
+    };
   },
   props: {
     updatePotluck: Object,
   },
   methods: {
     validateNewPotluck() {
-      let message = '';
+      let message = "";
       if (this.newPotluck.name.length === 0) {
-        message += 'The new potluck needs a name.';
+        message += "The new potluck needs a name.";
       }
       if (this.newPotluck.summary.length === 0) {
-        message += 'The new potluck needs a summary.';
+        message += "The new potluck needs a summary.";
       }
       if (this.newPotluck.location.length === 0) {
-        message += 'The new potluck needs a location';
+        message += "The new potluck needs a location";
       }
       if (this.newPotluck.date.length === 0) {
-        message += 'The new potluck needs a date.';
+        message += "The new potluck needs a date.";
       }
-      if (this.newPotluck.courseRequest.apps === 0 &&
+      if (
+        this.newPotluck.courseRequest.apps === 0 &&
         this.newPotluck.courseRequest.sides === 0 &&
         this.newPotluck.courseRequest.mains === 0 &&
-        this.newPotluck.courseRequest.desserts === 0) {
-        message += 'The new potluck needs at least one course.';
+        this.newPotluck.courseRequest.desserts === 0
+      ) {
+        message += "The new potluck needs at least one course.";
       }
       return true;
     },
     saveNewPotluck() {
-      PotluckService
-        .addPotluck(this.$store.state.user.userId, this.newPotluck)
-        .then(response => {
+      PotluckService.addPotluck(this.$store.state.user.userId, this.newPotluck)
+        .then((response) => {
           this.resetPotluckForm;
           // If the controller does not handle the Post-Redirect-Get, uncomment this code below
-          this.$router.push({ name: 'guest-list', params: { potluckId: response.data.potluckId }, query: {action: 'invite'} });
+          this.$router.push({
+            name: "guest-list",
+            params: { potluckId: response.data.potluckId },
+            query: { action: "invite" },
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
-            this.handleErrorResponse(error)
+            this.handleErrorResponse(error);
           } else if (error.request) {
             console.log(error.response.data);
             console.log("OTHER PROBLEM");
           } else {
             console.log("ANOTHER PROBLEM");
           }
-        })
+        });
     },
 
     resetPotluckForm() {
@@ -159,12 +217,12 @@ export default {
     // },
     retrieveSpecificPotluck() {
       PotluckService.getPotluck(this.$route.params.potluckId)
-        .then(response => {
+        .then((response) => {
           this.newPotluck = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           this.handleErrorResponse(error);
-        })
+        });
     },
   },
   created() {
@@ -172,24 +230,26 @@ export default {
     //   this.assignUpdatePotluck;
     // }
     this.retrieveSpecificPotluck;
-  }
+  },
 };
 </script>
 
 <style scoped>
-.media{
-    display: flex;
-    justify-content: center;
+.media {
+  display: flex;
+  justify-content: center;
 }
 .box {
   margin-left: 20px;
   width: 450px;
-  
 }
-.main{
+.main {
   background-image: url(/7637317.jpg);
-  background-color:  rgb(255, 193, 146);
-  min-height: 95vh; /* Set minimum height of layout to full viewport height */
-
+  background-color: rgb(255, 193, 146);
+  min-height: 95vh;
+  /* Set minimum height of layout to full viewport height */
+}
+.container {
+  padding-top: 20px;
 }
 </style>
