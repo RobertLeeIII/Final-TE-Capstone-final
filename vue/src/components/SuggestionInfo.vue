@@ -1,4 +1,6 @@
 <template>
+
+    <h1 class="mealTitle">{{ currentMeal.strMeal }}</h1>
 <a :href="currentMeal.strMealThumb"></a>
 <router-link :to="
         {name: 'dish-signup',
@@ -33,4 +35,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.mealTitle{
+    font-size: 20px;
+    font-weight: bold;
+}</style>
