@@ -42,8 +42,10 @@ export default {
       return this.course === 1 ? 'appetizer' : this.course === 2 ? 'side' : this.course === 3 ? 'main dish' : 'dessert';
     },
     shuffledMeals() {
-      const mealsCopy = this.mealSuggestions.slice(); // Create a copy of the array
-      return mealsCopy.sort(() => Math.random() - 0.5);
+      let mealsCopy = this.mealSuggestions;
+
+      let shuffledCopy =  mealsCopy.sort(() => Math.random() - 0.5);
+      return shuffledCopy.slice(0,6);
     }
   },
   methods: {
@@ -95,13 +97,10 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-template-rows: auto auto;
   gap: 20px;
-  grid-auto-rows: 0px;
+  grid-auto-rows: auto; /* Set to auto to adjust height based on content */
   justify-items: center;
-  max-height: 750px;
-  overflow: hidden;
-
+  margin-bottom: 20px; /* Add some margin at the bottom */
 }
-
 .meal-item {
   margin: 0;
 }
