@@ -167,4 +167,5 @@ export default {
   font-size: 18px;
   color: #333;
   text-align: center;
-}</style>
+}
+</style>

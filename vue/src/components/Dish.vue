@@ -13,7 +13,7 @@
                 <div class="media">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img src="/public/logo.png" alt="Logo" />
+                            <img src="/public/potluck-planner-logo.png" alt="Logo" />
                         </figure>
                     </div>
                     <div class="media-content">
