@@ -7,7 +7,7 @@
             <h1 class="header-title">Pot·luck</h1>
             <h2 class="header-phonetic">
               <form class='registration-form' v-on:submit.prevent="register">
-                <h1>Register User</h1>
+                <h1>Register</h1>
                 <div role="alert" v-if="registrationErrors">
                   {{ registrationErrorMsg }}
                 </div>
@@ -33,7 +33,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope" style="padding-left: 8px; padding-top: 10px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
@@ -46,7 +46,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
@@ -59,7 +59,7 @@
                     required
                   />
                   <span class="icon is-left">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
                   </span>
                 </div>
                 <div class="form-input-group">
@@ -90,7 +90,7 @@
                   />
                 </div>
                 <div class="form-input-group">
-                  <label for="dietRes">Dietary Restrictions?</label>
+                  <label for="dietRes">Dietary Restrictions? </label>
                   <input
                     class="checkbox"
                     type="checkbox"
@@ -165,8 +165,60 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .registration-form{
   max-width: 500px;
+
+}
+.header {
+  text-align: left;
+  padding: 20px;
+  background-color: rgb(241, 247, 237);
+  border: 4px solid rgb(124, 169, 130);
+  margin-bottom: 20px;
+}
+.header-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.header-phonetic {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #666;
+}
+.login-form {
+  display: flex;
+  margin-bottom: 0.5rem;
+  flex-direction: column;
+}
+
+.form-input-group {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem; /* Adjusted margin */
+  display: flex;
+  width: 300px;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  height: 45px;
+  width: 350px; /* Adjusted width */
+} 
+.button {
+  width: 105px; /* Adjusted width */
+  margin-top: -0.5rem; /* Adjusted margin */
+  margin-bottom: 1.5rem;
+  align-self: flex-start; /* Align to the start (left) */
+}
+.checkbox {
+  margin-left: 5px;
+  margin-top: 4px;
 }
 </style>

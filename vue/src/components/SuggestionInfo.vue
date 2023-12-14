@@ -2,10 +2,10 @@
 
     <h1 class="mealTitle">{{ currentMeal.strMeal }}</h1>
 <a :href="currentMeal.strMealThumb"></a>
-<router-link :to="
+<router-link class="button" :to="
         {name: 'dish-signup',
         params: { potluckId: $route.params.potluckId },
-        query: { action: 'signup', course: courseNumber, suggest: currentMeal.idMeal }}"><button>Bring this Dish!</button></router-link>
+        query: { action: 'signup', course: courseNumber, suggest: currentMeal.idMeal }}">Bring this Dish!</router-link>
 </template>
 
 <script>
@@ -35,8 +35,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .mealTitle{
     font-size: 20px;
     font-weight: bold;
-}</style>
+}
+.button {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: rgb(124, 169, 130);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+</style>

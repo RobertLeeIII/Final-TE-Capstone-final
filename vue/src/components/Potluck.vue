@@ -25,7 +25,6 @@
           </div>
         </div>
         <div class="content">
-          <p>{{ propPotluck.summary }}</p>
           <a :href="`#${propPotluck.location}`">#{{ propPotluck.location }}</a>
           <br />
           <time :datetime="propPotluck.time">{{

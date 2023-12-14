@@ -34,5 +34,8 @@ export default{
     },
     getRecipeById(ID) {
         return http.get(`lookup.php?i=${ID}`)
+    },
+    getRecipeByName(dishName) {
+        return http.get(`search.php?s=${dishName}`)
     }
 }
