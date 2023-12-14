@@ -107,7 +107,7 @@
           <option>🎃Fall</option>
           <option>❄️Winter</option>
         </select>
-        <button class="button is-warning" type="submit">
+        <button class="button is-info" type="submit">
           Create Your Potluck!
         </button>
       </form>

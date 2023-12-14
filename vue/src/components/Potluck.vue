@@ -83,7 +83,7 @@ export default {
   width: 300px;
   height: 500px;
   overflow: auto;
-  border: 2px solid rgb(124, 169, 130); 
+  border: 2px solid rgb(124, 169, 130, 0.3); 
 }
 .content{
   background-color: rgb(239, 239, 239);

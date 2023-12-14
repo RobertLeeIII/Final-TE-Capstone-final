@@ -5,18 +5,17 @@
             <div class="card">
                 <router-link :to="{ name: 'potluck-list', query: { action: 'create' } }">
                     <div class="card-image">
-                        <p></p>
                         <figure class="image is-centered">
-                            <img src="/public/imagePotluck-transformed.jpg" alt="Potluck Image">
+                            <img src="/public/potluck-planner-logo.png" alt="Potluck Image">
                         </figure>
+                        <p></p>
                     </div>
                     <div class="card-content">
 
                         <div class="media">
                             <div class="media-center">
-                                <p>Create a Potluck</p>
+                                <p class="create-potluck-text">Create Your<br>Perfect Potluck</p>
                             </div>
-
                         </div>
                     </div>
                 </router-link>
@@ -145,7 +144,14 @@ export default {
 }
 
 .image.is-centered {
+    margin-top: 50px;
     display: flex;
     justify-content: center;
+    align-content: center;}
+    .create-potluck-text{
+    font-size: 30px;
+    text-align: center;
+    font-style: oblique;
+    
 }
 </style>
