@@ -9,7 +9,7 @@
           <div class="card-content">
             <div class="media">
               <div class="media-center">
-                <p>View My Potlucks</p>
+                <p class="potluck-views">View My Potlucks</p>
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
           <div class="dish-content">
             <div class="dish-media">
               <div class="dish-media-center">
-                <p>View My Dishes</p>
+                <p class="potluck-views">View My Dishes</p>
               </div>
             </div>
           </div>
@@ -167,5 +167,8 @@ export default {
   font-size: 18px;
   color: #333;
   text-align: center;
+}
+.potluck-views{
+  font-size: 1000vw;
 }
 </style>

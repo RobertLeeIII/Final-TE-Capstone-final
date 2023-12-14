@@ -65,7 +65,7 @@ export default {
       } else if (this.propPotluck.theme.includes("Winter")) {
         return "/public/winter2.jpg";
       }
-      return "/imagePotluck-transformed.jpg";
+      return "/public/default-potluck.jpg";
     },
   },
 };
