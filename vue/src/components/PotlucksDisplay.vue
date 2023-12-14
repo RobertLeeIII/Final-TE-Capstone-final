@@ -74,15 +74,15 @@ export default {
         },
         futurePotlucks() {
             return this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
+                const today = new Date()
+                const scheduled = new Date(item.time)
                 return scheduled > today
             })
         },
         pastPotlucks() {
             return this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
+                const today = new Date()
+                const scheduled = new Date(item.time)
                 return scheduled < today
             })
         }
