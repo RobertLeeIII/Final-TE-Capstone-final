@@ -7,7 +7,8 @@
   >
     <div class="card">
       <div class="card-image">
-        <figure class="image is-4by3">
+        <p></p>
+        <figure class="image is-3by2">
           <img :src="changingImage" alt="Potluck Image" />
         </figure>
       </div>
@@ -15,7 +16,7 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-48x48">
-              <img src="/public/logo.png" alt="Logo" />
+              <img src="/public/potluck-planner-logo.png" alt="Logo" />
             </figure>
           </div>
           <div class="media-content">
@@ -97,7 +98,6 @@ export default {
 </script>
 
 <style>
-/* Your existing style definitions */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -108,5 +108,10 @@ export default {
   width: 300px;
   height: 500px;
   overflow: auto;
+  border: 2px solid rgb(124, 169, 130, 0.3); 
+}
+.content{
+  background-color: rgb(239, 239, 239);
+  padding: 20px;
 }
 </style>
