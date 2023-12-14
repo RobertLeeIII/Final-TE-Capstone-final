@@ -1,12 +1,8 @@
 <template>
-    <router-link :to="{
-        name: 'dish-details',
-        params: { dishId: propDish.dishId },
-    }">
         <div class="card">
             <div class="card-image">
                 <figure class="image">
-                    <img :src="'/public/spoonDish.jpg'" alt="Dish Image" />
+                    <img :src="imageLink" alt="Dish Image" />
                 </figure>
             </div>
             <div class="card-content">
@@ -27,18 +23,23 @@
                 </div>
             </div>
         </div>
-    </router-link>
 </template>
 
 <script>
+import MealDBService from "@/services/MealDBService.js"
 export default {
     data() {
         return {
-
+            imageLink: '/public/spoonDish.jpg'
         }
     },
     props: {
         propDish: Object
+    },
+    created() {
+        MealDBService.getRecipeByName(this.propDish.name).then(response => {
+            this.imageLink = response.data.meals[0].strMealThumb
+        })
     }
 }
 </script>

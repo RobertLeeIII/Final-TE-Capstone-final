@@ -5,91 +5,105 @@
         <div class="header-content">
           <div class="header-text">
             <h1 class="header-title">Pot·luck</h1>
-            <h2 class="header-phonetic">Register User</h2>
-            <form class="login-form" v-on:submit.prevent="register">
-              <div v-if="registrationErrors" class="error-message">
-                {{ registrationErrorMsg }}
-              </div>
-              <div class="form-input-group">
-                <input
-                  class="input is-rounded"
-                  type="text"
-                  id="username"
-                  placeholder="Username"
-                  v-model="user.username"
-                  required
-                  autofocus
-                />
-              </div>
-              <div class="form-input-group control has-icons-left has-icons-right">
-                <input
-                  class="input is-rounded"
-                  type="email"
-                  placeholder="Email"
-                  v-model="user.email"
-                  required
-                />
-                <span class="icon is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-              </div>
-              <div class="form-input-group control has-icons-left">
-                <input
-                  class="input is-rounded"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  v-model="user.password"
-                  required
-                />
-                <span class="icon is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </div>
-              <div class="form-input-group control has-icons-left">
-                <input
-                  class="input is-rounded"
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm Password"
-                  v-model="user.confirmPassword"
-                  required
-                />
-                <span class="icon is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </div>
-              <div class="form-input-group">
-                <label for="security-question"></label>
-                <div class="select is-rounded">
-                  <select id="security-question" v-model="user.securityQuestion">
-                    <option>
-                      Select a Security Question
-                    </option>
-                    <option>What is your mother's maiden name?</option>
-                    <option>Where did you go to high school?</option>
-                    <option>What is your favorite color?</option>
-                    <option>What is your favorite season?</option>
-                  </select>
+            <h2 class="header-phonetic">
+              <form class='registration-form' v-on:submit.prevent="register">
+                <h1>Register</h1>
+                <div role="alert" v-if="registrationErrors">
+                  {{ registrationErrorMsg }}
                 </div>
-              </div>
-              <div class="form-input-group">
-                <input
-                  class="input is-rounded"
-                  type="text"
-                  id="security-answer"
-                  placeholder="Security Answer"
-                  v-model="user.securityAnswer"
-                  required
-                />
-              </div>
-              <div class="form-input-group">
-                <label for="dietRes">Dietary Restrictions?</label>
-                <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" />
-              </div>
-              <br />
-              <button class="button is-info" type="submit">Register</button>
-            </form>
+                <div class="form-input-group">
+                  <input
+                    class="input is-rounded"
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    v-model="user.username"
+                    required
+                    autofocus
+                  />
+                </div>
+                <div
+                  class="form-input-group control has-icons-left has-icons-right"
+                >
+                  <input
+                    class="input is-rounded"
+                    type="email"
+                    placeholder="Email"
+                    v-model="user.email"
+                    required
+                  />
+                  <span class="icon is-left">
+                    <i class="fas fa-envelope" style="padding-left: 8px; padding-top: 10px;"></i>
+                  </span>
+                </div>
+                <div class="form-input-group control has-icons-left">
+                  <input
+                    class="input is-rounded"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    v-model="user.password"
+                    required
+                  />
+                  <span class="icon is-left">
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
+                  </span>
+                </div>
+                <div class="form-input-group control has-icons-left">
+                  <input
+                    class="input is-rounded"
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    v-model="user.confirmPassword"
+                    required
+                  />
+                  <span class="icon is-left">
+                    <i class="fas fa-lock" style="padding-left: 8px; padding-top: 8px;"></i>
+                  </span>
+                </div>
+                <div class="form-input-group">
+                  <label for="security-question"></label>
+                  <div class="select is-rounded">
+                    <select
+                      id="security-question"
+                      v-model="user.securityQuestion"
+                    >
+                      <option value="" selected hidden>
+                        Select a Security Question
+                      </option>
+                      <option>What is your mother's maiden name?</option>
+                      <option>Where did you go to high school?</option>
+                      <option>What is your favorite color?</option>
+                      <option>What is your favorite season?</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-input-group">
+                  <input
+                    class="input is-rounded"
+                    type="text"
+                    id="security-answer"
+                    placeholder="Security Answer"
+                    v-model="user.securityAnswer"
+                    required
+                  />
+                </div>
+                <div class="form-input-group">
+                  <label for="dietRes">Dietary Restrictions? </label>
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    id="dietRes"
+                    v-model="user.dietRes"
+                  />
+                </div>
+                <br />
+                <button class="button is-info" type="submit">
+                  Register
+                </button>
+              </form>
+            </h2>
           </div>
         </div>
       </div>
@@ -151,40 +165,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.header {
-  text-align: left;
-  padding: 20px;
-  background-color: rgb(241, 247, 237);
-  border: 4px solid rgb(124, 169, 130);
-  margin-bottom: 20px;
-}
-
-.header-title {
-  font-size: 36px;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.header-phonetic {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #666;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-input-group {
-  margin-bottom: 0.5rem; /* Adjusted margin */
-  display: flex;
-  align-items: center;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
+<style>
+.registration-form{
+  max-width: 500px;
 }
 </style>

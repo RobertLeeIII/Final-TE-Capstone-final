@@ -1,6 +1,4 @@
 <template>
-    <br>
-    <div class="title">Uninvite People Here!</div>
     <div v-for="guest in guests" :key="guest.userId">
         <div v-if="!checkIsHost(guest.userId)">
             <input v-model="selectedGuests" :id="guest.userId" :value="guest.userId" type="checkbox"> {{
@@ -60,4 +58,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

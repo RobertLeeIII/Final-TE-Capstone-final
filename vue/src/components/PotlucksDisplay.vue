@@ -50,54 +50,70 @@
       </div>
     </div>
   </div>
-  <div></div>
 </template>
 
 <script>
 import Potluck from "@/components/Potluck.vue";
 
 export default {
-  data() {
-    return {
-      potlucks: [],
-      futurePotlucks: [],
-      pastPotlucks: [],
-    };
-  },
-  components: {
-    Potluck,
-  },
-  props: {
-    myPotlucks: Array,
-  },
-  computed: {
-    hasPotlucks() {
-      return this.myPotlucks.length > 0;
-    },
-  },
-  methods: {
-    populatePotluckArrays() {
-      this.potlucks = JSON.parse(JSON.stringify(this.myPotlucks));
-      this.futurePotlucks = this.myPotlucks.filter((item) => {
-        const today = new Date().getDate();
-        const scheduled = new Date(item.time).getDate();
-        if (scheduled > today) {
-          return item;
+    data() {
+        return {
+            potlucks: [],
+            // futurePotlucks: [],
+            // pastPotlucks: []
         }
-      });
-      this.pastPotlucks = this.myPotlucks.filter((item) => {
-        const today = new Date().getDate();
-        const scheduled = new Date(item.time).getDate();
-        if (scheduled < today) {
-          return item;
-        }
-      });
     },
-  },
-  created() {
-    this.populatePotluckArrays();
-  },
-};
+    components: {
+        Potluck
+    },
+    props: {
+        myPotlucks: Array
+    },
+    computed: {
+        hasPotlucks() {
+            return this.myPotlucks.length > 0;
+        },
+        futurePotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date()
+                const scheduled = new Date(item.time)
+                return scheduled > today
+            })
+        },
+        pastPotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date()
+                const scheduled = new Date(item.time)
+                return scheduled < today
+            })
+        }
+
+    },
+    methods: {
+        populatePotluckArrays() {
+            this.potlucks = JSON.parse(JSON.stringify(this.myPotlucks));
+            // this.futurePotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     if (scheduled > today) {
+            //         return item;
+            //     }
+            // })
+            // this.pastPotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     return scheduled < today
+            //     })
+            
+            }
+    },
+    created() {
+        this.populatePotluckArrays();
+
+    }
+
+
+}
 </script>
 
 <style scoped>
@@ -131,6 +147,9 @@ export default {
   height: 500px;
   word-wrap: break-word;
   overflow: auto;
+}
+.past{
+    opacity: 0.5;
 }
 
 .media {

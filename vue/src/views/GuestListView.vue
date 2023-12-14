@@ -9,13 +9,12 @@
         <!-- <router-link :to="{name: 'guest-list', params: {potluckId: Potluck.potluckId}, 
                       query: {action: 'uninvite'}}">Uninvite Someone?</router-link> -->
         <router-link v-if="isHost"
-            :to="{ name: 'guest-list', params: { potluckId: this.$route.params.potluckId }, query: { action: 'uninvite' } }"><button>Uninvite
-                People</button></router-link>
+            :to="{ name: 'guest-list', params: { potluckId: this.$route.params.potluckId }, query: { action: 'uninvite' } }">
+            <button class="button is-danger">Uninvite People</button></router-link>
     </div>
     <div>
-        <p></p> <button type="button" @click="backToPotluck" class="invite-nobody-button">
-            Back to Potluck
-        </button>
+        <p></p> <button class='button is-info' type="button" @click="backToPotluck">
+            Back to Potluck</button>
     </div>
 </template>
 
