@@ -21,7 +21,9 @@
                 </router-link>
 
             </div>
-            <potluck class="potluck" v-for="potluck in myPotlucks" :propPotluck="potluck" :key="potluck.potluckId">
+            <potluck class="potluck past" v-for="potluck in pastPotlucks" :propPotluck="potluck" :key="potluck.potluckId">
+            </potluck>
+            <potluck class="potluck future" v-for="potluck in futurePotlucks" :propPotluck="potluck" :key="potluck.potluckId">
             </potluck>
             <div class="card-container" v-if="!hasPotlucks">
                 <div class="card">
@@ -56,8 +58,8 @@ export default {
     data() {
         return {
             potlucks: [],
-            futurePotlucks: [],
-            pastPotlucks: []
+            // futurePotlucks: [],
+            // pastPotlucks: []
         }
     },
     components: {
@@ -70,29 +72,43 @@ export default {
         hasPotlucks() {
             return this.myPotlucks.length > 0;
         },
+        futurePotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date()
+                const scheduled = new Date(item.time)
+                return scheduled > today
+            })
+        },
+        pastPotlucks() {
+            return this.myPotlucks.filter((item) => {
+                const today = new Date()
+                const scheduled = new Date(item.time)
+                return scheduled < today
+            })
+        }
 
     },
     methods: {
         populatePotluckArrays() {
             this.potlucks = JSON.parse(JSON.stringify(this.myPotlucks));
-            this.futurePotlucks = this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
-                if (scheduled > today) {
-                    return item;
-                }
-            })
-            this.pastPotlucks = this.myPotlucks.filter((item) => {
-                const today = new Date().getDate()
-                const scheduled = new Date(item.time).getDate()
-                if (scheduled < today) {
-                    return item;
-                }
-            })
-        }
+            // this.futurePotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     if (scheduled > today) {
+            //         return item;
+            //     }
+            // })
+            // this.pastPotlucks = this.myPotlucks.filter((item) => {
+            //     const today = new Date().getDate()
+            //     const scheduled = new Date(item.time).getDate()
+            //     return scheduled < today
+            //     })
+            
+            }
     },
     created() {
         this.populatePotluckArrays();
+
     }
 
 
@@ -130,6 +146,9 @@ export default {
     height: 500px;
     word-wrap: break-word;
     overflow: auto;
+}
+.past{
+    opacity: 0.5;
 }
 
 .media {

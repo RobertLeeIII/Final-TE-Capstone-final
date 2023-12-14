@@ -4,7 +4,6 @@ export default {
     postNewDish(newDish, potluckId){
         return axios.post(`/potlucks/${potluckId}/menu`, newDish);
     },
-
     updateDish(updatedDish, dishId){
         return axios.put(`/dishes/${dishId}`, updatedDish) //TODO: use a query here instead of a verb as a path
     },
