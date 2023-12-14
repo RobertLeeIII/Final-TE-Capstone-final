@@ -12,22 +12,52 @@
                   {{ registrationErrorMsg }}
                 </div>
                 <div class="form-input-group">
-                  <input class="input is-rounded" type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+                  <input
+                    class="input is-rounded"
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    v-model="user.username"
+                    required
+                    autofocus
+                  />
                 </div>
-                <div class="form-input-group control has-icons-left has-icons-right">
-                  <input class="input is-rounded" type="email" placeholder="Email" v-model="user.email" required>
+                <div
+                  class="form-input-group control has-icons-left has-icons-right"
+                >
+                  <input
+                    class="input is-rounded"
+                    type="email"
+                    placeholder="Email"
+                    v-model="user.email"
+                    required
+                  />
                   <span class="icon is-left">
                     <i class="fas fa-envelope"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
-                  <input class="input is-rounded" type="password" id="password" placeholder="Password" v-model="user.password" required />
+                  <input
+                    class="input is-rounded"
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    v-model="user.password"
+                    required
+                  />
                   <span class="icon is-left">
                     <i class="fas fa-lock"></i>
                   </span>
                 </div>
                 <div class="form-input-group control has-icons-left">
-                  <input class="input is-rounded" type="password" id="confirmPassword" placeholder="Confirm Password" v-model="user.confirmPassword" required />
+                  <input
+                    class="input is-rounded"
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    v-model="user.confirmPassword"
+                    required
+                  />
                   <span class="icon is-left">
                     <i class="fas fa-lock"></i>
                   </span>
@@ -35,8 +65,13 @@
                 <div class="form-input-group">
                   <label for="security-question"></label>
                   <div class="select is-rounded is-full width">
-                    <select id="security-question" v-model="user.securityQuestion">
-                      <option value="" selected hidden>Select a Security Question</option>
+                    <select
+                      id="security-question"
+                      v-model="user.securityQuestion"
+                    >
+                      <option value="" selected hidden>
+                        Select a Security Question
+                      </option>
                       <option>What is your mother's maiden name?</option>
                       <option>Where did you go to high school?</option>
                       <option>What is your favorite color?</option>
@@ -45,14 +80,28 @@
                   </div>
                 </div>
                 <div class="form-input-group">
-                  <input class="input is-rounded" type="text" id="security-answer" placeholder="Security Answer" v-model="user.securityAnswer" required />
+                  <input
+                    class="input is-rounded"
+                    type="text"
+                    id="security-answer"
+                    placeholder="Security Answer"
+                    v-model="user.securityAnswer"
+                    required
+                  />
                 </div>
                 <div class="form-input-group">
                   <label for="dietRes">Dietary Restrictions?</label>
-                  <input class="checkbox" type="checkbox" id="dietRes" v-model="user.dietRes" />
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    id="dietRes"
+                    v-model="user.dietRes"
+                  />
                 </div>
-                <br>
-                <button class="button is-warning" type="submit">Register</button>
+                <br />
+                <button class="button is-info" type="submit">
+                  Register
+                </button>
               </form>
             </h2>
           </div>
@@ -85,7 +134,28 @@ export default {
   },
   methods: {
     register() {
-      // ... your existing code ...
+      if (this.user.password != this.user.confirmPassword) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+      } else {
+        authService
+          .register(this.user)
+          .then((response) => {
+            if (response.status == 201) {
+              this.$router.push({
+                path: '/login',
+                query: { registration: 'success' },
+              });
+            }
+          })
+          .catch((error) => {
+            const response = error.response;
+            this.registrationErrors = true;
+            if (response.status === 400) {
+              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+            }
+          });
+      }
     },
     clearErrors() {
       this.registrationErrors = false;

@@ -325,7 +325,7 @@ namespace Capstone.DAO
             }
             return rowsAffected;
         }
-        public User CreateUser(string email, string username, string password, string role, bool dietaryRestriction)
+        public User CreateUser(string email, string username, string password, string role, bool dietaryRestriction, string securityQuestion, string securityAnswer)
         {
             User newUser = null;
 
@@ -335,6 +335,8 @@ namespace Capstone.DAO
             string sql = "INSERT INTO users (email, username, password_hash, salt, user_role, diet_rest) " +
                          "OUTPUT INSERTED.user_id " +
                          "VALUES (@email, @username, @password_hash, @salt, @user_role, @diet_rest)";
+            string sql2 = "INSERT INTO user_recovery(user_id, question_id, answer) " +
+                          "VALUES (@user_id, (SELECT question_id FROM recovery_questions WHERE question_text = @question_text), @answer);";
 
             int newUserId = 0;
 
@@ -356,6 +358,19 @@ namespace Capstone.DAO
 
                 }
                 newUser = GetUserById(newUserId);
+
+                using (SqlConnection conn2 = new SqlConnection(connectionString))
+                {
+                    conn2.Open();
+                    SqlCommand cmd2 = new SqlCommand(sql2, conn2);
+                    cmd2.Parameters.AddWithValue("@user_id", newUserId);
+                    cmd2.Parameters.AddWithValue("@question_text", securityQuestion);
+                    cmd2.Parameters.AddWithValue("@answer", securityAnswer);
+                    cmd2.ExecuteNonQuery();
+
+                }
+
+
             }
             catch (SqlException ex)
             {

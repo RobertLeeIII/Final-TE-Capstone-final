@@ -5,7 +5,7 @@
         <div class="navbar-container">
           <div class="navbar-brand">
             <a class="navbar-item" href="/">
-              <img src="/public/logo.png" alt="Logo">
+              <img src="/public/potluck-planner-logo.png" alt="Logo">
             </a>
             <button class="navbar-toggle" @click="toggleNavbar">
               <span class="toggle-icon"></span>
@@ -19,7 +19,7 @@
             <router-link v-if="$store.state.token !== ''" class="nav-link" :to="{ name: 'logout' }">Logout</router-link>
             <div class="navbar-buttons">
               <router-link v-if="$store.state.token == ''" class="button is-secondary" :to="{ name: 'login' }">Login</router-link>
-              <router-link v-if="$store.state.token == ''" class="button is-primary" :to="{ name: 'register' }">Sign up</router-link>
+              <router-link v-if="$store.state.token == ''" class="button is-info" :to="{ name: 'register' }">Sign up</router-link>
             </div>
           </div>
         </div>
@@ -125,5 +125,8 @@ export default {
 
 .button {
   margin-left: 0.5rem;
+}
+.centerFooter {
+  padding: 10px;
 }
 </style>

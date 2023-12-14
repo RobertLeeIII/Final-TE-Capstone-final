@@ -1,40 +1,43 @@
 <template>
   <div class="main">
-  <div class="card">
-    <form @submit.prevent="submitRecipe">
-      <div class="card-body">
-        <label for="dishName">Dish Name</label>
-        <input id="dishName" type="text" v-model="newDish.name">
+    <div class="card">
+      <form @submit.prevent="submitRecipe">
+        <div class="card-body">
+          <label for="dishName">Dish Name</label>
+          <input id="dishName" type="text" v-model="newDish.name">
 
-        <textarea v-model="newDish.recipe" placeholder="Enter directions"></textarea>
+          <textarea v-model="newDish.recipe" placeholder="Enter directions"></textarea>
 
-        <div class="toggle-section">
-          <button @click.prevent="toggleSpecialDiets" type="button">{{ showSpecialDiets ? 'Hide Special Diets' : 'Special Diets' }}</button>
-          <div v-if="showSpecialDiets" class="checkbox-group">
-            <label v-for="diet in specialDiets" :key="diet">
-              <input type="checkbox" :value="diet" v-model="newDish.diets" />
-              {{ diet }}
-            </label>
+          <div class="toggle-section">
+            <button @click.prevent="toggleSpecialDiets" type="button">{{ showSpecialDiets ? 'Hide Special Diets' :
+              'Special Diets' }}</button>
+            <div v-if="showSpecialDiets" class="checkbox-group">
+              <label v-for="diet in specialDiets" :key="diet">
+                <input type="checkbox" :value="diet" v-model="newDish.diets" />
+                {{ diet }}
+              </label>
+            </div>
+
+            <button @click.prevent="toggleAllergens" type="button">{{ showAllergens ? 'Hide Allergens' : 'Allergens'
+            }}</button>
+            <div v-if="showAllergens" class="checkbox-group">
+              <label v-for="allergen in allergens" :key="allergen">
+                <input type="checkbox" :value="allergen" v-model="newDish.allergens" />
+                {{ allergen }}
+              </label>
+            </div>
           </div>
 
-          <button @click.prevent="toggleAllergens" type="button">{{ showAllergens ? 'Hide Allergens' : 'Allergens' }}</button>
-          <div v-if="showAllergens" class="checkbox-group">
-            <label v-for="allergen in allergens" :key="allergen">
-              <input type="checkbox" :value="allergen" v-model="newDish.allergens" />
-              {{ allergen }}
-            </label>
-          </div>
+          <button type="submit">Submit Recipe</button>
         </div>
-
-        <button type="submit">Submit Recipe</button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import DishService from '@/services/DishService.js';
+import MealDBService from '../services/MealDBService';
 
 export default {
   data() {
@@ -47,6 +50,10 @@ export default {
         diets: [],
         allergens: [],
         courseId: this.$route.query.course
+      },
+      ingredients: [],
+      suggestedDish: {
+
       },
       showSpecialDiets: false,
       showAllergens: false,
@@ -76,10 +83,50 @@ export default {
         if (error.response.status === 404) {
           console.log('404 PROBLEM');
         }
-        else if(error.response.status === 401) {
-          this.$router.push({name: 'login'})
+        else if (error.response.status === 401) {
+          this.$router.push({ name: 'login' })
         }
       }
+    },
+    getRecipeSuggestion(ID) {
+      MealDBService.getRecipeById(ID).then(response => {
+        let dish = response.data.meals[0];
+        this.suggestedDish = dish;
+        this.newDish.name = dish.strMeal;
+        this.ingredients = this.getIngredients();
+        let recipe = '';
+        this.newDish.recipe = this.getRecipe() + this.suggestedDish.strInstructions;
+
+      })
+    },
+    getRecipe() {
+      let recipe = ''
+      for (let i = 1; i < this.ingredients.length; i++){
+        recipe += this.ingredients[i] + '\n'
+      }
+      recipe += '\n\n'
+      
+      return recipe;
+    },
+    getIngredients() {
+      const ingredients = [];
+      for (let i = 1; i < 1000; i++) {
+        // Assuming a maximum of 20 ingredients
+        const ingredientKey = `strIngredient${i}`;
+        const measureKey = `strMeasure${i}`;
+        const ingredient = this.suggestedDish[ingredientKey];
+        const measure = this.suggestedDish[measureKey];
+
+        if (ingredient) {
+          ingredients.push(`${measure} ${ingredient}`);
+        }
+      }
+      return ingredients;
+    }
+  },
+  created() {
+    if (this.$route.query.suggest) {
+      this.getRecipeSuggestion(this.$route.query.suggest);
     }
   }
 };
@@ -95,6 +142,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .card {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -106,8 +154,9 @@ export default {
 
 .card-body {
   padding: 20px;
-  background-color: red;
-}.recipe-form {
+}
+
+.recipe-form {
   max-width: 600px;
   margin: auto;
   padding: 20px;
@@ -154,5 +203,4 @@ button:hover {
 .checkbox-group label {
   display: block;
   margin-bottom: 6px;
-}
-</style>
+}</style>
