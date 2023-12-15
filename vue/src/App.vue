@@ -3,17 +3,20 @@
     <header>
       <nav class="navbar" role="navigation">
         <div class="navbar-container">
-          <div class="navbar-brand">
-            <a class="navbar-item" href="/">
+          <!-- <div class="navbar-brand"> -->
+            <!-- <a class="navbar-item" href="/">
               <img src="/public/potluck-planner-logo.png" alt="Logo">
-            </a>
+            </a> -->
             <button class="navbar-toggle" @click="toggleNavbar">
               <span class="toggle-icon"></span>
               <span class="toggle-icon"></span>
               <span class="toggle-icon"></span>
             </button>
-          </div>
+          <!-- </div> -->
           <div class="navbar-links" :class="{ 'active': isNavbarActive }">
+            <a class="navbar-item" href="/">
+              <img src="/public/potluck-planner-logo.png" alt="Logo">
+            </a>
             <router-link class="nav-link" :to="{ name: 'home' }">Welcome</router-link>
             <router-link v-if="$store.state.token !== ''" class="nav-link" :to="{ name: 'user-view', params: { userId: $store.state.user.userId } }">Home</router-link>
             <router-link v-if="$store.state.token !== ''" class="nav-link" :to="{ name: 'logout' }">Logout</router-link>
@@ -64,8 +67,6 @@ export default {
 </script>
 
 <style>
-/* Your existing styles can go here */
-
 .navbar {
   background-color: rgb(36, 62, 52);
   color: rgb(241, 247, 237);
@@ -77,9 +78,9 @@ export default {
   align-items: center;
 }
 
-.navbar-brand img {
+.navbar-links img {
   height: 2.5rem;
-  padding-left: 22px;
+  padding-left: 10px;
 }
 
 .navbar-toggle {

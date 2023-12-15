@@ -6,7 +6,7 @@
                     <label for="dishName">Dish Name</label>
                     <input id="dishName" type="text" v-model="newDish.name">
 
-                    <textarea v-model="newDish.recipe" placeholder="Enter directions"></textarea>
+                    <textarea v-model="newDish.recipe" placeholder="Enter directions" rows="20"></textarea>
 
                     <div class="toggle-section">
                         <button @click.prevent="toggleSpecialDiets" type="button">{{ showSpecialDiets ? 'Hide Special Diets'
@@ -62,6 +62,7 @@ export default {
   max-width: 600px;
   min-height: 80vh;
   margin: auto;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .card-body {

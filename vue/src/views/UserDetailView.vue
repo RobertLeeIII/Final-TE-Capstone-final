@@ -23,7 +23,7 @@
           </div>
           <div class="dish-content">
             <div class="dish-media">
-              <div class="dish-media-center">
+              <div class="media-center">
                 <p>View My Dishes</p>
               </div>
             </div>
@@ -81,6 +81,9 @@ export default {
   min-height: 88vh;
   background-color: rgb(241, 247, 237);
   border-top: 4px solid rgb(124, 169, 130);
+  background-image: url('/public/tablecloth1.jpg');  
+  background-size: cover; /* Ensure the background covers the entire viewport */
+
 }
 
 .centerFooter {
@@ -101,6 +104,10 @@ export default {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.card:hover {
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  transform: translateY(0px);
+}
 
 .card-image {
   overflow: hidden;
@@ -119,7 +126,9 @@ export default {
   padding: 20px;
   background-color: #fff;
 }
-
+.card-content:hover {
+  color: #3498DB;
+}
 .media {
   display: flex;
   justify-content: center;
@@ -127,18 +136,11 @@ export default {
 
 .media-center p {
   margin: 0;
-  font-size: 18px;
   color: #333;
   text-align: center;
+  font-weight: 500;
+  font-size: larger;
 }
-
-.dish-card {
-  width: 300px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 .dish-image {
   overflow: hidden;
   display: flex;
