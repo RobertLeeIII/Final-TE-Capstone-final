@@ -69,7 +69,7 @@ export default {
         return 'You are Hosting';
       }
       else{
-        return `Hosted By ${this.currentPotluck.host.substring(0,1).toUpperCase() + this.currentPotluck.host.substring(1) }`
+        return `Hosted By ${this.currentPotluck.host }`
       }
     }
   },
