@@ -22,9 +22,9 @@ export default{
     getRecipeByCourseId(ID){
         let search = '';
         if(ID == 1){
-            search = 'pasta'
+            search = 'vegetarian'
         }else if (ID == 2){
-            search = 'side'
+            search = 'Breakfast'
         }else if (ID == 3){
             search = 'miscellaneous'
         }else if (ID == 4){
