@@ -72,6 +72,6 @@ export default {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
+  background-color: rgba(0, 0, 0, 0.01);
 }
 </style>

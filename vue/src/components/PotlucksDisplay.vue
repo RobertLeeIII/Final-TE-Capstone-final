@@ -28,7 +28,7 @@
            
 
         </div>
-    </div>
+    
   </div>
 </template>
 
@@ -99,7 +99,7 @@ export default {
 <style scoped>
 .main {
   border: 4px solid rgb(124, 169, 130, 0.2);
-  background-color: rgb(241, 247, 237);
+  background-color: rgb(241, 247, 237, 0.01);
   /* Set background color for the header */
   min-height: 95vh;
   /* Set minimum height of layout to full viewport height */
@@ -129,7 +129,7 @@ export default {
   overflow: auto;
 }
 .past{
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 .media {
