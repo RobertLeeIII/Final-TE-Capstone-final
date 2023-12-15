@@ -115,7 +115,7 @@ export default {
     display: none;
 }
 .content{
-  background-color: rgb(239, 239, 239);
+  background-color: rgb(239, 239, 239,);
   padding: 20px;
 }
 </style>
