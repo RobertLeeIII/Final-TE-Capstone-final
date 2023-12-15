@@ -2,7 +2,7 @@
     <div class="main">
 
         <div class="card-container">
-            <div class="card">
+<!--             <div class="card">
                 <router-link :to="{ name: 'dish-list', params: { userId: this.$store.state.user.userId }, query: { action: 'create' } }">
                     <div class="card-image">
                         <figure class="image is-centered">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </router-link>
-            </div>
+            </div> -->
             <dish class="dish" v-for="dish in myDishes" :propDish="dish" :key="dish.dishId">
             </dish>
             <div class="card-container" v-if="!hasDishes">
@@ -74,4 +74,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>
