@@ -81,6 +81,9 @@ export default {
   min-height: 88vh;
   background-color: rgb(241, 247, 237);
   border-top: 4px solid rgb(124, 169, 130);
+  background-image: url('/public/tablecloth1.jpg');  
+  background-size: cover; /* Ensure the background covers the entire viewport */
+
 }
 
 .centerFooter {
