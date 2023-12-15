@@ -121,7 +121,7 @@
   }
   
   .isHost {
-    color: red;
+    color: limegreen
   }
   </style>
   

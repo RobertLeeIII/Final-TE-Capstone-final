@@ -65,11 +65,14 @@ export default {
       })
     },
     hostIdentify() {
-      if(this.propPotluck.hostId === this.$store.state.user.userId){
-        return 'You are Hosting';
-      }
-      else{
-        return `Hosted By ${this.currentPotluck.host.substring(0,1).toUpperCase() + this.currentPotluck.host.substring(1) }`
+      if(this.currentPotluck){
+
+        if(this.propPotluck.hostId === this.$store.state.user.userId){
+          return 'You are Hosting';
+        }
+        else{
+          return `Hosted By ${this.currentPotluck.host}`
+        }
       }
     }
   },
