@@ -1,53 +1,33 @@
 <template>
-  <div class="main">
-    <div class="card-container">
-      <div class="card">
-        <router-link
-          :to="{ name: 'potluck-list', query: { action: 'create' } }"
-        >
-          <div class="card-image">
-            <figure class="image is-centered">
-              <img src="/public/potluck-planner-logo.png" alt="Potluck Image" />
-            </figure>
-            <p></p>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-center">
-                <p class="create-potluck-text">
-                  Create Your<br />Perfect Potluck
-                </p>
-              </div>
+    <div class="main">
+
+        <div class="card-container">
+            <div class="card">
+                <router-link :to="{ name: 'potluck-list', query: { action: 'create' } }">
+                    <div class="card-image">
+                        <figure class="image is-centered">
+                            <img src="/public/potluck-planner-logo.png" alt="Potluck Image">
+                        </figure>
+                        <p></p>
+                    </div>
+                    <div class="card-content">
+
+                        <div class="media">
+                            <div class="media-center">
+                                <p class="create-potluck-text">Create Your<br>Perfect Potluck</p>
+                            </div>
+                        </div>
+                    </div>
+                </router-link>
+
             </div>
-          </div>
-        </router-link>
-      </div>
-      <potluck
-        class="potluck"
-        v-for="potluck in myPotlucks"
-        :propPotluck="potluck"
-        :key="potluck.potluckId"
-      >
-      </potluck>
-      <div class="card-container" v-if="!hasPotlucks">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-centered">
-              <img
-                src="/public/imagePotluck-transformed.jpg"
-                alt="Potluck Image"
-              />
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-center">
-                <p>You Have No Potlucks :(</p>
-              </div>
-            </div>
-          </div>
+            <potluck class="potluck past" v-for="potluck in pastPotlucks" :propPotluck="potluck" :key="potluck.potluckId">
+            </potluck>
+            <potluck class="potluck future" v-for="potluck in futurePotlucks" :propPotluck="potluck" :key="potluck.potluckId">
+            </potluck>
+           
+
         </div>
-      </div>
     </div>
   </div>
 </template>

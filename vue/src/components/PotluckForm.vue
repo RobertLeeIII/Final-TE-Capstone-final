@@ -54,7 +54,9 @@
             type="datetime-local"
             name="time"
             id="time"
+            :min="getTomorrowsDateAtMidnight()"
             v-model="newPotluck.time"
+            
           />
           <div v-if="validationErrors.time" class="error-message">
             {{ validationErrors.time }}
@@ -71,6 +73,7 @@
             type="number"
             name="apps"
             id="apps"
+            min="0" 
             v-model="newPotluck.courseRequest.apps"
           />
 
@@ -82,17 +85,19 @@
             type="number"
             name="sides"
             id="sides"
+            min="0" 
             v-model="newPotluck.courseRequest.sides"
           />
 
         </div>
         <div>
-          <label for="apps">Mains</label>
+          <label for="mains">Mains</label>
           <input
             class="input is-rounded"
             type="number"
             name="mains"
             id="mains"
+            min="0" 
             v-model="newPotluck.courseRequest.mains"
           />
 
@@ -104,7 +109,8 @@
             type="number"
             name="desserts"
             id="desserts"
-            v-model="newPotluck.courseRequest.Desserts"
+            min="0" 
+            v-model="newPotluck.courseRequest.desserts"
           />
           <div v-if="validationErrors.courses" class="error-message">
             {{ validationErrors.courses }}
@@ -167,6 +173,20 @@ export default {
     };
   },
   methods: {
+    getTomorrowsDateAtMidnight() {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    const year = tomorrow.getFullYear();
+    const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+    const day = String(tomorrow.getDate()).padStart(2, "0");
+    const hours = String(tomorrow.getHours()).padStart(2, "0");
+    const minutes = String(tomorrow.getMinutes()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+},
     validateNewPotluck() {
       this.validationErrors = {};
       let hasErrors = false;
