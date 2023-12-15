@@ -1,7 +1,7 @@
 <template>
   <div>
     <form class="box" @submit.prevent="handleSubmit">
-      <h3>Reset Password</h3>
+      <h3 class="title is-4">Reset Password</h3>
       <br />
       <div class="field">
         <label>Password</label>

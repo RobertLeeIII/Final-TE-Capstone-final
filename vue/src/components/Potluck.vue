@@ -3,8 +3,7 @@
     :to="{
       name: 'potluck-details',
       params: { potluckId: propPotluck.potluckId },
-    }"
-  >
+    }">
     <div class="card">
       <div class="card-image">
         <p></p>
@@ -15,9 +14,9 @@
       <div class="card-content">
         <div class="media">
           <div class="media-left">
-            <figure class="image is-48x48">
+           <!--  <figure class="image is-48x48">
               <img src="/public/potluck-planner-logo.png" alt="Logo" />
-            </figure>
+            </figure> Little logo may be too much?-->
           </div>
           <div class="media-content">
             <p class="title is-4">{{ propPotluck.name }}</p>
@@ -85,7 +84,7 @@ export default {
       } else if (this.propPotluck.theme.includes("Winter")) {
         return "/public/winter2.jpg";
       }
-      return "/imagePotluck-transformed.jpg";
+      return "/public/default-potluck.jpg";
     },
     
   },

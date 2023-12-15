@@ -111,10 +111,8 @@
     <div id="register" class="text-center"></div>
   </div>
 </template>
-
 <script>
 import authService from '../services/AuthService';
-
 export default {
   data() {
     return {
@@ -164,11 +162,9 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .registration-form{
   max-width: 500px;
-
 }
 .header {
   text-align: left;
@@ -182,7 +178,6 @@ export default {
   margin-bottom: 10px;
   color: #333;
 }
-
 .header-phonetic {
   font-size: 18px;
   margin-bottom: 20px;
@@ -193,7 +188,6 @@ export default {
   margin-bottom: 0.5rem;
   flex-direction: column;
 }
-
 .form-input-group {
   margin-top: 0.4rem;
   margin-bottom: 0.4rem; /* Adjusted margin */
@@ -201,16 +195,14 @@ export default {
   width: 300px;
   align-items: center;
 }
-
 .input-group {
   display: flex;
   align-items: center;
 }
-
 .input {
   height: 45px;
   width: 350px; /* Adjusted width */
-} 
+}
 .button {
   width: 105px; /* Adjusted width */
   margin-top: -0.5rem; /* Adjusted margin */
