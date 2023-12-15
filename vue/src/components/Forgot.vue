@@ -1,10 +1,10 @@
 <template>
   <div>
     <form class="box" @submit.prevent="handleSubmit">
-      <h3>Password Recovery</h3>
+      <h3 class="title is-4">Password Recovery</h3>
       <br />
       <div class="field">
-        <label for="email">Email</label>
+        <label for="email">Please enter your email</label>
         <div class="control">
           <input
             type="email"
@@ -34,7 +34,7 @@
         </div>
 
         <div class="field">
-          <label for="securityAnswer">Security Answer</label>
+          <label for="securityAnswer"></label>
           <div class="control">
             <input
               type="text"
@@ -111,9 +111,20 @@ export default {
         this.securityQuestion = securityQuestionResponse.data;
       } catch (error) {
         console.error(error);
-        // Handle error appropriately, e.g., show an error message to the user
       }
     },
   },
 };
 </script>
+<style>
+  .forimage {
+    text-align: center;
+  }
+
+  .img-size {
+    max-width: 100%; 
+    max-height: 490px; 
+    display: block; 
+    margin: 0 auto;
+  }
+</style>
